@@ -18,7 +18,7 @@ import utility.ConfigUtil;
 
 public class UsrMsgUtil {
 	
-	public static String fromArgument(String regex, String value) {
+	private static String fromArgument(String regex, String value) {
 	    if(value.matches(regex)) {
 	        Pattern pattern = Pattern.compile("[0-9]{15,}");
 	        Matcher matcher = pattern.matcher(value);   
@@ -46,9 +46,9 @@ public class UsrMsgUtil {
 	        return null;
 	    }
 	}
-	
-	
-	public static boolean canNotTalk(TextChannel channel) {
+
+
+	private static boolean canNotTalk(TextChannel channel) {
         if (channel == null) return true;
         Member member = channel.getGuild().getSelfMember();
         return member == null
@@ -87,11 +87,6 @@ public class UsrMsgUtil {
         if (channel instanceof TextChannel && canNotTalk((TextChannel) channel)) return;
         channel.sendMessage(new EmbedBuilder().setDescription(msg).build()).queue();
     }
-	
-	 public static void sendCEMessage(String msg, MessageChannel channel, Color color) {
-		 if (channel instanceof TextChannel && canNotTalk((TextChannel) channel)) return;
-		 channel.sendMessage(new EmbedBuilder().setColor(color).setDescription(msg).build()).queue();
-	 }
 	 
     public static void sendVEMessage(String msg, MessageChannel channel) {
         if (channel instanceof TextChannel && canNotTalk((TextChannel) channel)) return;

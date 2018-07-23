@@ -27,7 +27,7 @@ public class BotVersionCmd extends Command {
 		String pr = ConfigUtil.getPrefix();
 		
 		String[] ft = new String[] {};
-		String[] fx = new String[] {"Uptime command help description emoji fix"};
+		String[] fx = new String[] {};
 		String[] ds = new String[] {};
 		
 		eb.addField("Version", "Current version: **"+ Bumblebot.botVersion + "**", false);
