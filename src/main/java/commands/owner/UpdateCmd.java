@@ -25,7 +25,7 @@ public class UpdateCmd extends Command {
 			if(System.getProperty("os.name").toLowerCase().contains("windows")) {
 				Runtime.getRuntime().exec("java -jar update.jar");
 			}else{
-				Runtime.getRuntime().exec("java -cp /home/ryan/bot_hosting_files/bumblebot2/Bumblebot/update.jar main.Update");
+				Runtime.getRuntime().exec("java -cp ./update.jar main.Update");
 			}
 			e.getJDA().shutdown();
 			System.exit(0);
