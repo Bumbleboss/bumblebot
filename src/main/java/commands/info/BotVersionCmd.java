@@ -33,19 +33,26 @@ public class BotVersionCmd extends Command {
 		
 		eb.addField("Version", "Current version: **"+ Bumblebot.botVersion + "**", false);
 
-		//noinspection ConstantConditions
-		for (String aFt : ft) {
-			sb.append("- ").append(aFt).append("\n");
+		if(ft.length > 0) {
+			for (String aFt : ft) {
+				sb.append("- ").append(aFt).append("\n");
+			}
+			eb.addField("Features", sb.toString(), false);
+		}
+			
+
+		if(fx.length > 0) {
+			for (String aFx : fx) {
+				sb2.append("- ").append(aFx).append("\n");
+			}
+			eb.addField("Fixes", sb2.toString(), false);
 		}
 
-		//noinspection ConstantConditions
-		for (String aFx : fx) {
-			sb2.append("- ").append(aFx).append("\n");
-		}
-
-		//noinspection ConstantConditions
-		for (String d : ds) {
-			sb3.append("- ").append(d).append("\n");
+		if(ds.length > 0) {
+			for (String d : ds) {
+				sb3.append("- ").append(d).append("\n");
+			}
+			eb.addField("Disabled", sb3.toString(), false);
 		}
 
 		eb.setColor(Color.decode(ConfigUtil.getHex()));
