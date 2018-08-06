@@ -30,8 +30,6 @@ public class SearchCmd extends Music{
 		if(!e.getSelfMember().getVoiceState().inVoiceChannel()) {
 			ms.connectToVc(e.getGuild().getAudioManager(), e.getMember());
 		}
-		e.reply(new EmbedBuilder().setDescription("Searching for... " + e.getArgs()).build(), m -> {
-			ms.loadTracks(e.getTextChannel(), "ytsearch: " + e.getArgs(), e.getAuthor(), builder, m);
-		});
+		e.reply(new EmbedBuilder().setDescription("Searching for... " + e.getArgs()).build(), m -> ms.loadTracks(e.getTextChannel(), "ytsearch: " + e.getArgs(), e.getAuthor(), builder, m));
 	}
 }

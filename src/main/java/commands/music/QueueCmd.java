@@ -43,7 +43,7 @@ public class QueueCmd extends Music {
 		int page = 1;
 		try {
 			page = Integer.parseInt(e.getArgs());
-		}catch(NumberFormatException ex) {}
+		}catch(NumberFormatException ignored) {}
 		MusicManager ms = getMusicManager();
 		GuildMusicManager musicManager = ms.getGuildAudioPlayer(e.getGuild());
 	    List<QueuedTrack> queue = musicManager.scheduler.getQueue().getList();

@@ -53,7 +53,6 @@ public class CleanCmd extends Command {
         
         int num = -1;
         List<String> quotes = new LinkedList<>();
-        String pattern = null;
         List<String> ids = new LinkedList<>();
         String parameters = e.getArgs();
         
@@ -75,9 +74,8 @@ public class CleanCmd extends Command {
         m = NUM_PATTERN.matcher(parameters);
         if(m.find())
             num = Integer.parseInt(m.group(1));
-        parameters = parameters.replaceAll(NUM_PATTERN.pattern(), " ").toLowerCase();
-                
-        boolean all = quotes.isEmpty() && pattern==null && ids.isEmpty();
+
+        boolean all = quotes.isEmpty() && ids.isEmpty();
         
         if(num==-1){
             if(all){
@@ -92,7 +90,6 @@ public class CleanCmd extends Command {
         }
         
         int val2 = num+1;
-        String p = pattern;
         threadpool.submit(() -> {
             int val = val2;
             List<Message> msgs = new LinkedList<>();
@@ -122,14 +119,9 @@ public class CleanCmd extends Command {
                     continue;
                 }
                 String lowerContent = msg.getContentRaw().toLowerCase();
-                if(quotes.stream().anyMatch(quote -> lowerContent.contains(quote))){
+                if(quotes.stream().anyMatch(lowerContent::contains)){
                     del.add(msg);
-                    continue;
                 }
-                try{
-                    if(p!=null && msg.getContentRaw().matches(p))
-                        del.add(msg);
-                }catch(Exception ex){}
             }
 
             if(del.isEmpty()){
@@ -158,7 +150,7 @@ public class CleanCmd extends Command {
             e.getTextChannel().sendMessage(new EmbedBuilder().setAuthor(e.getAuthor().getName(), null, e.getAuthor().getAvatarUrl())
             		.setDescription("Deleted **"+del.size()+"** messages!"+(week2?week2limit:""))
             		.setColor(Color.decode(ConfigUtil.getHex()))
-            		.build()).queue(m1->{m1.delete().queueAfter(2, TimeUnit.SECONDS);});
+            		.build()).queue(m1-> m1.delete().queueAfter(2, TimeUnit.SECONDS));
         });
     }
 }

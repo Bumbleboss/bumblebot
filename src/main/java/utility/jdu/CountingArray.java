@@ -29,20 +29,13 @@ public class CountingArray<E> {
 			return this.get(most_popular_index);
 		else throw new IndexOutOfBoundsException("Array is empty");
 	}
-	
-	public long getCount(E element) {
-		int index = this.indexOf(element);
-		if(index != -1)
-			return this.count_array[index];
-		return 0;
-	}
-	
+
 	public long getCount(int index) {
 		return this.count_array[index];
 	}
 	
 	@SuppressWarnings("unchecked")
-	public E get(int index) {
+	E get(int index) {
 		return (E) this.object_array[index];
 	}
 	
@@ -60,21 +53,20 @@ public class CountingArray<E> {
 		}
 	}
 	
-    public void clear() {
-        for(int i = 0; i < size; i++) {
-        	this.object_array[i] = null;
-            this.count_array[i] = -1;
-        }
-        
-        this.elements = 0;
-    }
-	
+// --Commented out by Inspection START (8/6/2018 4:03 PM):
+//    public void clear() {
+//        for(int i = 0; i < size; i++) {
+//        	this.object_array[i] = null;
+//            this.count_array[i] = -1;
+//        }
+//
+//        this.elements = 0;
+//    }
+// --Commented out by Inspection STOP (8/6/2018 4:03 PM)
+
 	private boolean contains(Object object) {
-		if(this.indexOf(object) >= 0) {
-			return true;
-		}
-		return false;
-	}
+        return this.indexOf(object) >= 0;
+    }
 	
 	private int indexOf(Object object) {
 		if(object == null)

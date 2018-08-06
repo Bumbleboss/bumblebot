@@ -19,7 +19,7 @@ public class PauseCmd extends Music {
 			return;
 		}
 		
-		if(!isDJ(e)) {
+		if(isDJ(e)) {
 			if(getListeners(e) == 1) {
 				ms.pauseTrack(e.getTextChannel());
 				return;

@@ -8,7 +8,7 @@ import utility.ConfigUtil;
 
 public abstract class Server extends Command {
 
-	public Server() {
+	protected Server() {
 		this.category = Bumblebot.myServer;
 	}
 	
@@ -20,5 +20,5 @@ public abstract class Server extends Command {
 		 }
 	 }
 	 
-	 public abstract void doCommand(CommandEvent event);
+	 protected abstract void doCommand(CommandEvent event);
 }

@@ -1,8 +1,6 @@
 package commands.misc;
 
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.List;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -29,15 +27,15 @@ public class TranslateCmd extends Command{
 	protected void execute(CommandEvent e) {
 		try {
 			YandexAPI api = ConfigUtil.trns;
-			String[] args = e.getArgs().split("\\;");
+			String[] args = e.getArgs().split(";");
 			
 			YandexLanguage lng = null;
-			List<YandexLanguage> list = Arrays.asList(YandexLanguage.values());
-			for(int i = 0; i < list.size(); i++) {
-				if(list.get(i).toString().equals(args[0])) {
-					lng = list.get(i);
-				}
-			}
+			YandexLanguage[] list = YandexLanguage.values();
+            for (YandexLanguage aList : list) {
+                if (aList.toString().equals(args[0])) {
+                    lng = aList;
+                }
+            }
 			
 			YandexResponse yn = api.getYandexResponse(args[1], lng);
 			e.reply(new EmbedBuilder()

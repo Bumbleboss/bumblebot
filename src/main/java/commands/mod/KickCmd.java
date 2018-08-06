@@ -32,7 +32,7 @@ public class KickCmd extends Command {
 
 			LinkedList<User> users = new LinkedList<>();
 	        StringBuilder builder = new StringBuilder();
-	        e.getMessage().getMentionedUsers().stream().forEach((u) -> {
+	        e.getMessage().getMentionedUsers().forEach((u) -> {
 	        	Member m = e.getGuild().getMember(u);
 	            if(m==null){
 	                users.add(u);
@@ -57,12 +57,12 @@ public class KickCmd extends Command {
 	                    reason = reason.substring(0,512);
 	                }
 	                e.getGuild().getController().kick(u.getId(), reason).queue((v) -> {
-	                	builder.append("\n").append("Sayonara, BITCH! ").append(u.getAsMention() + " just got kicked!");
+	                	builder.append("\n").append("Sayonara, BITCH! ").append(u.getAsMention()).append(" just got kicked!");
 	                	if(last) {
 	                		UsrMsgUtil.sendVEMessage(builder.toString(), e.getChannel());
 	                	}
 	                }, (t) -> {
-	                	builder.append("\n").append("I failed to kick ").append(u.getAsMention() + " ;-;");
+	                	builder.append("\n").append("I failed to kick ").append(u.getAsMention()).append(" ;-;");
 	                	if(last) {
 	                		UsrMsgUtil.sendVEMessage(builder.toString(), e.getChannel());
 	                	}

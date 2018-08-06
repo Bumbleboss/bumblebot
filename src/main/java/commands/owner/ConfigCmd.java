@@ -22,7 +22,7 @@ public class ConfigCmd extends Command {
 
 	@Override
 	protected void execute(CommandEvent e) {
-		String[] arg = e.getArgs().split("\\;");
+		String[] arg = e.getArgs().split(";");
 		
 		try {
 			String vl = arg[0];
@@ -62,12 +62,12 @@ public class ConfigCmd extends Command {
 		HEX("hex"),
 		PREFIX("prefix");
 			
-		String value;
+		final String value;
 		VALUES(String s) {
 			this.value = s;
 		}
 		
-		public String getValue() {
+		String getValue() {
 			return value;
 		}
 	}

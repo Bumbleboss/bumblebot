@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -34,13 +35,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class OtherUtil {
 
-	private static OkHttpClient client = new OkHttpClient();
-	public static String WEBHOOK_URL = ConfigUtil.getWebhookURL();
-	public static String WEBHOOK_ERROR_URL = ConfigUtil.getWebhookErrorURL();
-	public static String JSONPOST = "application/json";
-	public static String TEXTPOST = "text/plain; charset=utf-8";
+	private static final OkHttpClient client = new OkHttpClient();
+	private static final String WEBHOOK_ERROR_URL = ConfigUtil.getWebhookErrorURL();
+	private static final String JSONPOST = "application/json";
+	private static final String TEXTPOST = "text/plain; charset=utf-8";
 	
 	public static boolean isValidURL(String url){
 	    try {
@@ -51,7 +52,7 @@ public class OtherUtil {
 	    }
 	}
 	
-	public static final void unZipFile(File zip, File extractTo) throws IOException {
+	public static void unZipFile(File zip, File extractTo) throws IOException {
 		ZipFile archive = new ZipFile(zip);
 		Enumeration<?> e = archive.entries();
         while (e.hasMoreElements()) {
@@ -86,14 +87,15 @@ public class OtherUtil {
 		String error2 = error.substring(error.lastIndexOf("[Error Description]: "), error.length()).replace("[Error Description]: ", "");
 		return "**Error:** "+err+"\n**Description:** " + error2;
 	}
-	
-	public static String getPOST(String url, String bodyData, String mediaTp) {
+
+	@SuppressWarnings("SameParameterValue")
+	private static String getPOST( String url, String bodyData) {
 		try {
-			MediaType mediaType = MediaType.parse(mediaTp);
+			MediaType mediaType = MediaType.parse(OtherUtil.TEXTPOST);
 			RequestBody body = RequestBody.create(mediaType, bodyData);
 			Request request = new Request.Builder().url(url).post(body).build();
 			Response response = client.newCall(request).execute();
-			return response.body().string();
+			return Objects.requireNonNull(response.body()).string();
 		} catch (IOException e1) {
 			return null;
 		}
@@ -106,7 +108,7 @@ public class OtherUtil {
 	public static void getWebhookError(Exception error, String className, User user) {
 		StringWriter errors = new StringWriter();
 		
-		String avatar = null;
+		String avatar;
 		try {
 			avatar = Bumblebot.jda.getSelfUser().getAvatarUrl();
 		}catch(NullPointerException ex) {
@@ -127,22 +129,18 @@ public class OtherUtil {
 		getJSONPOST(WEBHOOK_ERROR_URL+"/slack", jsonString);
 		
 		if(!(user==null)) {
-			user.openPrivateChannel().queue(m -> {
-				m.sendMessage("Something happpened with the command you triggered, will be reported. Sorry for the inconvenience!\n```Java\n"+error.getMessage()+"```").queue();
-			});
+			user.openPrivateChannel().queue(m -> m.sendMessage("Something happpened with the command you triggered, will be reported. Sorry for the inconvenience!\n```Java\n"+error.getMessage()+"```").queue());
 		}
 	}
 	
-	public static String getJSONPOST(String url, String json) {
+	private static void getJSONPOST(String url, String json) {
 		try {
 			MediaType JSON = MediaType.parse(JSONPOST);
 			RequestBody body = RequestBody.create(JSON, json);
 			Request request = new Request.Builder().url(url).post(body).build();
 			Response response = client.newCall(request).execute();
-			return response.body().string();
-		} catch (IOException e) {
-			return null;
-		}
+			Objects.requireNonNull(response.body()).string();
+		} catch (IOException ignored) {}
 	}
 	
 	public static String getGET(String url) {
@@ -150,7 +148,7 @@ public class OtherUtil {
 		Response response;
 		try {
 			response = client.newCall(request).execute();
-			return response.body().string();
+			return Objects.requireNonNull(response.body()).string();
 		} catch (IOException e) {
 			return null;
 		}
@@ -162,12 +160,11 @@ public class OtherUtil {
 		final long h = duration / 3600000L % 24;
 		final long m = duration / 60000L % 60;
 		final long s = duration / 1000L % 60;
-		
-		String uptime = (d == 0 ? "" : d + " day")+(d == 0 | d == 1 ? "" : "s, ")+(d == 1 ? ", " : "")
+
+		return (d == 0 ? "" : d + " day")+(d == 0 | d == 1 ? "" : "s, ")+(d == 1 ? ", " : "")
 				+ (h == 0 ? "" : h + " hour")+(h == 0 | h == 1 ? "" : "s, ")+(h == 1 ? ", " : "")
 				+ (m == 0 ? "" : m + " minute")+(m == 0 | m == 1 ? "" : "s, ")+(m == 1 ? ", " : "")
 				+ (s == 0 ? "" : s + " second")+(s == 0 | s == 1? "" : "s.")+(s == 1 ? ", " : "");
-		return uptime;
 	}
 	
 	public static void restart(){
@@ -182,22 +179,23 @@ public class OtherUtil {
 				return;
 			}
 
-			final ArrayList<String> command = new ArrayList<String>();
+			final ArrayList<String> command = new ArrayList<>();
 			command.add(javaBin);
 			command.add("-jar");
 			command.add(currentJar.getPath());
 
 			final ProcessBuilder builder = new ProcessBuilder(command);
 			builder.start();
-			try {Bumblebot.jda.shutdown();}catch (NullPointerException ex) {}
+			try {Bumblebot.jda.shutdown();}catch (NullPointerException ignored) {}
 			System.exit(0);
 		} catch (Exception ex) {
 			OtherUtil.getWebhookError(ex, OtherUtil.class.getName(), null);
 		}
 	}
 	
-	public static boolean isValidFormat(String format, String value) {
-        Date date = null;
+	@SuppressWarnings("SameParameterValue")
+	private static boolean isValidFormat(String format, String value) {
+        Date date;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             date = sdf.parse(value);
@@ -219,7 +217,7 @@ public class OtherUtil {
 	}
 	
 	public static String postToHaste(String body) {
-		return "https://hastebin.com/"+ new JSONObject(getPOST("https://hastebin.com/documents", body, TEXTPOST)).getString("key");
+		return "https://hastebin.com/"+ new JSONObject(Objects.requireNonNull(getPOST("https://hastebin.com/documents", body))).getString("key");
 	}
 	
 	public static String getCount(String input) {

@@ -21,8 +21,8 @@ public class ShippingCmd extends Command {
 	
 	@Override
 	protected void execute(CommandEvent e) {
-		String m1 = null;
-		String m2 = null;
+		String m1;
+		String m2;
 		
 		if(e.getArgs().isEmpty()){
 			e.reply("You need to mention two people!");
@@ -58,31 +58,31 @@ public class ShippingCmd extends Command {
 		StringBuilder sb = new StringBuilder();
 		
 		if(result >= 1 && result <= 10) {
-			sb.append("**"+result +"%** `​█         ​` It's not gonna work ;-;");
+			sb.append("**").append(result).append("%** `​█         ​` It's not gonna work ;-;");
 		}else if(result >= 11 && result <= 20) {
-			sb.append("**"+result +"%** `​██        ​` Forget it...");
+			sb.append("**").append(result).append("%** `​██        ​` Forget it...");
 		}else if(result >= 21 && result <= 30) {
-			sb.append("**"+result +"%** `​█​██       ​` Very bad.");
+			sb.append("**").append(result).append("%** `​█​██       ​` Very bad.");
 		}else if(result >= 31 && result <= 40) {
-			sb.append("**"+result +"%** `​█​███      ​` Not too good.");
+			sb.append("**").append(result).append("%** `​█​███      ​` Not too good.");
 		}else if(result >= 41 && result <= 50) {
-			sb.append("**"+result +"%** `█​████     ​` Almost");
+			sb.append("**").append(result).append("%** `█​████     ​` Almost");
 		}else if(result >= 51 && result <= 60) {
-			sb.append("**"+result +"%** `█​█████    ​` Almost");
+			sb.append("**").append(result).append("%** `█​█████    ​` Almost");
 		}else if(result >= 61 && result <= 68) {
-			sb.append("**"+result +"%** `​█​██████   ​` Not too shabby!");
+			sb.append("**").append(result).append("%** `​█​██████   ​` Not too shabby!");
 		}else if(result == 69) {
-			sb.append("**"+result +"%** `​█​██████   ​` Oh I see how it is ( ͡° ͜ʖ ͡°)");
+			sb.append("**").append(result).append("%** `​█​██████   ​` Oh I see how it is ( ͡° ͜ʖ ͡°)");
 		}else if(result >= 70 && result <= 80) {
-			sb.append("**"+result +"%** `​█​███████  ​` Take good care!");
+			sb.append("**").append(result).append("%** `​█​███████  ​` Take good care!");
 		}else if(result >= 81 && result <= 90) {
-			sb.append("**"+result +"%** `​█​████████ ​` My my, I'm so envious.");
+			sb.append("**").append(result).append("%** `​█​████████ ​` My my, I'm so envious.");
 		}else if(result >= 91 && result <= 99) {
-			sb.append("**"+result +"%** `​█​████████ ​` Damn :o");
+			sb.append("**").append(result).append("%** `​█​████████ ​` Damn :o");
 		}else if(result == 100) {
-			sb.append("**"+result +"%** `​█​█████████​` SUGOOOOOI!! YOU TWO ARE MEANT FOR EACH OTHER!!");
+			sb.append("**").append(result).append("%** `​█​█████████​` SUGOOOOOI!! YOU TWO ARE MEANT FOR EACH OTHER!!");
 		}else{
-			sb.append("**"+result+"%** `​          ​` Okay, it's pointless.");
+			sb.append("**").append(result).append("%** `​          ​` Okay, it's pointless.");
 		}
 		return sb;
 	}

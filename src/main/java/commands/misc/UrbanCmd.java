@@ -7,8 +7,7 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import main.Bumblebot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import urbanAPI.UrbanAPI;
-import urbanAPI.entities.UrbanException;
-import urbanAPI.entities.UrbanList;
+import urbanAPI.UrbanList;
 import utility.ConfigUtil;
 import utility.OtherUtil;
 
@@ -47,8 +46,8 @@ public class UrbanCmd extends Command {
 			eb.setColor(Color.decode(ConfigUtil.getHex()));
 			e.reply(eb.build());
 			} catch (Exception ex) {
-				if(ex instanceof UrbanException) {
-					e.reply(new EmbedBuilder().setDescription("No results were found. :cry:").build());
+				if(ex instanceof IndexOutOfBoundsException) {
+					e.reply(new EmbedBuilder().setDescription("No results were found. ;-;").build());
 				}else{
 					OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 				}

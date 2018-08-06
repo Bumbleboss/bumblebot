@@ -22,10 +22,14 @@ dependencies {
 	compile 'org.mongodb:bson:3.8.0'
 
 	//APIs
-	compile 'com.github.Bumbleboss:YandexTranslateAPI:1.3'
+	compile 'com.github.Bumbleboss:yandexTranslate_api:1.3'
+	compile 'com.github.Bumbleboss:urbanDictionary_api:1.0'
+	compile 'com.github.Bumbleboss:osu_api:1.0'
+	compile 'com.github.Bumbleboss:youtube_api:1.0'
+
 	compile 'com.uwetrottmann.trakt5:trakt-java:5.9.0'
 	compile 'com.uwetrottmann.tmdb2:tmdb-java:1.8.4'
-	compile files('jars/youtube-api.jar', 'jars/urban-api.jar', 'jars/anilist-api.jar', 'jars/osu-api.jar', 'jars/musicxmatch-api.jar')
+	compile files('jars/anilist-api.jar', 'jars/musicxmatch-api.jar')
 	
 	//APIs dependencies
 	compile 'com.google.code.gson:gson:2.8.5'
@@ -34,10 +38,10 @@ dependencies {
 	compile 'javax.xml.bind:jaxb-api:2.3.0'
 	
 	//JDA & JDA-Utils
-    compile 'net.dv8tion:JDA:3.7.1_386'
-    compile 'com.jagrosh:jda-utilities-command:2.1.1'
-    compile 'com.jagrosh:jda-utilities-commons:2.1.1'
-    compile 'com.jagrosh:jda-utilities-menu:2.1.1'
+    compile 'net.dv8tion:JDA:3.7.1_390'
+    compile 'com.jagrosh:jda-utilities-command:2.1.2'
+    compile 'com.jagrosh:jda-utilities-commons:2.1.2'
+    compile 'com.jagrosh:jda-utilities-menu:2.1.2'
     
     //Lavaplayer && JDA-NAS
     compile 'com.sedmelluq:lavaplayer:1.3.7'
@@ -45,6 +49,7 @@ dependencies {
 
 	//Other
 	compile 'ch.qos.logback:logback-classic:1.2.3'
+
 }
 
 compileJava.options.encoding = 'UTF-8'

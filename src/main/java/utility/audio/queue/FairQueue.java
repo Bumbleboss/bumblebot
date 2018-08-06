@@ -2,6 +2,7 @@ package utility.audio.queue;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("UnusedReturnValue")
 public class FairQueue<T extends Queueable> {
     private final List<T> list = new ArrayList<>();
     

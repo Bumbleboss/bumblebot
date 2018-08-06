@@ -1,6 +1,7 @@
 package commands.misc;
 
 import java.awt.Color;
+import java.util.Objects;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -31,13 +32,13 @@ public class MovieSearchCmd extends Command {
 
 		Tmdb api = ConfigUtil.tmdb;
 		try {
-			int id = api.searchService().movie(e.getArgs(), null, null, true, null, null, null).execute().body().results.get(0).id;
+			int id = Objects.requireNonNull(api.searchService().movie(e.getArgs(), null, null, true, null, null, null).execute().body()).results.get(0).id;
 			Movie mv = api.moviesService().summary(id).execute().body();
 			EmbedBuilder eb = new EmbedBuilder();
 				
 			eb.setAuthor("TMDB", "https://www.themoviedb.org/movie/"+id, "https://i.imgur.com/G9q4DF1.png");
 			eb.setColor(Color.decode("#00D474"));
-			eb.setDescription("["+mv.title+"](https://www.themoviedb.org/movie/"+id+")\n"+
+			eb.setDescription("["+Objects.requireNonNull(mv).title+"](https://www.themoviedb.org/movie/"+id+")\n"+
 					(mv.overview==null? "N/A" : (mv.overview.length()>1024? mv.overview.substring(0, 1000)+"..." : mv.overview)));
 			eb.setThumbnail("https://image.tmdb.org/t/p/w500"+mv.poster_path);
 			eb.addField("Release date", mv.release_date==null? "N/A" : OtherUtil.getDate(mv.release_date.toString()), true);
@@ -46,14 +47,13 @@ public class MovieSearchCmd extends Command {
 			eb.addField("Revenue", mv.revenue==null? "N/A": OtherUtil.getCount(mv.revenue.toString()) +"$", true);
 			eb.addField("Duration", mv.runtime==null? "N/A": mv.runtime + " mins", true);
 				
-			String genres = null;
+			String genres;
 			if(mv.genres==null) {
 				genres = "N/A";
 			}else{
 				StringBuilder gen = new StringBuilder();
 				for(int i = 0; i < 3 && i < mv.genres.size(); i++) {
-					gen.append(mv.genres.get(i).name.substring(0, 1).toUpperCase())
-					.append(mv.genres.get(i).name.substring(1, mv.genres.get(i).name.length())+", ");
+					gen.append(mv.genres.get(i).name.substring(0, 1).toUpperCase()).append(mv.genres.get(i).name, 1, mv.genres.get(i).name.length()).append(", ");
 				}
 				genres = gen.toString().substring(0, gen.length()-2)+".";
 			}

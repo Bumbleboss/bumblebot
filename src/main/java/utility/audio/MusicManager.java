@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -54,8 +55,8 @@ public class MusicManager {
 	
 	public void loadCustom(final TextChannel channel, final List<String> tracks, final User usr) {
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
-		for(int i = 0; i < tracks.size(); i++) {
-			playerManager.loadItemOrdered(musicManager, tracks.get(i), new AudioLoadResultHandler() {
+		for (String track : tracks) {
+			playerManager.loadItemOrdered(musicManager, track, new AudioLoadResultHandler() {
 				@Override
 				public void trackLoaded(AudioTrack track) {
 					play(musicManager, track, usr);
@@ -63,13 +64,12 @@ public class MusicManager {
 
 				@Override
 				public void playlistLoaded(AudioPlaylist playlist) {
-					playlist.getTracks().stream().forEach((track) -> {
-						play(musicManager, track, usr);
-					});
+					playlist.getTracks().forEach((track) -> play(musicManager, track, usr));
 				}
-				
+
 				@Override
 				public void noMatches() {}
+
 				@Override
 				public void loadFailed(FriendlyException exception) {}
 			});
@@ -90,20 +90,19 @@ public class MusicManager {
 				play(musicManager, track, usr);
 			}
 
+			@SuppressWarnings("RedundantArrayCreation")
 			@Override
 			public void playlistLoaded(AudioPlaylist playlist) {
 				if(syt) {
 					List<AudioTrack> trs = playlist.getTracks();
-					bd.setColor(Color.decode(ConfigUtil.getHex()))
+					Objects.requireNonNull(bd).setColor(Color.decode(ConfigUtil.getHex()))
 					.setChoices(new String[0])
 					.setDescription("Results")
 					.setSelection((msg, i) -> {
 						play(musicManager, trs.get(i-1), usr);
 						UsrMsgUtil.sendVEMessage("Added to queue " + new QueuedTrack(trs.get(i-1), null).toString(false, false, 0), channel);
 					})
-					.setCancel((msg) -> {
-						UsrMsgUtil.sendEMessage("Selection has been canceled", channel);
-					})
+					.setCancel((msg) -> UsrMsgUtil.sendEMessage("Selection has been canceled", channel))
 					.setUsers(usr);
 					for(int i = 0; i < 3 && i < trs.size(); i++) {
 						AudioTrack tracks = trs.get(i);
@@ -125,9 +124,7 @@ public class MusicManager {
 				}
 				
 				List<AudioTrack> trs = playlist.getTracks();
-				playlist.getTracks().stream().forEach((track) -> {
-					play(musicManager, track, usr);
-				});
+				playlist.getTracks().forEach((track) -> play(musicManager, track, usr));
 				AudioTrack firstTrack = playlist.getTracks().get(0);
 				UsrMsgUtil.sendVEMessage("Added playlist **"+ playlist.getName()+"** with **"+ trs.size() +"** enteries!\nStarting with... "+ new QueuedTrack(firstTrack, null).toString(false, false, 0), channel);
 			}
@@ -148,7 +145,7 @@ public class MusicManager {
 		AudioPlayer plyr = getGuildAudioPlayer(channel.getGuild()).player;
 		String content = "Skipped "+new QueuedTrack(plyr.getPlayingTrack(), null).toString(false, false, 0) +" from the queue!";
 		
-		if(skip) {plyr.stopTrack();};
+		if(skip) {plyr.stopTrack();}
 		channel.sendMessage(new EmbedBuilder().setAuthor(usr.getName(), null, usr.getAvatarUrl())
 				.setColor(Color.decode(ConfigUtil.getHex())).setDescription(skip?content:msg).build()).queue();
 	}
@@ -219,14 +216,14 @@ public class MusicManager {
 		}
 	}
 	
-	public static String progressBar(double percent) {
-        String str = "";
+	private static String progressBar(double percent) {
+        StringBuilder str = new StringBuilder();
         for(int i=0; i<12; i++)
             if(i == (int)(percent*12))
-                str+="⚫";
+                str.append("⚫");
             else
-                str+="▬";
-        return str;
+                str.append("▬");
+        return str.toString();
     }
 	
 	public String formatTime(long duration) {

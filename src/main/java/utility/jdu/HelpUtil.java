@@ -1,9 +1,7 @@
 package utility.jdu;
 
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.Command.Category;
@@ -61,9 +59,9 @@ public class HelpUtil extends ListenerAdapter{
 			if(s.getMessage().getContentDisplay().equalsIgnoreCase(ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" "+ getHelp().get(i).getName())) {
 				s.getChannel().sendMessage(getHelpMessage(i)).queue();
 			}else{ 
-				List<String> lsts = Arrays.asList(getHelp().get(i).getAliases());
-				for(int i2 = 0; i2 < lsts.size(); i2++) {
-					if(s.getMessage().getContentDisplay().equalsIgnoreCase(ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" "+ lsts.get(i2).toString())) {
+				String[] lsts = getHelp().get(i).getAliases();
+				for (String lst : lsts) {
+					if (s.getMessage().getContentDisplay().equalsIgnoreCase(ConfigUtil.getPrefix() + ConfigUtil.getHelpWord() + " " + lst)) {
 						s.getChannel().sendMessage(getHelpMessage(i)).queue();
 					}
 				}
@@ -85,7 +83,7 @@ public class HelpUtil extends ListenerAdapter{
 	
 	private String getCategoryMessage(Category cat, int i) {
 		if(getHelp().get(i).getCategory().equals(cat)) {
-			String helpDescription = null;
+			String helpDescription;
 			if(getHelp().get(i).getHelp().length() > 30) {
 				helpDescription = getHelp().get(i).getHelp().substring(0, 30).replace("*", "").replace("\n", " ") + "...";
 			}else{
@@ -102,8 +100,7 @@ public class HelpUtil extends ListenerAdapter{
 	}
 	
 	public void setHelpCommands(Command... helpcmd) {
-		for(Command command: helpcmd)
-			command1.add(command);
+		Collections.addAll(command1, helpcmd);
 	}
 	
 	private Message getHelpMessage(int i) {
@@ -120,13 +117,13 @@ public class HelpUtil extends ListenerAdapter{
 		String[] argu = null;
 		try {
 			argu = help.getArguments().split("\\{}");
-		}catch (NullPointerException e) {}
+		}catch (NullPointerException ignored) {}
 		//COMMAND ALIASES
 		
 		String[] alias = null;
 		try {
 			alias = help.getAliases();
-		}catch (NullPointerException e) {}
+		}catch (NullPointerException ignored) {}
 		
 		EmbedBuilder eb = new EmbedBuilder();
 		MessageBuilder mb = new MessageBuilder();
@@ -143,8 +140,7 @@ public class HelpUtil extends ListenerAdapter{
 			eb.setDescription(des.substring(0, 1).toUpperCase() + des.substring(1));
 		}
 		
-		if(argu == null) {
-		}else{
+		if(argu != null) {
 			boolean field = false;
 			if((ConfigUtil.getPrefix()+cmd+" "+argu[0]).length() < 25) {
 				field = true;
@@ -153,23 +149,20 @@ public class HelpUtil extends ListenerAdapter{
 			eb.addField("Example",ConfigUtil.getPrefix()+cmd + " " + argu[1].substring(1), field);
 			try {
 				eb.setImage(argu[2]);
-			}catch(ArrayIndexOutOfBoundsException ex) {}
+			}catch(ArrayIndexOutOfBoundsException ignored) {}
 		}
 		
 		String aliase = null;
-		if(alias.length == 0) {
-		}else{
+		if(Objects.requireNonNull(alias).length != 0) {
 			StringBuilder hm = new StringBuilder();
-			List<String> aliaslist = Arrays.asList(alias);
-			for(int i1 = 0; i1 < aliaslist.size(); i1++) {
-				aliase =	hm.append(aliaslist.get(i1) + ", ").toString();
+			for (String anAliaslist : alias) {
+				aliase = hm.append(anAliaslist).append(", ").toString();
 			}
-			eb.addField("Aliases", aliase.substring(0, aliase.length() - 2), false);
+			eb.addField("Aliases", aliase.substring(0, Objects.requireNonNull(aliase).length() - 2), false);
 		}
 		
 		eb.setFooter("Help command of '" + ConfigUtil.getPrefix()+cmd+"'", null);
 		mb.setEmbed(eb.build());
-		Message m = mb.build();
-		return m;	
+		return mb.build();
 	}
 }

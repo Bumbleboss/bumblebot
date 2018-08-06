@@ -28,7 +28,7 @@ public class LoggerCmd extends Command {
 		FileManager fl = new FileManager("./assists/logs/");
 		
 		//LOGGING STUFF
-		String[] parts = e.getArgs().split("\\;");
+		String[] parts = e.getArgs().split(";");
 		if(parts.length==2) {
 			if(parts[0].equalsIgnoreCase("warn")) {
 				Bumblebot.logger.warn(parts[1]);
@@ -67,7 +67,7 @@ public class LoggerCmd extends Command {
 		if(fls.size() > 0) {
 			sb.append("**__List of logs__:**\n");
 			for(int i = 0; i < fls.size(); i++) {
-				sb.append("**"+(i+1)+".** ").append(fls.get(i)).append("\n");
+				sb.append("**").append(i + 1).append(".** ").append(fls.get(i)).append("\n");
 			}
 		}else{
 			sb.append("No log files were found!");
@@ -75,7 +75,7 @@ public class LoggerCmd extends Command {
 		UsrMsgUtil.sendVEMessage(sb.toString(), e.getChannel());
 	}
 	
-	public String getDate(String value) {
+	private String getDate(String value) {
 		String[] d = value.split("[d]");
 		String[] m = value.split("[m]");
 

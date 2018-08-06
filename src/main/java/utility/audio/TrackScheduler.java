@@ -16,6 +16,7 @@ import net.dv8tion.jda.core.entities.User;
 import utility.audio.queue.FairQueue;
 import utility.audio.queue.QueuedTrack;
 
+@SuppressWarnings("UnusedReturnValue")
 public class TrackScheduler extends AudioEventAdapter implements AudioSendHandler {
 	
 	private final AudioPlayer player;
@@ -28,7 +29,7 @@ public class TrackScheduler extends AudioEventAdapter implements AudioSendHandle
 	public TrackScheduler(AudioPlayer player, Guild guild) {
 	    this.player = player;
 	    this.guildId = guild.getIdLong();
-	    queue = new FairQueue<QueuedTrack>();
+	    queue = new FairQueue<>();
 	    votes = new HashSet<>();
 	}
 	
@@ -62,11 +63,7 @@ public class TrackScheduler extends AudioEventAdapter implements AudioSendHandle
 		queue.clear();
 		player.stopTrack();
 	}
-	
-	public boolean isMusicPlaying() {
-		return Bumblebot.jda.getGuildById(guildId).getSelfMember().getVoiceState().inVoiceChannel() && player.getPlayingTrack() != null;
-	}
-	
+
 	public Set<String> getVotes() {
 		return votes;
 	}
@@ -96,11 +93,7 @@ public class TrackScheduler extends AudioEventAdapter implements AudioSendHandle
             		player.setPaused(false);
             	}
             	votes.clear();
-            	new Thread(new Runnable() {
-        			public void run() {
-        				Bumblebot.jda.getGuildById(guildId).getAudioManager().closeAudioConnection();
-        			}
-        		}).start();
+            	new Thread(() -> Bumblebot.jda.getGuildById(guildId).getAudioManager().closeAudioConnection()).start();
             	return;
             }
             

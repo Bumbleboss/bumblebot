@@ -2,6 +2,7 @@ package commands.myServer.rules;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Objects;
 
 import com.jagrosh.jdautilities.command.CommandEvent;
 
@@ -51,7 +52,7 @@ public class RulesCmd extends Server {
 					+ "\n**Rule #6:** *You must abide the rules noted in Discord's community guidelines.*");
 			eb.setFooter("Mentioned by "+UsrMsgUtil.getUserSet(e.getJDA(), e.getAuthor().getId())+" | Thanks!", null);
 		}else if(RulesManager.matchChannel(chnlName)) {
-			if(RulesManager.getChannelEmbed(chnlName).equals("null")) {
+			if(Objects.requireNonNull(RulesManager.getChannelEmbed(chnlName)).equals("null")) {
 				eb.addField("Description", RulesManager.getChannelDesc(chnlName), false);
 			}else{
 				eb.addField("Rules", RulesManager.getChannelDesc(chnlName), false);

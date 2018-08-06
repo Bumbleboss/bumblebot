@@ -7,10 +7,11 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 import main.Bumblebot;
-import main.Osu;
-import main.OsuBeatmap;
-import main.OsuUser;
+
 import net.dv8tion.jda.core.EmbedBuilder;
+import osuAPI.OsuAPI;
+import osuAPI.OsuBeatmap;
+import osuAPI.OsuUser;
 import utility.ConfigUtil;
 import utility.OtherUtil;
 import utility.core.UsrMsgUtil;
@@ -28,7 +29,7 @@ public class OsuUserCmd extends Command {
 	@Override
 	@SuppressWarnings("static-access")
 	protected void execute(CommandEvent e) {
-		Osu api = ConfigUtil.osu;
+		OsuAPI api = ConfigUtil.osu;
 		if(e.getArgs().isEmpty()) {
 			e.reply("You need to provide an osu! username.");
 			return;
@@ -50,7 +51,7 @@ public class OsuUserCmd extends Command {
 			eb.addField("Total Plays", usr.getPlayCount(), true);
 			eb.addField("Level", df.format(Double.parseDouble(usr.getLevel())), true);
 				
-			OsuBeatmap ub = api.getBeatmapsById(api.getBestPlays(e.getArgs(), 0).get(0).getBeatmapId(), 0).get(0);		
+			OsuBeatmap ub = api.getBeatmapsById(api.getBestPlays(e.getArgs(), 0).get(0).getBeatmapId(), 0).get(0);
 			String Beatmap = ub.getArtist() + " - " + ub.getTitle() + " [" + ub.getDifficultyName() + "]";
 			eb.addField("Top Play", "["+Beatmap+"](https://osu.ppy.sh/b/"+ub.getBeatmapId()+")", false);
 			eb.setFooter("Requested by "+UsrMsgUtil.getUserSet(e.getJDA(), e.getAuthor().getId()), e.getAuthor().getAvatarUrl());

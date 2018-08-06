@@ -44,7 +44,7 @@ public class PositionCmd extends Music {
 		}
 	}
 	
-	public long getTime(String time) {
+	private long getTime(String time) {
 		String[] h = time.split("[h]");
 		String[] m = time.split("[m]");
 		String[] s = time.split("[s]");
@@ -52,7 +52,7 @@ public class PositionCmd extends Music {
 		long hours = 0;
 		try {
 			hours = Integer.parseInt(h[0]);
-		}catch(ArrayIndexOutOfBoundsException | NumberFormatException ex ) {}
+		}catch(ArrayIndexOutOfBoundsException | NumberFormatException ignored) {}
 		
 		long minutes = 0;
 		try {
@@ -61,7 +61,7 @@ public class PositionCmd extends Music {
 			}else{
 				minutes = Integer.parseInt(m[0]);
 			}
-		}catch(ArrayIndexOutOfBoundsException | NumberFormatException ex) {}
+		}catch(ArrayIndexOutOfBoundsException | NumberFormatException ignored) {}
 		
 		long seconds = 0;
 		try {
@@ -72,7 +72,7 @@ public class PositionCmd extends Music {
 			}else{
 				seconds = Integer.parseInt(s[0]);
 			}
-		}catch(ArrayIndexOutOfBoundsException | NumberFormatException ex) {}
+		}catch(ArrayIndexOutOfBoundsException | NumberFormatException ignored) {}
 		
 		return getMillisecond(hours, minutes, seconds);
 	}

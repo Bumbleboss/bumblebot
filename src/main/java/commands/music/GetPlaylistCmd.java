@@ -33,8 +33,8 @@ public class GetPlaylistCmd extends Music {
 		}
 		
 		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < queue.size(); i++) {
-			sb.append(queue.get(i).getTrack().getInfo().uri+"\n");
+		for (QueuedTrack aQueue : queue) {
+			sb.append(aQueue.getTrack().getInfo().uri).append("\n");
 		}
 		UsrMsgUtil.sendVEMessage("Here's the playlist queue links!\n"+OtherUtil.postToHaste(sb.toString()), e.getChannel());
 	}

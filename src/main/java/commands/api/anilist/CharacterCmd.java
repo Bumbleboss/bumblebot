@@ -34,6 +34,7 @@ public class CharacterCmd extends Command {
         		.setEventWaiter(waiter);
 	}
 
+	@SuppressWarnings("RedundantArrayCreation")
 	@Override
 	protected void execute(CommandEvent e) {
 		String args = e.getArgs();
@@ -55,12 +56,10 @@ public class CharacterCmd extends Command {
 						try {
 							e.reply(getCharacter(args, i-1));
 						} catch (AniListException e1) {
-							e.reply(new EmbedBuilder().setDescription("No results found! ;-;").build());
+							e.reply(new EmbedBuilder().setDescription("No result found on the requested anime character! ;-;").build());
 						}
 					})
-					.setCancel((msg) -> {
-						e.reply(new EmbedBuilder().setDescription("Selection has been canceled.").build());
-					})
+					.setCancel((msg) -> e.reply(new EmbedBuilder().setDescription("Selection has been canceled.").build()))
 					.setUsers(e.getAuthor());
 					for(int i = 0; i < 3 && i < charr.size(); i++) {
 						AniListCharacterData chars = charr.get(i);
@@ -71,13 +70,17 @@ public class CharacterCmd extends Command {
 					builder.build().display(m);
 				}
 			}catch (Exception ex) {
+				if(ex instanceof AniListException) {
+					m.editMessage(new EmbedBuilder().setDescription("No result found on the requested anime character! ;-;").build()).queue();
+					return;
+				}
 				m.editMessage(new EmbedBuilder().setDescription("Bot was unable to retrieve info from AniList API.").build()).queue();
 				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 			}
 		});	
 	}
 	
-	public Message getCharacter(String query, Integer i) throws AniListException{
+	private Message getCharacter(String query, Integer i) throws AniListException{
 		MessageBuilder mb = new MessageBuilder(); 
 		List<AniListCharacterData> charr = new AniListInfo().getCharacter(query);
 		EmbedBuilder eb = new EmbedBuilder();

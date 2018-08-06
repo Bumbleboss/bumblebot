@@ -43,7 +43,7 @@ public class ForceMarryCmd extends Command {
 				
 			mrg.removeUser(mrg.getPartner(user2));
 			mrg.removeUser(user2);
-		}catch (NullPointerException ex) {}
+		}catch (NullPointerException ignored) {}
 			
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC+0"));

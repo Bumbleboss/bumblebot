@@ -21,7 +21,7 @@ public class PlayCmd extends Music {
 	@Override
 	public void doCommand(CommandEvent e) {
 		MusicManager ms = getMusicManager();
-		String url = null;
+		String url;
 		if(OtherUtil.isValidURL(e.getArgs())) {
 			url = e.getArgs();
 		}else if(!e.getMessage().getAttachments().isEmpty()) {

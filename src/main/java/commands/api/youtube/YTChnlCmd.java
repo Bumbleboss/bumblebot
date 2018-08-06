@@ -12,7 +12,6 @@ import utility.OtherUtil;
 import youTubeAPI.YouTubeAPI;
 import youTubeAPI.core.entities.channels.ChannelItems;
 import youTubeAPI.core.entities.search.Item;
-import youTubeAPI.core.exceptions.YouTubeException;
 
 public class YTChnlCmd extends Command {
 	
@@ -54,11 +53,7 @@ public class YTChnlCmd extends Command {
 			}
 			e.reply(eb.build());			
 		} catch (Exception ex) {
-			if(ex instanceof YouTubeException) {
-				e.reply("No videos were found! ;-;");
-			}else{
-				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
-			}
+			e.reply(ex.getMessage());
 		}
 	}
 }

@@ -23,7 +23,7 @@ public class ChildrenCmd extends Command {
 	protected void execute(CommandEvent e) {
 		Children chl = new Children();
 		StringBuilder sb = new StringBuilder();
-		String id = null;
+		String id;
 		
 		if(e.getMessage().getMentionedUsers().size() > 0) {
 			id = e.getMessage().getMentionedUsers().get(0).getId();
@@ -37,7 +37,7 @@ public class ChildrenCmd extends Command {
 			}
 			
 			if(!UsrMsgUtil.isInGuild(e.getGuild(), chl.getChildren().get(i).getString("id"))) {
-				sb.append("**"+UsrMsgUtil.getUserSet(e.getJDA(), chl.getChildren().get(i).getString("id"))+"**").append(", ");
+				sb.append("**").append(UsrMsgUtil.getUserSet(e.getJDA(), chl.getChildren().get(i).getString("id"))).append("**").append(", ");
 			}
 			if(UsrMsgUtil.isInGuild(e.getGuild(), chl.getChildren().get(i).getString("id"))) {
 				sb.append(e.getJDA().getUserById(chl.getChildren().get(i).getString("id")).getAsMention()).append(", ");

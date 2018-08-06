@@ -14,81 +14,76 @@ import com.uwetrottmann.trakt5.TraktV2;
 
 import aniListAPI.AniListAPI;
 import main.Config;
-import main.Osu;
 import musixMatchAPI.MusixMatch;
+import osuAPI.OsuAPI;
 import urbanAPI.UrbanAPI;
 import yandexAPI.YandexAPI;
 import youTubeAPI.YouTubeAPI;
 
 public class ConfigUtil {
 
-	private static Config config = new Config();
-	public static AniListAPI aniapi = new AniListAPI();
-	public static Osu osu = new Osu();
-	public static TraktV2 trakt = new TraktV2(getTrakt());
-	public static YouTubeAPI yt = new YouTubeAPI(getYT());
+	private static final Config config = new Config();
+	private static final AniListAPI aniapi = new AniListAPI();
+	public static final OsuAPI osu = new OsuAPI(getOSU());
+	public static final TraktV2 trakt = new TraktV2(getTrakt());
+	public static final YouTubeAPI yt = new YouTubeAPI(getYT());
 	
-	public static UrbanAPI ub = new UrbanAPI(getUrban());	
-	public static MusixMatch lyrc = new MusixMatch(getMusixMatch());
-	public static Tmdb tmdb = new Tmdb(getTMDB());
-	public static YandexAPI trns = new YandexAPI(getYandex());
+	public static final UrbanAPI ub = new UrbanAPI(getUrban());
+	public static final MusixMatch lyrc = new MusixMatch(getMusixMatch());
+	public static final Tmdb tmdb = new Tmdb(getTMDB());
+	public static final YandexAPI trns = new YandexAPI(getYandex());
 
 	@SuppressWarnings("static-access")
 	public static void main (String[] args) {
 		ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-		ses.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					aniapi.getAccessToken(getAniClient(), getAniSecret());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		ses.scheduleAtFixedRate(() -> {
+			try {
+				aniapi.getAccessToken(getAniClient(), getAniSecret());
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}, 0, 3720000, TimeUnit.MILLISECONDS);
-		osu.setKey(getOSU());
 	}
 
 	public static MongoDatabase getDatabase() {
 		MongoClientURI uri = new MongoClientURI(getMongoDB());
 		MongoClient mongoClient = new MongoClient(uri);
-		MongoDatabase database = mongoClient.getDatabase("bumblecore");
-		return database;
+		return mongoClient.getDatabase("bumblecore");
 	}
 	
-	public static String getYT() {
+	private static String getYT() {
 		return getKeys().getString("yt");
 	}
 	
-	public static String getMusixMatch() {
+	private static String getMusixMatch() {
 		return getKeys().getString("musicxmatch");
 	}
 	
-	public static String getOSU() {
+	private static String getOSU() {
 		return getKeys().getString("osu");
 	}
 	
-	public static String getTMDB() {
+	private static String getTMDB() {
 		return getKeys().getString("tmdb");
 	}
 	
-	public static String getTrakt() {
+	private static String getTrakt() {
 		return getKeys().getString("trakt");
 	}
 	
-	public static String getYandex() {
+	private static String getYandex() {
 		return getKeys().getString("yandex");
 	}
 	
-	public static String getUrban() {
+	private static String getUrban() {
 		return getKeys().getString("urban");
 	}
 	
-	public static String getAniSecret() {
+	private static String getAniSecret() {
 		return getAnilist().getString("secret");
 	}
 	
-	public static String getAniClient() {
+	private static String getAniClient() {
 		return getAnilist().getString("client");
 	}
 	
@@ -100,11 +95,11 @@ public class ConfigUtil {
 		return config.getJSONObject("keys");
 	}
 
-	public static String getMongoDB() {
+	private static String getMongoDB() {
 		return config.getValue("database");
 	}
 
-	public static final String getToken() {
+	public static String getToken() {
 		return config.getValue("token");
 	}
 	
@@ -140,7 +135,7 @@ public class ConfigUtil {
 		return getServer().getString("servertc");
 	}
 	
-	public static JSONObject getServer() {
+	private static JSONObject getServer() {
 		return config.getJSONObject("server");
 	}
 

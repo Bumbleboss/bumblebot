@@ -10,14 +10,14 @@ import net.dv8tion.jda.core.entities.GuildVoiceState;
 import utility.audio.MusicManager;
 import utility.core.UsrMsgUtil;
 
-public abstract class Music extends Command{
+abstract class Music extends Command{
 
 	//DON'T EVEN THINK OF EDITING IT
-	public static MusicManager ms = new MusicManager();
-	public String MUSIC_PREFIX = "m";
-	public String DJ_ROLE = "DJ";
+	static final MusicManager ms = new MusicManager();
+	final String MUSIC_PREFIX = "m";
+	final String DJ_ROLE = "DJ";
 	
-	public Music() {
+	Music() {
 		this.category = Bumblebot.Music;
 		this.guildOnly = true;
 	}
@@ -40,23 +40,24 @@ public abstract class Music extends Command{
 		doCommand(e);
 	}
 	
-	public MusicManager getMusicManager() {
+	@SuppressWarnings("SameReturnValue")
+    MusicManager getMusicManager() {
 	    return ms;
 	}
 	
-    public boolean isDJ(CommandEvent e) {
+    boolean isDJ(CommandEvent e) {
         if(e.isOwner())
-            return true;
+            return false;
         if(e.getMember().hasPermission(Permission.MANAGE_SERVER))
-            return true;
+            return false;
         if(getMusicManager().getGuildAudioPlayer(e.getGuild()).scheduler.getRequester().getId().equals(e.getAuthor().getId())) 
-        	return true;
-        return RolesManager.hasRole(e.getMember(), DJ_ROLE);
+        	return false;
+        return !RolesManager.hasRole(e.getMember(), DJ_ROLE);
     }
     
-    public int getListeners(CommandEvent e) {
+    int getListeners(CommandEvent e) {
         return (int) e.getSelfMember().getVoiceState().getChannel().getMembers().stream().filter(m -> !m.getUser().isBot() && !m.getVoiceState().isDeafened()).count();
     }
     
-	public abstract void doCommand(CommandEvent event);
+	protected abstract void doCommand(CommandEvent event);
 }

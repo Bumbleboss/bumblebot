@@ -13,10 +13,12 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import utility.OtherUtil;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class FileManager {
 	
 	private static String path;
@@ -39,15 +41,15 @@ public class FileManager {
 	
 	public void deleteFolder(File file) {
 		if(file.isDirectory()){	 
-			if(file.list().length==0){
+			if(Objects.requireNonNull(file.list()).length==0){
 				file.delete();
 			}else{
 				String files[] = file.list();
-				for (String temp : files) {
+				for (String temp : Objects.requireNonNull(files)) {
 					File fileDelete = new File(file, temp);	        		 
 					deleteFolder(fileDelete);
 				}
-				if(file.list().length==0){
+				if(Objects.requireNonNull(file.list()).length==0){
 					file.delete();
 				}
 			}
@@ -72,8 +74,7 @@ public class FileManager {
 	
 	public List<String> listFiles(String fileName, String fileFormat) {
 		File fl = new File((path==null?"":path)+fileName);
-		return Arrays.asList(fl.listFiles((path) -> path.getName().endsWith(fileFormat)))
-                .stream().map(f -> f.getName()).collect(Collectors.toList());
+		return Arrays.stream(Objects.requireNonNull(fl.listFiles((path) -> path.getName().endsWith(fileFormat)))).map(File::getName).collect(Collectors.toList());
 	}
 	
 	public void moveFile(String oldDir, String newDir) throws IOException {
@@ -86,9 +87,8 @@ public class FileManager {
             FileReader fileReader = new FileReader((path==null?"":path+File.separator)+fileName);
             try(BufferedReader br = new BufferedReader(fileReader)) {
                 for(String line; (line = br.readLine()) != null; ) {
-                	sb.append(line+"\n");
+                	sb.append(line).append("\n");
                 }
-                br.close();         
             }
             fileReader.close();
             return sb.toString();
@@ -103,15 +103,14 @@ public class FileManager {
 	}
 	
 	public static List<String> readFiles(String fileName) {
-		List<String> lines = new ArrayList<String>();
+		List<String> lines = new ArrayList<>();
 		try {
             FileReader fileReader = new FileReader((path==null?"":path+File.separator)+fileName);
             try(BufferedReader br = new BufferedReader(fileReader)) {
                 for(String line; (line = br.readLine()) != null; ) {
                 	lines.add(line);
                 }
-                br.close();         
-            }
+			}
             fileReader.close();
             return lines;
         }catch (Exception ex) {

@@ -1,6 +1,7 @@
 package commands.misc;
 
 import java.awt.Color;
+import java.util.Objects;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -30,13 +31,13 @@ public class TVShowSearchCmd extends Command {
 
 		Tmdb api = ConfigUtil.tmdb;
 		try {
-			int id = api.searchService().tv(e.getArgs(), null, null, null, null).execute().body().results.get(0).id;
+			int id = Objects.requireNonNull(api.searchService().tv(e.getArgs(), null, null, null, null).execute().body()).results.get(0).id;
 			TvShow tv = api.tvService().tv(id).execute().body();
 			EmbedBuilder eb = new EmbedBuilder();
 				
 			eb.setAuthor("TMDB", "https://www.themoviedb.org/tv/"+id, "https://i.imgur.com/G9q4DF1.png");
 			eb.setColor(Color.decode("#00D474"));
-			eb.setDescription("["+tv.name+"](https://www.themoviedb.org/tv/"+id+")\n"+
+			eb.setDescription("["+Objects.requireNonNull(tv).name+"](https://www.themoviedb.org/tv/"+id+")\n"+
 					(tv.overview==null? "N/A" : (tv.overview.length()>1024? tv.overview.substring(0, 1000) : tv.overview)));
 			eb.setThumbnail("https://image.tmdb.org/t/p/w500"+tv.poster_path);
 			eb.addField("Release date", tv.first_air_date==null? "N/A" : OtherUtil.getDate(tv.first_air_date.toString()), true);
@@ -44,14 +45,13 @@ public class TVShowSearchCmd extends Command {
 			eb.addField("Seasons | Episodes", 
 					(tv.number_of_seasons==null? "N/A" : tv.number_of_seasons) + " | " + (tv.number_of_episodes==null? "N/A" : tv.number_of_episodes), true);
 				
-			String genres = null;
+			String genres;
 			if(tv.genres==null) {
 				genres = "N/A";
 			}else{
 				StringBuilder gen = new StringBuilder();
 				for(int i = 0; i < 3 && i < tv.genres.size(); i++) {
-					gen.append(tv.genres.get(i).name.substring(0, 1).toUpperCase())
-					.append(tv.genres.get(i).name.substring(1, tv.genres.get(i).name.length())+", ");
+					gen.append(tv.genres.get(i).name.substring(0, 1).toUpperCase()).append(tv.genres.get(i).name, 1, tv.genres.get(i).name.length()).append(", ");
 				}
 				genres = gen.toString().substring(0, gen.length()-2)+".";
 			}

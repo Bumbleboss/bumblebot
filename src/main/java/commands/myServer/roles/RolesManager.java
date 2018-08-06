@@ -14,14 +14,14 @@ import utility.core.FileManager;
 
 public class RolesManager {
 	
-	static String jsonData = FileManager.readFile("./assists/server_settings.json");	
-	static JSONObject role = new JSONObject(jsonData);
+	private static final String jsonData = FileManager.readFile("./assists/server_settings.json");
+	private static final JSONObject role = new JSONObject(jsonData);
 
 	public static String getRoleTypo(int i) {
 		return getRoles().getJSONObject(i).getString("typo");
 	}
 	
-	public static boolean isAssignable(int i) {
+	private static boolean isAssignable(int i) {
 		return getRoles().getJSONObject(i).getBoolean("assignable");
 	}
 	
@@ -57,7 +57,7 @@ public class RolesManager {
 				if(Objects.equals(role.toLowerCase(), getRoleName(i).toLowerCase()) || Objects.equals(role.toLowerCase(), getRoleTypo(i).toLowerCase())) {
 					return true;
 				}
-			}catch (ArrayIndexOutOfBoundsException | JSONException ex) {}
+			}catch (ArrayIndexOutOfBoundsException | JSONException ignored) {}
 		}
 		return false;
 	}
@@ -71,7 +71,7 @@ public class RolesManager {
 						return true;
 					}
 				}
-			}catch (ArrayIndexOutOfBoundsException | JSONException ex) {}
+			}catch (ArrayIndexOutOfBoundsException | JSONException ignored) {}
 		}
 		return false;
 	}

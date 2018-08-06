@@ -41,15 +41,15 @@ public class OrderMenu extends Menu {
     private final boolean allowTypedInput;
     private final boolean useCancel;
 
-	public final static String[] NUMBERS = new String[]{"1\u20E3","2\u20E3","3\u20E3",
+	private final static String[] NUMBERS = new String[]{"1\u20E3","2\u20E3","3\u20E3",
 	        "4\u20E3","5\u20E3","6\u20E3","7\u20E3","8\u20E3","9\u20E3", "\uD83D\uDD1F"};
 
-	public final static String[] LETTERS = new String[]{"\uD83C\uDDE6","\uD83C\uDDE7","\uD83C\uDDE8",
+	private final static String[] LETTERS = new String[]{"\uD83C\uDDE6","\uD83C\uDDE7","\uD83C\uDDE8",
 	        "\uD83C\uDDE9","\uD83C\uDDEA","\uD83C\uDDEB","\uD83C\uDDEC","\uD83C\uDDED","\uD83C\uDDEE","\uD83C\uDDEF"};
 
-	public final static String[] NUMBERSS = new String[]{"1","2","3","4","5","6","7","8","9", "10"};
+	private final static String[] NUMBERSS = new String[]{"1","2","3","4","5","6","7","8","9", "10"};
 	
-	public final static String CANCEL = "\u274C";
+	private final static String CANCEL = "\u274C";
 	    
 	@SuppressWarnings("static-access")
 	protected OrderMenu(EventWaiter waiter, Set<User> users, Set<Role> roles, long timeout, TimeUnit unit,
@@ -91,10 +91,7 @@ public class OrderMenu extends Menu {
     	ra.queue(m -> {
             try{
                 for(int i=1; i<=choices.size(); i++){	
-                    if(i<choices.size()) {
-                    }else {
-                    	if(useCancel){
-                    	}
+                    if(!(i<choices.size())) {
                     	ra.queue(v -> {
                     		if(allowTypedInput) {
                     			waitGeneric(m);

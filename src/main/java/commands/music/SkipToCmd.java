@@ -25,13 +25,13 @@ public class SkipToCmd extends Music{
 	public void doCommand(CommandEvent e) {
 		MusicManager ms = getMusicManager();
 		
-		if(!isDJ(e)) {
-			if(getListeners(e) == 1) {}
+		if(isDJ(e)) {
+			if(getListeners(e) == 1) {return;}
 			e.reply("You need to have the **"+DJ_ROLE+"** role in order to do that!");
 			return;
 		}
 		
-		int num = 0;
+		int num;
 		try {
 			num = Integer.parseInt(e.getArgs());
 		}catch (NumberFormatException ex) {

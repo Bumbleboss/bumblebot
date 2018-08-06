@@ -11,7 +11,6 @@ import utility.ConfigUtil;
 import utility.OtherUtil;
 import youTubeAPI.YouTubeAPI;
 import youTubeAPI.core.entities.search.Item;
-import youTubeAPI.core.exceptions.YouTubeException;
 
 public class YTVidCmd extends Command{
 
@@ -43,11 +42,7 @@ public class YTVidCmd extends Command{
 			eb.setFooter("Published by " + srch.getInfo().channelTitle + " on " + OtherUtil.getDate(srch.getInfo().publishedAt), null);
 			e.reply(eb.build());
 		} catch (Exception ex) {
-			if(ex instanceof YouTubeException) {
-				e.reply("No videos were found! ;-;");
-			}else{
-				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
-			}
-		}  		
+			e.reply(ex.getMessage());
+		}
 	}	
 }

@@ -14,6 +14,7 @@ import utility.OtherUtil;
 import utility.core.FileManager;
 import utility.core.UsrMsgUtil;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class DownloadCmd extends Command {
 	
 	public DownloadCmd() {
@@ -41,17 +42,15 @@ public class DownloadCmd extends Command {
 			FileUtils.copyInputStreamToFile(att.getInputStream(), new File(args+fileName));
 			if(att.getFileName().contains(".zip")) {
 				zipFile =  true;
-				new Thread(new Runnable() {
-				    public void run() {
-				    	FileManager file = new FileManager("./");
-						try {
-							OtherUtil.unZipFile(new File(args+fileName), new File(args.isEmpty()?"./":args));
-							file.deleteFile(args+fileName);
-						} catch (IOException ex) {
-							UsrMsgUtil.sendEMessage("Error:\n```"+ex.getLocalizedMessage()+"```", e.getChannel());
-						}
-				    }
-				}).start();
+				new Thread(() -> {
+                    FileManager file = new FileManager("./");
+                    try {
+                        OtherUtil.unZipFile(new File(args+fileName), new File(args.isEmpty()?"./":args));
+                        file.deleteFile(args+fileName);
+                    } catch (IOException ex) {
+                        UsrMsgUtil.sendEMessage("Error:\n```"+ex.getLocalizedMessage()+"```", e.getChannel());
+                    }
+                }).start();
 			}
 		}catch(Exception ex) {
 			OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());

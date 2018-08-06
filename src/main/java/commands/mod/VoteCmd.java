@@ -11,7 +11,7 @@ import utility.core.UsrMsgUtil;
 
 public class VoteCmd extends Command {
 
-	public String[] NUMBERS = new String[]{"1\u20E3","2\u20E3","3\u20E3",
+	private final String[] NUMBERS = new String[]{"1\u20E3","2\u20E3","3\u20E3",
 	        "4\u20E3","5\u20E3","6\u20E3","7\u20E3","8\u20E3","9\u20E3", "\uD83D\uDD1F"};
 	
 	public VoteCmd() {
@@ -30,13 +30,13 @@ public class VoteCmd extends Command {
 			return;
 		}
 		
-		String[] parts = e.getArgs().split("\\;");
+		String[] parts = e.getArgs().split(";");
 		
 		if(parts.length == 1) {
 			e.getChannel().getMessageById(parts[0]).queue(m -> {
 				m.addReaction("yes:445598815806816257").queue();
 				m.addReaction("no:445598834698092544").queue();
-			}, m -> {e.reply("You need to provide a valid messageId!");});
+			}, m -> e.reply("You need to provide a valid messageId!"));
 			return;
 		}
 		
@@ -54,14 +54,12 @@ public class VoteCmd extends Command {
 			String text = parts[0];
 			StringBuilder sb = new StringBuilder();
 			
-			sb.append(text+"\n\n");
+			sb.append(text).append("\n\n");
 			for(int i = 1; i < parts.length; i++) {
-				sb.append("**"+(i)+".** "  + parts[i]+"\n");
+				sb.append("**").append(i).append(".** ").append(parts[i]).append("\n");
 			}
 			
-			e.reply(sb.toString(), m -> {
-				addReaction(m, parts.length+1);
-			});
+			e.reply(sb.toString(), m -> addReaction(m, parts.length+1));
 		}
 	}
 	

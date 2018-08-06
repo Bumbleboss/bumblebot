@@ -9,8 +9,8 @@ import utility.core.FileManager;
 
 public class Config {
 
-	static String jsonData = FileManager.readFile("./assists/config.json");	
-	static JSONObject inf = new JSONObject(jsonData);
+	private static final String jsonData = FileManager.readFile("./assists/beta_config.json");
+	private static final JSONObject inf = new JSONObject(jsonData);
     private JSONObject configObject;
 
 	public Config() {

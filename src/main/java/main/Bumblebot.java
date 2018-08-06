@@ -134,10 +134,10 @@ public class Bumblebot {
 	public final static Category myServer = new Category("Server");
 	public final static Category Owner = new Category("Owner");
 	public final static Permission[] modPerms = new Permission[] {Permission.MESSAGE_MANAGE, Permission.KICK_MEMBERS, Permission.BAN_MEMBERS, Permission.MANAGE_ROLES};
-	public static ScheduledExecutorService threadpool = Executors.newSingleThreadScheduledExecutor();
-	public static EventWaiter waiter = new EventWaiter();
-	public static String botVersion = FileManager.readFiles("./build.gradle").get(8).replace("'", "").replace("version", "").replace(" ", "");
-	public static Logger logger = LoggerFactory.getLogger("Bumblebot");
+	private static final ScheduledExecutorService threadpool = Executors.newSingleThreadScheduledExecutor();
+	private static final EventWaiter waiter = new EventWaiter();
+	public static final String botVersion = FileManager.readFiles("./build.gradle").get(8).replace("'", "").replace("version", "").replace(" ", "");
+	public static final Logger logger = LoggerFactory.getLogger("Bumblebot");
 
 	public static void main(String[] args) throws LoginException {
 		HelpUtil util = new HelpUtil();
@@ -164,7 +164,7 @@ public class Bumblebot {
 				.setGame(Game.playing("booting up...")).addEventListener(waiter).addEventListener(util)
 				.addEventListener(new ChatterBot()).addEventListener(new AntiLink()).addEventListener(new ServerJoins())
 				.addEventListener(getCommandClient())
-				.buildAsync();
+				.build();
 		ConfigUtil.main(new String[0]);
 		changeStatus();
 	}
@@ -206,15 +206,15 @@ public class Bumblebot {
 				    }
 				    return true;
 				}).forEach(category -> {
-				    for(int i = 0; i < cmds.size(); i++) {
-				    	if(cmds.get(i).isHidden() && !hl.isOwner()) {
-				    	    continue;
-				    	}
-				    	if(cmds.get(i).isOwnerCommand() && !hl.isOwner()) {
-				    	    continue;
-				    	}
+					for (Command cmd : cmds) {
+						if (cmd.isHidden() && !hl.isOwner()) {
+							continue;
+						}
+						if (cmd.isOwnerCommand()) {
+							hl.isOwner();
+						}
 
-				    }
+					}
 				    eb.appendDescription("***"+category.getName() + "*** |");
 				});
 				eb.appendDescription("\n\nType **"+ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" <category>** to know what commands goes under the categories");
@@ -254,19 +254,19 @@ public class Bumblebot {
 		};
 	}
 
-	public static void changeStatus() {
+	private static void changeStatus() {
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
 				String fileName = "./assists/status.txt";
 				BufferedReader input = null;
 
-				ArrayList<String> lines = new ArrayList<String>();
+				ArrayList<String> lines = new ArrayList<>();
 				File f = new File(fileName);
 
 				try {
 					input = new BufferedReader(new FileReader(f.getAbsolutePath()));
-					String line = null;
+					String line;
 					while((line = input.readLine()) != null) {
 						lines.add(line);
 					}

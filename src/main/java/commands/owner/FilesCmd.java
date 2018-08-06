@@ -25,7 +25,7 @@ public class FilesCmd extends Command {
 	
 	@Override
 	protected void execute(CommandEvent e) {
-		String[] arg = e.getArgs().split("\\;");
+		String[] arg = e.getArgs().split(";");
 		try {
 			String action = arg[0];
 			String file = arg[1];
@@ -54,14 +54,14 @@ public class FilesCmd extends Command {
 				fl.moveFile(file, arg[2]);
 				UsrMsgUtil.sendVEMessage("Moved **"+file+"** to **" + arg[2]+"**", e.getChannel());
 			}else if(action.equalsIgnoreCase("list")) {
-				String format = null;
+				String format;
 				try {format = arg[2];}catch(ArrayIndexOutOfBoundsException ex) {format = "";}
 				List<String> ss = fl.listFiles(file, format);
 				StringBuilder sb = new StringBuilder();
 				StringBuilder sb2 = new StringBuilder();
 				for(int i = 0; i < ss.size(); i++) {
-					sb.append("**"+(i+1)+"** " + ss.get(i) + "\n");
-					sb2.append(ss.get(i) + "\n");
+					sb.append("**").append(i + 1).append("** ").append(ss.get(i)).append("\n");
+					sb2.append(ss.get(i)).append("\n");
 				}
 				if(sb.toString().length() > 1900) {
 					UsrMsgUtil.sendVEMessage("[List of files]("+OtherUtil.postToHaste(sb2.toString())+")", e.getChannel());

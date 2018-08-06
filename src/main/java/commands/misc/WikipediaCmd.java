@@ -3,6 +3,7 @@ package commands.misc;
 import java.awt.Color;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Objects;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +37,7 @@ public class WikipediaCmd extends Command {
 			parse = OtherUtil.getGET("https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&pageids="+URLEncoder.encode(args, "UTF-8"));
 		} catch (UnsupportedEncodingException ex) {OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());}
 		
-		JSONObject json = new JSONObject(parse).getJSONObject("query").getJSONObject("pages");
+		JSONObject json = new JSONObject(Objects.requireNonNull(parse)).getJSONObject("query").getJSONObject("pages");
 		
 		String id = null;
 		for(String key: json.keySet()) {
@@ -45,7 +46,7 @@ public class WikipediaCmd extends Command {
 		
 		JSONObject res = json.getJSONObject(id);
 		
-		if(id.equals("-1")) {
+		if(id != null && id.equals("-1")) {
 			e.reply("There are no articles with the given query");
 		}else{
 			String title = res.getString("title");
@@ -56,12 +57,12 @@ public class WikipediaCmd extends Command {
 		}
 	}
 	
-	public Integer getPageId(String query) {
-		String parse = null;
+	private Integer getPageId(String query) {
+		String parse;
 		Integer ptitle = null;
 		try {
 			parse = OtherUtil.getGET("https://en.wikipedia.org/w/api.php?action=query&list=search&utf8&format=json&srsearch="+URLEncoder.encode(query, "UTF-8"));
-			ptitle =new JSONObject(parse).getJSONObject("query").getJSONArray("search").getJSONObject(0).getInt("pageid");
+			ptitle =new JSONObject(Objects.requireNonNull(parse)).getJSONObject("query").getJSONArray("search").getJSONObject(0).getInt("pageid");
 		} catch (Exception ex) {
 			if(ex instanceof JSONException) {
 				ptitle = -1;

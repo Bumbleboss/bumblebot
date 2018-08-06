@@ -1,8 +1,6 @@
 package commands.owner;
 
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import com.jagrosh.jdautilities.command.Command;
@@ -44,14 +42,14 @@ public class SudoCmd extends Command {
 			
 			String[] args = e.getArgs().split("\\s+");
 			String user = id==null?args[0]:id;
-			String arg = null;try {arg = args[2];}catch (ArrayIndexOutOfBoundsException ex) {arg = "";}
+			String arg;try {arg = args[2];}catch (ArrayIndexOutOfBoundsException ex) {arg = "";}
 			
-			List<Command> cmds = Arrays.asList(Bumblebot.getCommands());
-			for(int i = 0; i < cmds.size(); i++) {
-				if(args[1].equalsIgnoreCase(cmds.get(i).getName())) {
-					cmds.get(i).run(new CommandEvent(new MessageReceivedEvent(e.getJDA(), 0, getMessage(user, e.getMessage(), arg)), arg, Bumblebot.getCommandClient()));
-				}
-			}
+			Command[] cmds = Bumblebot.getCommands();
+            for (Command cmd : cmds) {
+                if (args[1].equalsIgnoreCase(cmd.getName())) {
+                    cmd.run(new CommandEvent(new MessageReceivedEvent(e.getJDA(), 0, getMessage(user, e.getMessage(), arg)), arg, Bumblebot.getCommandClient()));
+                }
+            }
 			
 		}catch (Exception ex) {
 			if(ex instanceof ArrayIndexOutOfBoundsException | ex instanceof NumberFormatException) {
@@ -62,7 +60,7 @@ public class SudoCmd extends Command {
 		}
 	}
 	
-	public Message getMessage(String authorId, Message msg, String content) {		
+	private Message getMessage(String authorId, Message msg, String content) {
 		return new ReceivedMessage(msg.getIdLong(), 
 				msg.getChannel(), msg.getType(), msg.isWebhookMessage(), msg.mentionsEveryone(), 
 				new TLongHashSet(msg.getMentionedUsers().stream().map(User::getIdLong).collect(Collectors.toList())),

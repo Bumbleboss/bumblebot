@@ -21,7 +21,7 @@ public class StopCmd extends Music{
 			return;
 		}
 		
-		if(!isDJ(e)) {
+		if(isDJ(e)) {
 			if(getListeners(e) == 1) {
 				ms.getGuildAudioPlayer(e.getGuild()).scheduler.stopAndClear();
 				UsrMsgUtil.sendVEMessage("Stopped playing and cleared the queue", e.getChannel());

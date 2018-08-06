@@ -11,8 +11,8 @@ import utility.OtherUtil;
 
 public class DatabaseManager {
 	
-	private MongoDatabase db = ConfigUtil.getDatabase();
-	private String collection;
+	private final MongoDatabase db = ConfigUtil.getDatabase();
+	private final String collection;
 	
 	public DatabaseManager(String coll) {
 		collection = coll;
@@ -20,8 +20,7 @@ public class DatabaseManager {
 	
 	public MongoCollection<Document> getDocument() {
 		try {
-			MongoCollection<Document> collection = db.getCollection(getCollection());
-	        return collection;
+			return db.getCollection(getCollection());
 		}catch (Exception ex) {
             OtherUtil.getWebhookError(ex, DatabaseManager.class.getName(), null);
 			return null;
@@ -58,8 +57,9 @@ public class DatabaseManager {
 	 * @return
 	 * 		The object's variable
 	 */
+	@SuppressWarnings("SuspiciousMethodCalls")
 	public Object getField(String field, String id, Object var) {
-		Document found = (Document) getDocument().find(new Document(field, id)).first();
+		Document found = getDocument().find(new Document(field, id)).first();
     	if(found != null) {
     		return found.get(var);
     	}else{

@@ -18,6 +18,7 @@ import utility.ConfigUtil;
 
 public class UsrMsgUtil {
 	
+	@SuppressWarnings("SameParameterValue")
 	private static String fromArgument(String regex, String value) {
 	    if(value.matches(regex)) {
 	        Pattern pattern = Pattern.compile("[0-9]{15,}");
@@ -60,26 +61,24 @@ public class UsrMsgUtil {
 	    int[] all = new int[6];
 	    
 	    List<Member> members = guild.getMembers();
-	    
-	    for(int i = 0; i < members.size(); i++) {
-	        Member member = members.get(i);
-	        
-	        if(member.getOnlineStatus().equals(OnlineStatus.ONLINE)) {
-	            all[0] += 1;
-	        }else if(member.getOnlineStatus().equals(OnlineStatus.OFFLINE)) {
-	            all[1] += 1;
-	        }else if(member.getOnlineStatus().equals(OnlineStatus.IDLE)) {
-	            all[2] += 1;
-	        }else if(member.getOnlineStatus().equals(OnlineStatus.DO_NOT_DISTURB)) {
-	            all[3] += 1;
-	        }
-	        
-	        if(member.getUser().isBot()) {
-	            all[4] += 1;
-	        }else{
-	            all[5] += 1;
-	        }
-	    }   
+
+		for (Member member : members) {
+			if (member.getOnlineStatus().equals(OnlineStatus.ONLINE)) {
+				all[0] += 1;
+			} else if (member.getOnlineStatus().equals(OnlineStatus.OFFLINE)) {
+				all[1] += 1;
+			} else if (member.getOnlineStatus().equals(OnlineStatus.IDLE)) {
+				all[2] += 1;
+			} else if (member.getOnlineStatus().equals(OnlineStatus.DO_NOT_DISTURB)) {
+				all[3] += 1;
+			}
+
+			if (member.getUser().isBot()) {
+				all[4] += 1;
+			} else {
+				all[5] += 1;
+			}
+		}
 	    return all;
 	}
 	

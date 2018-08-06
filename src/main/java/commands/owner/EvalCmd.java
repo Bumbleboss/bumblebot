@@ -25,9 +25,9 @@ public class EvalCmd extends Command {
     
     @Override
     protected void execute(CommandEvent e) {
-    	String parse = "\nimport java.awt.Color;\n" + 
-				"import net.dv8tion.jda.core.*;\nimport utility.ConfigUtil as con;\nimport utility.OtherUtil as othr;\nimport utility.core.UsrMsgUtil as umt;"
-				+ "\nimport org.json.JSONArray;\n" + "import org.json.JSONObject;\n"
+    	String parse = "\nimport java.awt.Color\n" +
+				"import net.dv8tion.jda.core.*\nimport utility.ConfigUtil as con\nimport utility.OtherUtil as othr\nimport utility.core.UsrMsgUtil as umt"
+				+ "\nimport org.json.JSONArray\n" + "import org.json.JSONObject\n"
 				+ e.getArgs();
     	try{
 			Binding bd = new Binding();

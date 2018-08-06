@@ -2,6 +2,7 @@ package commands.api.trakt;
 
 import java.awt.Color;
 import java.net.SocketTimeoutException;
+import java.util.Objects;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -38,7 +39,7 @@ public class TraktUserCmd extends Command {
 	    
 	    try { 
 			User user = trakt.users().profile(usr, Extended.FULL).execute().body();
-			if(user.isPrivate) {
+			if(Objects.requireNonNull(user).isPrivate) {
 				e.reply(new EmbedBuilder()
 						.setAuthor(user.username, "https://trakt.tv/users/"+user.username, null).setDescription("This user is private.")
 						.setColor(Color.decode("#ED1C24"))

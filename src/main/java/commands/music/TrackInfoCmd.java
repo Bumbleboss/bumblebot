@@ -65,7 +65,7 @@ public class TrackInfoCmd extends Music {
 	    e.reply(getMessage(num-1, queue));
 	}
 	
-	public MessageEmbed getMessage(int i, List<QueuedTrack> queue) {
+	private MessageEmbed getMessage(int i, List<QueuedTrack> queue) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setColor(Color.decode(ConfigUtil.getHex()));
 		QueuedTrack tr = queue.get(i);
@@ -74,12 +74,12 @@ public class TrackInfoCmd extends Music {
 		String previous = null;
 		try {
 			previous = queue.get(i-1).toString(false, true, 40);
-		}catch (IndexOutOfBoundsException ex) {}
+		}catch (IndexOutOfBoundsException ignored) {}
 		
 		String after = null;
 		try {
 			after = queue.get(i+1).toString(false, true, 40);
-		}catch (IndexOutOfBoundsException ex) {}
+		}catch (IndexOutOfBoundsException ignored) {}
 			
 		
 		eb.addField("Position in queue", i+1 + "", true);

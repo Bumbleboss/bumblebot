@@ -8,7 +8,7 @@ import utility.core.DatabaseManager;
 
 public class Children {
 	
-	public static final DatabaseManager db = new DatabaseManager("beta_child");
+	private static final DatabaseManager db = new DatabaseManager("beta_child");
 	
 	public void addChild(String userid, String parentA, String parentB, boolean st) {
 		Document doc = new Document("id", userid)
@@ -19,7 +19,7 @@ public class Children {
 	}
 	
 	public ArrayList<Document> getChildren() { 
-		return db.getDocument().find().into(new ArrayList<Document>());
+		return db.getDocument().find().into(new ArrayList<>());
 	}
 	
 	public void removeChild(String id) {
@@ -65,10 +65,6 @@ public class Children {
 	public boolean isParent(String id, String parent) {
 		if(parent.equals(getParentA(id))) {
 			return true;
-		}else if(parent.equals(getParentB(id))) {
-			return true;
-		}else{
-			return false;
-		}
+		}else return parent.equals(getParentB(id));
 	}
 }

@@ -34,6 +34,7 @@ public class AnimeCmd extends Command{
         		.setTimeout(1, TimeUnit.MINUTES);
 	}
 	
+	@SuppressWarnings("RedundantArrayCreation")
 	@Override
 	protected void execute(CommandEvent e) {
 		String args = e.getArgs();
@@ -50,17 +51,15 @@ public class AnimeCmd extends Command{
 				}else{
 					builder.setColor(Color.decode(ConfigUtil.getHex()))
 					.setChoices(new String[0])
-					.setDescription("Results")	
+					.setDescription("Results")
 					.setSelection((msg, i) ->  {
 						try {
 							e.reply(getAnime(args, i-1));
 						} catch (AniListException e1) {
-							e.reply(new EmbedBuilder().setDescription("No results found! ;-;").build());
+							e.reply(new EmbedBuilder().setDescription("No result found on the requested anime character! ;-;").build());
 						}
 					})
-					.setCancel((msg) -> {
-						e.reply(new EmbedBuilder().setDescription("Selection has been canceled.").build());
-					})
+					.setCancel((msg) -> e.reply(new EmbedBuilder().setDescription("Selection has been canceled.").build()))
 					.setUsers(e.getAuthor());
 					for(int i=0; i < 3 && i < anim.size(); i++) {
 						AniListAnimeData list = anim.get(i);
@@ -69,12 +68,17 @@ public class AnimeCmd extends Command{
 					builder.build().display(m);
 				}
 			} catch (Exception ex) {
+				if(ex instanceof AniListException) {
+					m.editMessage(new EmbedBuilder().setDescription("No result found on the requested anime! ;-;").build()).queue();
+					return;
+				}
 				m.editMessage(new EmbedBuilder().setDescription("Bot was unable to retrieve info from AniList API.").build()).queue();
+				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 			}
 		});
 	}
 	
-	public Message getAnime(String query, Integer i) throws AniListException {
+	private Message getAnime(String query, Integer i) throws AniListException {
 		MessageBuilder mb = new MessageBuilder();
 		AniListAnimeData ani = new AniListInfo().getAnimeSeries(query).get(i);
 		EmbedBuilder eb = new EmbedBuilder();
@@ -92,7 +96,7 @@ public class AnimeCmd extends Command{
 		eb.setImage(ani.getBannerUrl());
 		eb.setFooter("Provided by AniList.", null);
 		mb.setEmbed(eb.build());
-			
+
 		return mb.build();
 	}
 }

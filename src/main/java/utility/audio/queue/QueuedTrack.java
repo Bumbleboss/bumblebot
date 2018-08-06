@@ -28,7 +28,7 @@ public class QueuedTrack implements Queueable {
 	}
 
 	public String toString(boolean ownr, boolean sub, int substring) {
-		String title = null;
+		String title;
 		String orgTit = track.getInfo().title;
 		if(orgTit.contains("[") && orgTit.contains("]")) {
 			title = orgTit.replace("[", "").replace("]", "");

@@ -36,7 +36,7 @@ public class LyricsCmd extends Command {
 		}
 		
 		try {
-			String[] args = e.getArgs().split("\\;");
+			String[] args = e.getArgs().split(";");
 			Track track = api.getMatchingTrack(args[0], args[1]);
 			Lyrics lyrc = api.getLyrics(track.getTrack().getTrackId());
 			
@@ -45,14 +45,12 @@ public class LyricsCmd extends Command {
 			eb.setDescription(lyrc.getLyricsBody().replace("******* This Lyrics is NOT for Commercial use *******\n(1409615473592)", "")
 					+ "["+ track.getTrack().getArtistName() + " - " + track.getTrack().getTrackName()+"]"
 					+ "("+track.getTrack().getTrackShareUrl().substring(0, track.getTrack().getTrackShareUrl().lastIndexOf("?"))+")");
-			eb.setFooter("Provided by MusixMatch", "http://tny.im/cHy");
+			eb.setFooter("Provided by MusixMatch", "http://brand.musixmatch.com/img/528cf00b303e3d89700006c4/617089/upload-40e9b1b0-9523-11e6-adda-0fb2759a0a66.png");
 			e.reply(eb.build());
 		} catch (Exception ex) {
 			if(ex instanceof MusixMatchException || ex instanceof IndexOutOfBoundsException){ 
 				UsrMsgUtil.sendEMessage("Lyrics not found! ;-;", e.getChannel());
-			}else if(ex instanceof ArrayIndexOutOfBoundsException) {
-				UsrMsgUtil.sendEMessage("Usage: **"+ConfigUtil.getPrefix()+this.name + " "+ this.arguments.split("\\{}")[0] + "**", e.getChannel());
-			}else{
+			}else {
 				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 			}
 		}

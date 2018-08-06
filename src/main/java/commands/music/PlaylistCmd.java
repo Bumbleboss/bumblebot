@@ -32,18 +32,18 @@ public class PlaylistCmd extends Music {
 			UsrMsgUtil.sendEMessage("Usage: **" + ConfigUtil.getPrefix() + this.name + " " + this.arguments.split("\\{}")[0]+"**", e.getChannel());
 			return;
 		}
-		
-		for(int i = 0; i < playlists.size(); i++) {
-			if(e.getArgs().equalsIgnoreCase("list")) {
-				sb.append("***"+playlists.get(i).replace(".txt", "")+"*** | ");
-			}else if(e.getArgs().equalsIgnoreCase(playlists.get(i).replace(".txt", "").replace("_", "").replace(" ", ""))) {
-				if(!e.getSelfMember().getVoiceState().inVoiceChannel()) {
-					ms.connectToVc(e.getGuild().getAudioManager(), e.getMember());
-				}
-				ms.loadCustom(e.getTextChannel(), FileManager.readFiles(playlists.get(i)), e.getAuthor());
-				return;
-			}
-		}
+
+        for (String playlist : playlists) {
+            if (e.getArgs().equalsIgnoreCase("list")) {
+                sb.append("***").append(playlist.replace(".txt", "")).append("*** | ");
+            } else if (e.getArgs().equalsIgnoreCase(playlist.replace(".txt", "").replace("_", "").replace(" ", ""))) {
+                if (!e.getSelfMember().getVoiceState().inVoiceChannel()) {
+                    ms.connectToVc(e.getGuild().getAudioManager(), e.getMember());
+                }
+                ms.loadCustom(e.getTextChannel(), FileManager.readFiles(playlist), e.getAuthor());
+                return;
+            }
+        }
 		
 		if(sb.toString().length() > 0) {
 			UsrMsgUtil.sendVEMessage("**All playlists:**\n"+sb.toString(), e.getChannel());

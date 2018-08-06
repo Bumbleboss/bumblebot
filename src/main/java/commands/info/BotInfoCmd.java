@@ -25,7 +25,7 @@ public class BotInfoCmd extends Command {
 	}
 	@Override
 	protected void execute(CommandEvent e) {
-		int cmds = Arrays.asList(Bumblebot.getCommands()).stream().filter(cc -> !(cc.isOwnerCommand() && !e.isOwner())).collect(Collectors.toList()).size();
+		int cmds = Arrays.stream(Bumblebot.getCommands()).filter(cc -> !(cc.isOwnerCommand() && !e.isOwner())).collect(Collectors.toList()).size();
 		EmbedBuilder eb = new EmbedBuilder();
 	    eb.setAuthor("BumbleCore", null, e.getJDA().getSelfUser().getAvatarUrl());
 	    eb.setColor(Color.decode(ConfigUtil.getHex()));

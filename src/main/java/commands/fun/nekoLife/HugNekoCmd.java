@@ -1,6 +1,7 @@
 package commands.fun.nekoLife;
 
 import java.awt.Color;
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -35,7 +36,7 @@ public class HugNekoCmd extends Command {
 			}else{
 				message = e.getAuthor().getAsMention() + " "+OtherUtil.getRandom(msg)+" " + user.getAsMention();
 			}
-			img = new JSONObject(OtherUtil.getGET("https://nekos.life/api/hug")).getString("url");
+			img = new JSONObject(Objects.requireNonNull(OtherUtil.getGET("https://nekos.life/api/hug"))).getString("url");
 		}else{
 			message = "You need to mention a user!";
 		}

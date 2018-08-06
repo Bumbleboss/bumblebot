@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 import utility.core.FileManager;
 
-public class RulesManager {
+class RulesManager {
 
-	static String jsonData = FileManager.readFile("./assists/server_settings.json");	
-	static JSONObject role = new JSONObject(jsonData);
-	private static List<Object> list = getChannels().toList();
+	private static final String jsonData = FileManager.readFile("./assists/server_settings.json");
+	private static final JSONObject role = new JSONObject(jsonData);
+	private static final List<Object> list = getChannels().toList();
 
 	
 	public static JSONArray getChannels() {
@@ -22,16 +22,7 @@ public class RulesManager {
 	public static String getChannelName(int i) {
 		return getChannels().getJSONObject(i).getString("name");
 	}
-	
-	public static String getChannelCategory(String name) {
-		for(int i = 0; i < list.size(); i++) {
-			if(Objects.equals(name.toLowerCase(), getChannels().getJSONObject(i).getString("name"))) {
-				return getChannels().getJSONObject(i).getString("category");
-			}
-		}
-		return null;
-	}
-	
+
 	public static String getChannelId(int i) {
 		return getChannels().getJSONObject(i).getString("id");
 	}

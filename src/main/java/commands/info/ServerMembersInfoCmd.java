@@ -27,12 +27,11 @@ public class ServerMembersInfoCmd extends Command {
 		EmbedBuilder eb = new EmbedBuilder();
         int[] all = UsrMsgUtil.getMembers(guild);
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("<:Online:421600843863687168>Online: **" + all[0] + "**").append("\n");
-		sb.append("<:Idle:421601342797381642>Away: **" + all[2] + "**").append("\n");
-		sb.append("<:Do_Not_Disturb:421601568299941889>Do not disturb: **" + all[3] + "**").append("\n");
-		sb.append("<:Offline:421601574255591454>Offline: **" + all[1] + "**");
-		eb.addField("User Status", sb.toString(), true);
+		String sb = "<:Online:421600843863687168>Online: **" + all[0] + "**" + "\n" +
+				"<:Idle:421601342797381642>Away: **" + all[2] + "**" + "\n" +
+				"<:Do_Not_Disturb:421601568299941889>Do not disturb: **" + all[3] + "**" + "\n" +
+				"<:Offline:421601574255591454>Offline: **" + all[1] + "**";
+		eb.addField("User Status", sb, true);
 		
 		StringBuilder sb1 = new StringBuilder();
 		sb1.append("Users:\n");
@@ -40,7 +39,7 @@ public class ServerMembersInfoCmd extends Command {
 			if(!guild.getMembers().get(i).getUser().isBot()) {
 				String memname = guild.getMembers().get(i).getEffectiveName();
 				String memid = guild.getMembers().get(i).getUser().getId();
-				sb1.append("  "+memname+" (" + memid + ")" + "\n");
+				sb1.append("  ").append(memname).append(" (").append(memid).append(")").append("\n");
 			}
 		}
 		sb1.append("\n\nBots:\n");
@@ -48,7 +47,7 @@ public class ServerMembersInfoCmd extends Command {
 			if(guild.getMembers().get(i).getUser().isBot()) {
 				String memname = guild.getMembers().get(i).getEffectiveName();
 				String memid = guild.getMembers().get(i).getUser().getId();
-				sb1.append("  "+memname+" (" + memid + ")" + "\n");
+				sb1.append("  ").append(memname).append(" (").append(memid).append(")").append("\n");
 			}
 		}
 

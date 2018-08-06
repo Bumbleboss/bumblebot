@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
+import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
@@ -30,7 +31,7 @@ public class ServerJoins extends ListenerAdapter {
 				String user = e.getMessage().getContentRaw().replace(ConfigUtil.getPrefix()+"memwel ", "");
 				User usr = e.getJDA().getUserById(user);
 				File file = getWelcomeMsg(usr);
-				e.getChannel().sendFile(file, file.getName()).embed(new EmbedBuilder()
+				e.getChannel().sendFile(file, Objects.requireNonNull(file).getName()).embed(new EmbedBuilder()
 						.setAuthor("Member Joined", null, usr.getEffectiveAvatarUrl())	
 						.setFooter(UsrMsgUtil.getUserSet(e.getJDA(), usr.getId()) +" | "+usr.getId(), null)
 						.setTimestamp(Instant.now())
@@ -43,12 +44,11 @@ public class ServerJoins extends ListenerAdapter {
 	
 	public void onGuildMemberJoin(GuildMemberJoinEvent e) {
 		if(e.getGuild().getId().equals(ConfigUtil.getServerId())) {
-			if(e.getUser().isBot()) {
-			}else{
+			if(!e.getUser().isBot()) {
 				e.getGuild().getController().addSingleRoleToMember(e.getMember(), e.getGuild().getRoleById("281034463410913280")).queue();
 				User usr = e.getUser();
 				File file = getWelcomeMsg(usr);
-				e.getGuild().getTextChannelById(ConfigUtil.getServerTC()).sendFile(file, file.getName()).embed(new EmbedBuilder()
+				e.getGuild().getTextChannelById(ConfigUtil.getServerTC()).sendFile(file, Objects.requireNonNull(file).getName()).embed(new EmbedBuilder()
 						.setAuthor("Member Joined", null, usr.getEffectiveAvatarUrl())	
 						.setFooter(UsrMsgUtil.getUserSet(e.getJDA(), usr.getId()) +" | "+usr.getId(), null)
 						.setTimestamp(Instant.now())
@@ -61,8 +61,7 @@ public class ServerJoins extends ListenerAdapter {
 	
 	public void onGuildMemberLeave(GuildMemberLeaveEvent e) {
 		if(e.getGuild().getId().equals(ConfigUtil.getServerId())) { 
-			if(e.getUser().isBot()) {
-			}else{
+			if(!e.getUser().isBot()) {
 				e.getGuild().getTextChannelById(ConfigUtil.getServerTC()).sendMessage(new EmbedBuilder()
 						.setColor(Color.decode(ConfigUtil.getHex()))
 						.setAuthor("Member left!", null, e.getUser().getEffectiveAvatarUrl())
@@ -89,8 +88,8 @@ public class ServerJoins extends ListenerAdapter {
 			Image image3 = ImageIO.read(new File("./assists/imgs/server-join-trans.png"));
 			BufferedImage buffered_image_z = (BufferedImage) image3;
 				
-			buffered_image_x.getGraphics().drawImage(ImgUtil.resize(buffered_image_y, 420, 420), x = 1075, y = 0, null);
-			buffered_image_x.getGraphics().drawImage(buffered_image_z, x = 0, y = 0, null);
+			buffered_image_x.getGraphics().drawImage(ImgUtil.resize(buffered_image_y, 420, 420), 1075, 0, null);
+			buffered_image_x.getGraphics().drawImage(buffered_image_z, 0, 0, null);
 			
 			File file = new File("./assists/imgs/joins/Welcome_"+UsrMsgUtil.stripFormatting(usr.getName())+".png");
 			ImageIO.write(buffered_image_x, "PNG", file);

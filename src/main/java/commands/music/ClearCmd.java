@@ -21,7 +21,7 @@ public class ClearCmd extends Music {
 			return;
 		}
 		
-		if(!isDJ(e)) {
+		if(isDJ(e)) {
 			if(getListeners(e) == 1) {
 				ms.clearQueue(e.getTextChannel());
 				return;

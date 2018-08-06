@@ -23,7 +23,7 @@ public class SkipCmd extends Music {
 			return;
 		}
 				
-		if(!isDJ(e)) {
+		if(isDJ(e)) {
 			if(getListeners(e) == 1) {
 				ms.skipTrack(e.getTextChannel(), e.getAuthor(), true, null);
 				return;

@@ -9,6 +9,7 @@ import main.Bumblebot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import utility.ConfigUtil;
 
+@SuppressWarnings({"ConstantConditions", "MismatchedQueryAndUpdateOfStringBuilder", "MismatchedReadAndWriteOfArray"})
 public class BotVersionCmd extends Command {
 
 	public BotVersionCmd() {
@@ -31,32 +32,23 @@ public class BotVersionCmd extends Command {
 		String[] ds = new String[] {};
 		
 		eb.addField("Version", "Current version: **"+ Bumblebot.botVersion + "**", false);
-		
-		for(int i = 0; i < ft.length;i++) {
-			sb.append("- " + ft[i] + "\n");
+
+		//noinspection ConstantConditions
+		for (String aFt : ft) {
+			sb.append("- ").append(aFt).append("\n");
 		}
-		
-		for(int i = 0; i < fx.length;i++) {
-			sb2.append("- " + fx[i] + "\n");
+
+		//noinspection ConstantConditions
+		for (String aFx : fx) {
+			sb2.append("- ").append(aFx).append("\n");
 		}
-		
-		for(int i = 0; i < ds.length;i++) {
-			sb3.append("- " + ds[i] + "\n");
+
+		//noinspection ConstantConditions
+		for (String d : ds) {
+			sb3.append("- ").append(d).append("\n");
 		}
-		
-		if(ft.length > 0) {
-			eb.addField("New features", sb.toString(), false);
-		}
-		
-		if(fx.length > 0) {
-			eb.addField("Fixes", sb2.toString(), false);	
-		}
-		
-		if(ds.length > 0) {
-			eb.addField("Disabled", sb3.toString(), false);	
-		}
-		
-		eb.setColor(Color.decode(ConfigUtil.getHex()));		
+
+		eb.setColor(Color.decode(ConfigUtil.getHex()));
 		e.reply(eb.build());
 	}
 }

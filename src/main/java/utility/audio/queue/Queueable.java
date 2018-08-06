@@ -1,6 +1,6 @@
 package utility.audio.queue;
 
-public interface Queueable {
+interface Queueable {
 	
-    public long getIdentifier();
+    long getIdentifier();
 }

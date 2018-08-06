@@ -64,9 +64,10 @@ public class UserInfoCmd extends Command {
 			   		 eb.addField("Roles [" + getRl.size() + "]", getRl.get(0).getName() + ", " + getRl.get(1).getName() , true);
 			   	}else if(getRl.size() > 2) {
 			   		 eb.addField("Roles [" + getRl.size() + "]", getRl.get(0).getName() + ", " + getRl.get(1).getName() + " ..and **" + roles + "** more", false);
-			   	}else if(getRl.size() == 0) {
-			   		eb.addField("Roles", "None" , true);
-			   	}
+			   	}else {
+					getRl.size();
+					eb.addField("Roles", "None" , true);
+				}
 				
 				List<Permission> getPr = e.getGuild().getMember(user).getPermissions();
 				int permss = getPr.size() - 3;
@@ -84,9 +85,10 @@ public class UserInfoCmd extends Command {
 			   				 + ", " + getPr.get(1).getName().substring(0,1).toUpperCase() + getPr.get(1).getName().substring(1).toLowerCase()
 			   				 + ", " + getPr.get(2).getName().substring(0,1).toUpperCase() + getPr.get(2).getName().substring(1).toLowerCase()
 			   				 + " ..and **" + permss + "** more", false);
-			   	}else if(getPr.size() == 0) {
-			   		eb.addField("Permissions", "None" , true);
-			   	}
+			   	}else {
+					getPr.size();
+					eb.addField("Permissions", "None" , true);
+				}
 				
 			}
 			

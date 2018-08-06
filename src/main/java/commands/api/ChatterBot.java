@@ -10,6 +10,7 @@ import utility.ConfigUtil;
 import utility.OtherUtil;
 
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ChatterBot extends ListenerAdapter {
 
 	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {

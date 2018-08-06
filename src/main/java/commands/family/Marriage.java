@@ -6,7 +6,7 @@ import utility.core.DatabaseManager;
 
 public class Marriage {
 	
-	public static final DatabaseManager db = new DatabaseManager("beta_marriage");
+	private static final DatabaseManager db = new DatabaseManager("beta_marriage");
 	
 	public enum STATUS {
 		PROPOSER,
@@ -66,11 +66,7 @@ public class Marriage {
 	public boolean isProposing(String id) {
 		try {
 			String value = db.getField("id", id, "status").toString();
-			if(value.equals(STATUS.PROPOSER.toString())) {
-				return true;
-			}else{
-				return false;
-			}
+            return value.equals(STATUS.PROPOSER.toString());
 		}catch (NullPointerException ex) {
 			return false;
 		}
@@ -79,11 +75,7 @@ public class Marriage {
 	public boolean isProposedTo(String id) {
 		try {
 			String value = db.getField("id", id, "status").toString();
-			if(value.equals(STATUS.PROPOSEDTO.toString())) {
-				return true;
-			}else{
-				return false;
-			}
+            return value.equals(STATUS.PROPOSEDTO.toString());
 		}catch (NullPointerException ex) {
 			return false;
 		}
@@ -97,10 +89,14 @@ public class Marriage {
 		db.setField("id", id, "date", date);
 	}
 	
-	public String getMarriageStatus(String id) {
-		return db.getField("id", id, "status").toString();
-	}
-	
+// --Commented out by Inspection START (8/6/2018 4:03 PM):
+// --Commented out by Inspection START (8/6/2018 4:03 PM):
+////	public String getMarriageStatus(String id) {
+////		return db.getField("id", id, "status").toString();
+////	}
+//// --Commented out by Inspection STOP (8/6/2018 4:03 PM)
+// --Commented out by Inspection STOP (8/6/2018 4:03 PM)
+
 	public void setMarriageStatus(String id, STATUS status) {
 		db.setField("id", id, "status", status);
 	}
