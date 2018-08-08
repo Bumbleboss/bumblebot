@@ -152,12 +152,7 @@ public class ConfigUtil {
 	}
 
 	public static String getWebhookURL() {
-		return config.getValue("web");
+		return config.getValue("webhook");
 	}
-
-	public static String getWebhookErrorURL() {
-		return config.getValue("weberror");
-	}
-
 
 }

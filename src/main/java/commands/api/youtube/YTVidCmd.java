@@ -9,8 +9,10 @@ import main.Bumblebot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import utility.ConfigUtil;
 import utility.OtherUtil;
+import utility.core.UsrMsgUtil;
 import youTubeAPI.YouTubeAPI;
 import youTubeAPI.core.entities.search.Item;
+import youTubeAPI.core.error.YouTubeException;
 
 public class YTVidCmd extends Command{
 
@@ -42,7 +44,11 @@ public class YTVidCmd extends Command{
 			eb.setFooter("Published by " + srch.getInfo().channelTitle + " on " + OtherUtil.getDate(srch.getInfo().publishedAt), null);
 			e.reply(eb.build());
 		} catch (Exception ex) {
-			e.reply(ex.getMessage());
+			if(ex instanceof YouTubeException) {
+				UsrMsgUtil.sendEMessage("No results found! ;-;", e.getChannel());
+			}else{
+				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
+			}
 		}
 	}	
 }

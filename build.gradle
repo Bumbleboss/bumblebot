@@ -22,10 +22,10 @@ dependencies {
 	compile 'org.mongodb:bson:3.8.0'
 
 	//APIs
-	compile 'com.github.Bumbleboss:yandexTranslate_api:1.3'
-	compile 'com.github.Bumbleboss:urbanDictionary_api:1.0'
+	compile 'com.github.Bumbleboss:yandexTranslate_api:1.4'
+	compile 'com.github.Bumbleboss:urbanDictionary_api:1.1'
 	compile 'com.github.Bumbleboss:osu_api:1.0'
-	compile 'com.github.Bumbleboss:youtube_api:1.0'
+	compile 'com.github.Bumbleboss:youtube_api:1.1'
 
 	compile 'com.uwetrottmann.trakt5:trakt-java:5.9.0'
 	compile 'com.uwetrottmann.tmdb2:tmdb-java:1.8.4'

@@ -9,9 +9,11 @@ import main.Bumblebot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import utility.ConfigUtil;
 import utility.OtherUtil;
+import utility.core.UsrMsgUtil;
 import youTubeAPI.YouTubeAPI;
 import youTubeAPI.core.entities.channels.ChannelItems;
 import youTubeAPI.core.entities.search.Item;
+import youTubeAPI.core.error.YouTubeException;
 
 public class YTChnlCmd extends Command {
 	
@@ -53,7 +55,11 @@ public class YTChnlCmd extends Command {
 			}
 			e.reply(eb.build());			
 		} catch (Exception ex) {
-			e.reply(ex.getMessage());
+			if(ex instanceof YouTubeException) {
+				UsrMsgUtil.sendEMessage("No results found! ;-;", e.getChannel());
+			}else{
+				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
+			}
 		}
 	}
 }

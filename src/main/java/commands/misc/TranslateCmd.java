@@ -11,6 +11,7 @@ import utility.ConfigUtil;
 import utility.OtherUtil;
 import utility.core.UsrMsgUtil;
 import yandexAPI.YandexAPI;
+import yandexAPI.YandexException;
 import yandexAPI.YandexLanguage;
 import yandexAPI.YandexResponse;
 
@@ -47,9 +48,10 @@ public class TranslateCmd extends Command{
 			
 		} catch (Exception ex) {
 			if(ex instanceof ArrayIndexOutOfBoundsException) {
-				UsrMsgUtil.sendEMessage("Usage: **"+ConfigUtil.getPrefix()+this.name + " "+ this.arguments.split("\\{}")[0] + "**", e.getChannel());
+				UsrMsgUtil.sendEMessage("Usage: **" + ConfigUtil.getPrefix() + this.name + " " + this.arguments.split("\\{}")[0] + "**", e.getChannel());
+			}else if(ex instanceof YandexException) {
+				UsrMsgUtil.sendEMessage(ex.getMessage(), e.getChannel());
 			}else{
-				UsrMsgUtil.sendEMessage(OtherUtil.getAPIError(ex), e.getChannel());
 				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 			}
 		}	

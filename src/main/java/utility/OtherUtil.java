@@ -39,7 +39,7 @@ import okhttp3.Response;
 public class OtherUtil {
 
 	private static final OkHttpClient client = new OkHttpClient();
-	private static final String WEBHOOK_ERROR_URL = ConfigUtil.getWebhookErrorURL();
+	private static final String WEBHOOK_URL = ConfigUtil.getWebhookURL();
 	private static final String JSONPOST = "application/json";
 	private static final String TEXTPOST = "text/plain; charset=utf-8";
 	
@@ -80,13 +80,6 @@ public class OtherUtil {
         }
         archive.close();
     }
-	
-	public static String getAPIError(Exception e) {
-		String error = e.getMessage().substring(e.getMessage().lastIndexOf("[Error]: "), e.getMessage().length()).replace("[Error]: ", "");
-		String err = error.substring(0, error.lastIndexOf("[Error Description]: "));
-		String error2 = error.substring(error.lastIndexOf("[Error Description]: "), error.length()).replace("[Error Description]: ", "");
-		return "**Error:** "+err+"\n**Description:** " + error2;
-	}
 
 	@SuppressWarnings("SameParameterValue")
 	private static String getPOST( String url, String bodyData) {
@@ -119,14 +112,14 @@ public class OtherUtil {
 		String last = "[Error description for class "+className+"]("+postToHaste(errors.toString())+")";
 		String jsonString = new JSONObject().put("attachments", 
 				new JSONArray().put(0, 
-						new JSONObject().put("color", ConfigUtil.getHex())
+						new JSONObject().put("color", "#Cf0000")
 						.put("author_name", error.getClass().getName())
 						.put("author_icon", avatar)
 						.put("text", last+(user==null?"":"\nTriggered by **" + user.getName() + " ("+user.getId()+")**"))
 						.put("footer", className)
 						.put("ts", Instant.now().getEpochSecond())))
 				.toString();
-		getJSONPOST(WEBHOOK_ERROR_URL+"/slack", jsonString);
+		getJSONPOST(WEBHOOK_URL+"/slack", jsonString);
 		
 		if(!(user==null)) {
 			user.openPrivateChannel().queue(m -> m.sendMessage("Something happpened with the command you triggered, will be reported. Sorry for the inconvenience!\n```Java\n"+error.getMessage()+"```").queue());
