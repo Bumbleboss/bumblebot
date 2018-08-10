@@ -18,8 +18,8 @@ public class BanCmd extends Command {
         this.category = Bumblebot.Mod;
         this.arguments = "[@user...] <reason> {} @BumbleCore sent nudes to me in DMs";
         this.help = "Bans all mentioned users";
-        this.userPermissions = new Permission[]{Permission.KICK_MEMBERS};
-        this.botPermissions = new Permission[]{Permission.KICK_MEMBERS};
+        this.userPermissions = new Permission[]{Permission.BAN_MEMBERS};
+        this.botPermissions = new Permission[]{Permission.BAN_MEMBERS};
 	}
 	
 	@Override

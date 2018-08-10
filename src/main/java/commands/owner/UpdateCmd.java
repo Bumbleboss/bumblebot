@@ -1,5 +1,6 @@
 package commands.owner;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.jagrosh.jdautilities.command.Command;
@@ -20,15 +21,16 @@ public class UpdateCmd extends Command {
 	
 	@Override
 	protected void execute(CommandEvent e) {
+		File upd = new File("update.jar");
 		UsrMsgUtil.sendVEMessage("Updating bot!", e.getChannel());
 		try {
-			if(System.getProperty("os.name").toLowerCase().contains("windows")) {
-				Runtime.getRuntime().exec("java -jar update.jar");
+			if(upd.exists()) {
+				Runtime.getRuntime().exec("java -jar "+upd.getName());
+				e.getJDA().shutdown();
+				System.exit(0);
 			}else{
-				Runtime.getRuntime().exec("java -cp ./update.jar main.Update");
+				e.reply("`" + upd.getName() + "` is not found!");
 			}
-			e.getJDA().shutdown();
-			System.exit(0);
 		} catch (IOException ex) {
 			OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 		}
