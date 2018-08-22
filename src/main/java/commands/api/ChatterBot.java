@@ -25,17 +25,17 @@ public class ChatterBot extends ListenerAdapter {
 			if(e.getGuild().getId().equals(ConfigUtil.getServerId()) && e.getChannel().getId().equals(ConfigUtil.getCleverTC())) {
 				if(e.getMessage().getAttachments().size() > 0) {
 					String[] replies = new String[] {"Hey, I don't reply to images!", "No images pls ;-;", "I don't respond to images >.>", "Please refrain from sending images here, I am learning..."};
-		            e.getChannel().sendMessage(replies[(int)(Math.random()*replies.length)]);
+		            e.getChannel().sendMessage(replies[(int)(Math.random()*replies.length)]).queue();
 					return;
 				}
 				e.getChannel().sendMessage(e.getAuthor().getName() + ", " + OtherUtil.getGET(url+e.getMessage().getContentDisplay())).queue();
 				
 			}else if(e.getMessage().getContentRaw().startsWith("<@!"+botid+"> ")) {
-				String response = e.getMessage().getContentDisplay().replace("<@!"+botid+"> ", "");
+				String response = e.getMessage().getContentRaw().replace("<@!"+botid+"> ", "");
 				e.getChannel().sendMessage(e.getAuthor().getName() + ", " + OtherUtil.getGET(url+response)).queue();
 				
 			}else if(e.getMessage().getContentRaw().startsWith("<@"+botid+"> ")) {
-				String response = e.getMessage().getContentDisplay().replace("<@"+botid+"> ", "");
+				String response = e.getMessage().getContentRaw().replace("<@"+botid+"> ", "");
 				e.getChannel().sendMessage(e.getAuthor().getName() + ", " + OtherUtil.getGET(url+response)).queue();
 				
 			}else if(e.getMessage().getContentRaw().startsWith(ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" "+"<@!"+botid+">")

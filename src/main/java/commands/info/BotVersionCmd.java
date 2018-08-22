@@ -27,8 +27,8 @@ public class BotVersionCmd extends Command {
 		StringBuilder sb3 = new StringBuilder();
 		String pr = ConfigUtil.getPrefix();
 		
-		String[] ft = new String[] {"Designer and coding roles are now up!! --MYSERVER", "Now has build versions?"};
-		String[] fx = new String[] {"Doesn't delete invite links from admins anymore", "Ban command requires BAN_MEMBERS perms not KICK_MEMBERS"};
+		String[] ft = new String[] {};
+		String[] fx = new String[] {"Chatterbot sending requests had the tag in its message so it was learning improperly"};
 		String[] ds = new String[] {};
 		
 		eb.addField("Version", "Current version: **"+ Bumblebot.botVersion + "**", false);

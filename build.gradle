@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = 'main.Bumblebot'
 
-version '1.1.0_001'
+version '1.1.0_002'
 
 sourceCompatibility = 10
 
@@ -17,38 +17,40 @@ repositories {
 
 dependencies {
     //Database
-	compile 'org.mongodb:mongodb-driver:3.8.0'
-    compile 'org.mongodb:mongodb-driver-core:3.8.0'
-	compile 'org.mongodb:bson:3.8.0'
+	implementation 'org.mongodb:mongodb-driver:3.8.0'
+    implementation 'org.mongodb:mongodb-driver-core:3.8.0'
+	implementation 'org.mongodb:bson:3.8.0'
 
 	//APIs
-	compile 'com.github.Bumbleboss:yandexTranslate_api:1.4'
-	compile 'com.github.Bumbleboss:urbanDictionary_api:1.1'
-	compile 'com.github.Bumbleboss:osu_api:1.0'
-	compile 'com.github.Bumbleboss:youtube_api:1.1'
+	implementation 'com.github.Bumbleboss:yandexTranslate_api:1.4'
+	implementation 'com.github.Bumbleboss:urbanDictionary_api:1.1'
+	implementation 'com.github.Bumbleboss:osu_api:1.0'
+	implementation 'com.github.Bumbleboss:youtube_api:1.1'
 
-	compile 'com.uwetrottmann.trakt5:trakt-java:5.9.0'
-	compile 'com.uwetrottmann.tmdb2:tmdb-java:1.8.4'
-	compile files('jars/anilist-api.jar', 'jars/musicxmatch-api.jar')
+	implementation 'com.uwetrottmann.trakt5:trakt-java:5.9.0'
+	implementation 'com.uwetrottmann.tmdb2:tmdb-java:1.8.4'
+	implementation files('jars/anilist-api.jar', 'jars/musicxmatch-api.jar')
 	
 	//APIs dependencies
-	compile 'com.google.code.gson:gson:2.8.5'
-	compile 'org.json:json:20180130'
-	compile 'org.codehaus.groovy:groovy-all:2.5.0'
-	compile 'javax.xml.bind:jaxb-api:2.3.0'
+	implementation 'com.google.code.gson:gson:2.8.5'
+	implementation 'org.json:json:20180130'
+	implementation 'org.codehaus.groovy:groovy-all:2.5.0'
+	implementation 'javax.xml.bind:jaxb-api:2.3.0'
 	
 	//JDA & JDA-Utils
-    compile 'net.dv8tion:JDA:3.7.1_390'
-    compile 'com.jagrosh:jda-utilities-command:2.1.2'
-    compile 'com.jagrosh:jda-utilities-commons:2.1.2'
-    compile 'com.jagrosh:jda-utilities-menu:2.1.2'
+    implementation ('net.dv8tion:JDA:3.7.1_398') {
+		exclude module: 'opus-java'
+	}
+    implementation 'com.jagrosh:jda-utilities-command:2.1.4'
+    implementation 'com.jagrosh:jda-utilities-commons:2.1.4'
+    implementation 'com.jagrosh:jda-utilities-menu:2.1.4'
     
     //Lavaplayer && JDA-NAS
-    compile 'com.sedmelluq:lavaplayer:1.3.7'
-    compile 'com.sedmelluq:jda-nas:1.0.6'
+    implementation 'com.sedmelluq:lavaplayer:1.3.7'
+    implementation 'com.sedmelluq:jda-nas:1.0.6'
 
 	//Other
-	compile 'ch.qos.logback:logback-classic:1.2.3'
+	implementation 'ch.qos.logback:logback-classic:1.2.3'
 
 }
 
