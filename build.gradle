@@ -1,12 +1,12 @@
 plugins {
     id'java'
     id'application'
- 	id'com.github.johnrengelman.shadow' version '2.0.4'
+ 	id'com.github.johnrengelman.shadow' version '2.0.2'
 }
 
 mainClassName = 'main.Bumblebot'
 
-version '1.1.0_002'
+version '1.1.0_003'
 
 sourceCompatibility = 10
 
@@ -38,7 +38,7 @@ dependencies {
 	implementation 'javax.xml.bind:jaxb-api:2.3.0'
 	
 	//JDA & JDA-Utils
-    implementation ('net.dv8tion:JDA:3.7.1_398') {
+    implementation ('net.dv8tion:JDA:3.7.1_407') {
 		exclude module: 'opus-java'
 	}
     implementation 'com.jagrosh:jda-utilities-command:2.1.4'

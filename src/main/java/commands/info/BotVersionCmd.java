@@ -27,8 +27,8 @@ public class BotVersionCmd extends Command {
 		StringBuilder sb3 = new StringBuilder();
 		String pr = ConfigUtil.getPrefix();
 		
-		String[] ft = new String[] {};
-		String[] fx = new String[] {"Chatterbot sending requests had the tag in its message so it was learning improperly"};
+		String[] ft = new String[] {"API commands now uses your username instead of the given args if they were not in the message."};
+		String[] fx = new String[] {};
 		String[] ds = new String[] {};
 		
 		eb.addField("Version", "Current version: **"+ Bumblebot.botVersion + "**", false);

@@ -20,7 +20,6 @@ import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import utility.ConfigUtil;
 import utility.OtherUtil;
-import utility.core.UsrMsgUtil;
 import utility.jdu.OrderMenu;
 
 public class TraktHistoryCmd extends Command {
@@ -30,7 +29,7 @@ public class TraktHistoryCmd extends Command {
 		this.name = "trakthistory";
 		this.aliases = new String[] {"trhis"};
 		this.help = "Get watched history of a Trakt.tv user!";
-		this.arguments = "<username> {} Bumbleboss";
+		this.arguments = "(username) {} Bumbleboss";
 		this.category = Bumblebot.API;
 		bd = new OrderMenu.Builder()
 				.allowTextInput(true)
@@ -41,12 +40,7 @@ public class TraktHistoryCmd extends Command {
 	@SuppressWarnings("RedundantArrayCreation")
 	@Override
 	protected void execute(CommandEvent e) {
-		String args = e.getArgs();
-		if(args.isEmpty()) {
-			UsrMsgUtil.sendEMessage("You need to provide a username!", e.getChannel());
-			return;
-		}
-		
+		String args = e.getArgs().isEmpty() ? e.getAuthor().getName() : e.getArgs();
 		TraktV2 trakt = ConfigUtil.trakt;
 		UserSlug usr = new UserSlug(args);
 		

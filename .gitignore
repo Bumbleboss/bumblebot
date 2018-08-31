@@ -4,5 +4,6 @@
 /assists
 /jars
 /out
+/build
 
 *.iml

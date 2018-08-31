@@ -19,23 +19,20 @@ public class OsuBestCmd extends Command {
 		this.help = "Gets top plays of an osu! player.";
 		this.aliases = new String[] {"osbt"};
 		this.category = Bumblebot.API;
-		this.arguments = "<username> {} Bumbleboss";	
+		this.arguments = "(username) {} Bumbleboss";
 	}
 	
 	@Override
 	@SuppressWarnings("static-access")
 	protected void execute(CommandEvent e) {
 		OsuAPI api = ConfigUtil.osu;
-		if(e.getArgs().isEmpty()) {
-			e.reply("You need to provide an osu! username.");
-			return;
-		}
-	
+		String user = e.getArgs().isEmpty() ? e.getAuthor().getName() : e.getArgs();
+
 		try {
-			ArrayList<OsuPlay> beatmaps = api.getBestPlays(e.getArgs(), 0);
+			ArrayList<OsuPlay> beatmaps = api.getBestPlays(user, 0);
 			EmbedBuilder eb = new EmbedBuilder();
 				
-			eb.setAuthor("Top plays of " + e.getArgs(), "https://osu.ppy.sh/u/"+beatmaps.get(0).getUserId(), "https://a.ppy.sh/"+beatmaps.get(0).getUserId());
+			eb.setAuthor("Top plays of " + user, "https://osu.ppy.sh/u/"+beatmaps.get(0).getUserId(), "https://a.ppy.sh/"+beatmaps.get(0).getUserId());
 			eb.setColor(Color.decode(ConfigUtil.getHex()));
 			for(int i = 0; i < 3 && i < beatmaps.size(); i++) {
 				OsuPlay beat = beatmaps.get(i);

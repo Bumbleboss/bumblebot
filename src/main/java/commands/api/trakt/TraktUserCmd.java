@@ -15,27 +15,22 @@ import main.Bumblebot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import utility.ConfigUtil;
 import utility.OtherUtil;
-import utility.core.UsrMsgUtil;
 
 public class TraktUserCmd extends Command {
 
 	public TraktUserCmd() {
 		this.name = "trakt";
 		this.help = "Get profile of a Trakt.tv user!";
-		this.arguments = "<username> {} Bumbleboss";
+		this.arguments = "(username) {} Bumbleboss";
 		this.aliases = new String[] {"traktuser"+"trusr"};
 		this.category = Bumblebot.API;
 	}
 	
 	@Override
 	protected void execute(CommandEvent e) {
-		if(e.getArgs().isEmpty()) {
-			UsrMsgUtil.sendEMessage("You need to provide a username!", e.getChannel());
-			return;
-		}
-		
+		String username = e.getArgs().isEmpty() ? e.getAuthor().getName() : e.getArgs();
 		TraktV2 trakt = ConfigUtil.trakt;
-	    UserSlug usr = new UserSlug(e.getArgs());
+	    UserSlug usr = new UserSlug(username);
 	    
 	    try { 
 			User user = trakt.users().profile(usr, Extended.FULL).execute().body();
