@@ -41,16 +41,20 @@ public class OsuUserCmd extends Command {
 			
 			eb.setAuthor(usr.getUsername(), "https://osu.ppy.sh/u/"+usr.getUserId(), "https://a.ppy.sh/"+usr.getUserId());
 			eb.setColor(Color.decode(ConfigUtil.getHex()));
-			eb.addField("Rank","#"+ df.format(Double.parseDouble(usr.getPPRank())), true);
-			eb.addField("Country", (user.equalsIgnoreCase("Bumbleboss")?":eyes:":":flag_"+usr.getCountry().toLowerCase()+":"), true);
-			eb.addField("PP", df.format(Double.parseDouble(usr.getPPRaw()))+"pp", true);
-			eb.addField("Accuracy", dfa.format(Double.parseDouble(usr.getAccuracy()))+"%", true);
-			eb.addField("Total Plays", usr.getPlayCount(), true);
-			eb.addField("Level", df.format(Double.parseDouble(usr.getLevel())), true);
-				
-			OsuBeatmap ub = api.getBeatmapsById(api.getBestPlays(user, 0).get(0).getBeatmapId(), 0).get(0);
-			String Beatmap = ub.getArtist() + " - " + ub.getTitle() + " [" + ub.getDifficultyName() + "]";
-			eb.addField("Top Play", "["+Beatmap+"](https://osu.ppy.sh/b/"+ub.getBeatmapId()+")", false);
+
+			eb.addField("Rank",(usr.getPPRank() == null ? "N/A" : "#"+ df.format(Double.parseDouble(usr.getPPRank()))), true);
+			eb.addField("Country", (user.equalsIgnoreCase("Bumbleboss") ? ":eyes:" : ":flag_"+usr.getCountry().toLowerCase()+":"), true);
+			eb.addField("PP", (usr.getPPRaw() == null ? "N/A" : df.format(Double.parseDouble(usr.getPPRaw()))+"pp"), true);
+			eb.addField("Accuracy", (usr.getAccuracy() == null ? "N/A" : dfa.format(Double.parseDouble(usr.getAccuracy()))+"%"), true);
+			eb.addField("Total Plays", (usr.getPlayCount() == null ? "N/A" : usr.getPlayCount()), true);
+			eb.addField("Level", (usr.getLevel() == null ? "N/A" : df.format(Double.parseDouble(usr.getLevel()))), true);
+
+			try {
+				OsuBeatmap ub = api.getBeatmapsById(api.getBestPlays(user, 0).get(0).getBeatmapId(), 0).get(0);
+				String Beatmap = ub.getArtist() + " - " + ub.getTitle() + " [" + ub.getDifficultyName() + "]";
+				eb.addField("Top Play", "["+Beatmap+"](https://osu.ppy.sh/b/"+ub.getBeatmapId()+")", false);
+			}catch(IndexOutOfBoundsException ignored) {}
+
 			eb.setFooter("Requested by "+UsrMsgUtil.getUserSet(e.getJDA(), e.getAuthor().getId()), e.getAuthor().getAvatarUrl());
 			e.reply(eb.build());
 		}catch (Exception ex) {

@@ -12,6 +12,8 @@ import osuAPI.OsuAPI;
 import osuAPI.OsuBeatmap;
 import osuAPI.OsuPlay;
 import utility.ConfigUtil;
+import utility.OtherUtil;
+
 public class OsuBestCmd extends Command {
 
 	public OsuBestCmd() {
@@ -47,8 +49,12 @@ public class OsuBestCmd extends Command {
 				+" | Misses: " + beat.getCountMiss() +" | Rank: " + beat.getRank() +" | Difficulty: `"+star+"`", false);
 			}
 			e.reply(eb.build());
-		}catch(IndexOutOfBoundsException ex) {
-			e.reply("No users were found! ;-;");
+		}catch(Exception ex) {
+			if(ex instanceof IndexOutOfBoundsException) {
+				e.reply("Requested user does not have any top plays");
+			}else{
+				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
+			}
 		}
 	}
 }

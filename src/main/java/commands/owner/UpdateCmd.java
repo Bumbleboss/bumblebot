@@ -21,16 +21,11 @@ public class UpdateCmd extends Command {
 	
 	@Override
 	protected void execute(CommandEvent e) {
-		File upd = new File("update.jar");
 		UsrMsgUtil.sendVEMessage("Updating bot!", e.getChannel());
 		try {
-			if(upd.exists()) {
-				Runtime.getRuntime().exec("java -jar "+upd.getName());
-				e.getJDA().shutdown();
-				System.exit(0);
-			}else{
-				e.reply("`" + upd.getName() + "` is not found!");
-			}
+			Runtime.getRuntime().exec("./update");
+			e.getJDA().shutdown();
+			System.exit(0);
 		} catch (IOException ex) {
 			OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 		}

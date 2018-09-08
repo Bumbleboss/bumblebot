@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = 'main.Bumblebot'
 
-version '1.1.0_003'
+version '1.1.0_004'
 
 sourceCompatibility = 10
 
@@ -24,7 +24,7 @@ dependencies {
 	//APIs
 	implementation 'com.github.Bumbleboss:yandexTranslate_api:1.4'
 	implementation 'com.github.Bumbleboss:urbanDictionary_api:1.1'
-	implementation 'com.github.Bumbleboss:osu_api:1.0'
+	implementation 'com.github.Bumbleboss:osu_api:1.1'
 	implementation 'com.github.Bumbleboss:youtube_api:1.1'
 
 	implementation 'com.uwetrottmann.trakt5:trakt-java:5.9.0'
@@ -35,10 +35,9 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.8.5'
 	implementation 'org.json:json:20180130'
 	implementation 'org.codehaus.groovy:groovy-all:2.5.0'
-	implementation 'javax.xml.bind:jaxb-api:2.3.0'
 	
 	//JDA & JDA-Utils
-    implementation ('net.dv8tion:JDA:3.7.1_407') {
+    implementation ('net.dv8tion:JDA:3.7.1_419') {
 		exclude module: 'opus-java'
 	}
     implementation 'com.jagrosh:jda-utilities-command:2.1.4'

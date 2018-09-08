@@ -53,7 +53,7 @@ public class TraktHistoryCmd extends Command {
 				}
 				
 				List<HistoryEntry> cmnt = trakt.users().history(usr, 0, 10, Extended.FULL, null, null).execute().body();
-				if(Objects.requireNonNull(cmnt).size() == 0) {
+				if(Objects.requireNonNull(cmnt).size() == 1) {
 					try {
 						m.editMessage(getHistory(0, cmnt)).queue();
 					}catch (IndexOutOfBoundsException ex) {
