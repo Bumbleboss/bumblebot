@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = 'main.Bumblebot'
 
-version '1.1.0_004'
+version '1.1.0_005'
 
 sourceCompatibility = 10
 

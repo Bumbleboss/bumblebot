@@ -104,7 +104,6 @@ import commands.owner.DownloadCmd;
 import commands.owner.EvalCmd;
 import commands.owner.FilesCmd;
 import commands.owner.LoggerCmd;
-import commands.owner.RestartCmd;
 import commands.owner.ShutdownCmd;
 import commands.owner.SudoCmd;
 import commands.owner.UpdateCmd;
@@ -145,18 +144,6 @@ public class Bumblebot {
 		((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("com.sedmelluq.discord.lavaplayer").setLevel(Level.OFF);
 		((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("net.dv8tion.jda.core.requests.Requester").setLevel(Level.OFF);
 		((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("net.dv8tion.jda.core.audio.AudioWebSocket").setLevel(Level.OFF);
-
-		try {
-			if(args[0].equals("--new-session")) {
-				logger.info("Bot will restart and exit terminal!");
-				OtherUtil.restart();
-				System.exit(0);
-			}else{
-				logger.warn("Bot will not exit the terminal!");
-			}
-		}catch (ArrayIndexOutOfBoundsException ex) {
-			logger.warn("Bot will not exit the terminal!");
-		}
 
 		util.setHelpCommands(getCommands());
 		jda = new JDABuilder(AccountType.BOT).setToken(ConfigUtil.getToken()).setStatus(OnlineStatus.DO_NOT_DISTURB)
@@ -250,7 +237,7 @@ public class Bumblebot {
 				new StopCmd(), new ShuffleCmd(), new RemoveCmd(), new RepeatCmd(), new PositionCmd(), new GetPlaylistCmd(), new PlaylistCmd(),
 				new TrackInfoCmd(),
 				//OWNER
-				new EvalCmd(), new ConfigCmd(), new RestartCmd(), new ShutdownCmd(), new FilesCmd(), new DownloadCmd(), new UpdateCmd(), new SudoCmd(), new LoggerCmd()
+				new EvalCmd(), new ConfigCmd(), new ShutdownCmd(), new FilesCmd(), new DownloadCmd(), new UpdateCmd(), new SudoCmd(), new LoggerCmd()
 		};
 	}
 

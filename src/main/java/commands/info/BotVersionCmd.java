@@ -28,11 +28,8 @@ public class BotVersionCmd extends Command {
 		String pr = ConfigUtil.getPrefix();
 		
 		String[] ft = new String[] {};
-		String[] fx = new String[] {
-				"now the osu command doesn't throw an 'N/A' error if the user had values of a different mode",
-				"trakt history command displays the first history right away if there were only one",
-				"updating bot from source file now runs smoothly"};
-		String[] ds = new String[] {};
+		String[] fx = new String[] {"update command now works differently --OWNER"};
+		String[] ds = new String[] {"Restart command is now removed --OWNER"};
 		
 		eb.addField("Version", "Current version: **"+ Bumblebot.botVersion + "**", false);
 

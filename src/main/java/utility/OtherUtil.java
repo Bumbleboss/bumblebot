@@ -160,32 +160,6 @@ public class OtherUtil {
 				+ (s == 0 ? "" : s + " second")+(s == 0 | s == 1? "" : "s.")+(s == 1 ? ", " : "");
 	}
 	
-	public static void restart(){
-		try {	
-			final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
-			File currentJar;
-	
-			currentJar = new File(Bumblebot.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-
-			if(!currentJar.getName().endsWith(".jar")) {
-				System.out.println("Woops");	
-				return;
-			}
-
-			final ArrayList<String> command = new ArrayList<>();
-			command.add(javaBin);
-			command.add("-jar");
-			command.add(currentJar.getPath());
-
-			final ProcessBuilder builder = new ProcessBuilder(command);
-			builder.start();
-			try {Bumblebot.jda.shutdown();}catch (NullPointerException ignored) {}
-			System.exit(0);
-		} catch (Exception ex) {
-			OtherUtil.getWebhookError(ex, OtherUtil.class.getName(), null);
-		}
-	}
-	
 	@SuppressWarnings("SameParameterValue")
 	private static boolean isValidFormat(String format, String value) {
         Date date;
