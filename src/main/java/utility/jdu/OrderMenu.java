@@ -140,9 +140,7 @@ public class OrderMenu extends Menu {
     }
 
     private void waitReactionOnly(Message m){
-        waiter.waitForEvent(MessageReactionAddEvent.class, e -> {
-            return isValidReaction(m, e);
-        }, e -> {
+        waiter.waitForEvent(MessageReactionAddEvent.class, e -> isValidReaction(m, e), e -> {
             m.delete().queue();
             if(e.getReaction().getReactionEmote().getName().equals(CANCEL))
                 cancel.accept(m);

@@ -7,7 +7,6 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import main.Bumblebot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import urbanAPI.UrbanAPI;
-import urbanAPI.UrbanException;
 import urbanAPI.UrbanList;
 import utility.ConfigUtil;
 import utility.OtherUtil;

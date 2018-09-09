@@ -1,8 +1,6 @@
 package commands.info;
 
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -25,14 +23,13 @@ public class BotInfoCmd extends Command {
 	}
 	@Override
 	protected void execute(CommandEvent e) {
-		int cmds = Arrays.stream(Bumblebot.getCommands()).filter(cc -> !(cc.isOwnerCommand() && !e.isOwner())).collect(Collectors.toList()).size();
 		EmbedBuilder eb = new EmbedBuilder();
 	    eb.setAuthor("BumbleCore", null, e.getJDA().getSelfUser().getAvatarUrl());
 	    eb.setColor(Color.decode(ConfigUtil.getHex()));
 	    eb.setThumbnail(e.getJDA().getSelfUser().getAvatarUrl());
 	    eb.setDescription("Hello there! I'm **BumbleCore**. A bot that is dedicated for [this server](https://discord.gg/7PCdKYN)"
 	    		+ "\nI will be your personal waifu! I can cook, wash, str--. *cough* I mean.. I will be your assistant!!"
-	    		+ " I can play music, check users info and many more useless **"+cmds+"** functions! ver **"+Bumblebot.botVersion+"**"
+	    		+ " I can play music, check users info and many more useless **"+e.getClient().getCommands().size()+"** functions! ver **"+Bumblebot.botVersion+"**"
 	    		+ "\n\nTo know what functions I can do, type with **"+ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+"**"
 	    		+ "\nFeel free to support me on [PayPal](https://www.paypal.me/bumbleboss) or [Patreon](https://www.patreon.com/bumblecore)"
 	    		+ "\n\nNo idea what a command does? Type **"+ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" [command]**!");

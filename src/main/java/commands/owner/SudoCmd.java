@@ -1,6 +1,7 @@
 package commands.owner;
 
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.jagrosh.jdautilities.command.Command;
@@ -44,7 +45,7 @@ public class SudoCmd extends Command {
 			String user = id==null?args[0]:id;
 			String arg;try {arg = args[2];}catch (ArrayIndexOutOfBoundsException ex) {arg = "";}
 			
-			Command[] cmds = Bumblebot.getCommands();
+			List<Command> cmds = e.getClient().getCommands();
             for (Command cmd : cmds) {
                 if (args[1].equalsIgnoreCase(cmd.getName())) {
                     cmd.run(new CommandEvent(new MessageReceivedEvent(e.getJDA(), 0, getMessage(user, e.getMessage(), arg)), arg, Bumblebot.getCommandClient()));

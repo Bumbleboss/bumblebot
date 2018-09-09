@@ -5,7 +5,6 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import utility.ConfigUtil;
-import utility.OtherUtil;
 import utility.core.UsrMsgUtil;
 
 public class AntiLink extends ListenerAdapter{

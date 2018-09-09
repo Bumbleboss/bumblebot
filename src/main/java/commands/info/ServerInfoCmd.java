@@ -28,21 +28,21 @@ public class ServerInfoCmd extends Command {
         eb.setAuthor(guild.getName(), null, guild.getIconUrl());
         eb.setThumbnail(guild.getIconUrl());
 
-        String sb = "Owner: " + "**" + guild.getOwner().getUser().getName() + "#" + guild.getOwner().getUser().getDiscriminator() + "**" + "\n" +
-                "Region: " + "**" + guild.getRegion().getName() + "** " + guild.getRegion().getEmoji() + "\n" +
-                "Verification Level: " + "**" + guild.getVerificationLevel().name().substring(0, 1).toUpperCase() + guild.getVerificationLevel().name().substring(1).toLowerCase() + "**";
-        eb.addField("Info", sb +"\n", false);
+        String sb = "Owner: **" + guild.getOwner().getUser().getName() + "#" + guild.getOwner().getUser().getDiscriminator() + "**\n" +
+                	"Region: **" + guild.getRegion().getName() + "** " + guild.getRegion().getEmoji() + "\n" +
+                	"Verification Level: **" + guild.getVerificationLevel().name().substring(0, 1).toUpperCase() + guild.getVerificationLevel().name().substring(1).toLowerCase() + "**";
+        eb.addField("Info", sb, false);
 
 
-        String sb2 = "Categories: " + "**" + guild.getCategories().size() + "**" + "\n" +
-                "Text Channels: " + "**" + guild.getTextChannels().size() + "**" + "\n" +
-                "Voice channels: " + "**" + guild.getVoiceChannels().size() + "**" + "\n";
+        String sb2 = "Categories: **" + guild.getCategories().size() + "**\n" +
+				     "Text Channels: **" + guild.getTextChannels().size() + "**\n" +
+                	 "Voice channels: **" + guild.getVoiceChannels().size() + "**\n";
         eb.addField("Channels", sb2, true);
         
         int[] all = UsrMsgUtil.getMembers(guild);
-        String sb3 = "All: " + "**" + guild.getMembers().size() + "**" + "\n" +
-                "Bots: " + "**" + all[4] + "**" + "\n" +
-                "Users: " + "**" + all[5] + "**" + "\n";
+        String sb3 = "All: **" + guild.getMembers().size() + "**\n" +
+                	 "Bots: **" + all[4] + "**\n" +
+                	 "Users: **" + all[5] + "**\n";
         eb.addField("Members", sb3, true);
         
         String month = guild.getCreationTime().getMonth().name().substring(0,1).toUpperCase() + guild.getCreationTime().getMonth().name().substring(1).toLowerCase();

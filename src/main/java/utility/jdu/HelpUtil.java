@@ -18,13 +18,13 @@ import utility.OtherUtil;
 
 public class HelpUtil extends ListenerAdapter{
 	
-    private final LinkedList<Command> command1 = new LinkedList<>();
+    private final List<Command> cmds = Bumblebot.getCommandClient().getCommands();
 	
 	public void onMessageReceived(MessageReceivedEvent s) {
 		StringBuilder category = new StringBuilder();
 		String cat = null;
-		for(int i = 0; i < command1.size(); i++) {			
-			if(command1.get(i).getCategory().equals(Bumblebot.myServer)) {
+		for(int i = 0; i < cmds.size(); i++) {
+			if(cmds.get(i).getCategory().equals(Bumblebot.myServer)) {
 				if(s.getChannelType().equals(ChannelType.PRIVATE)) {
 					continue;
 				}else{
@@ -34,7 +34,7 @@ public class HelpUtil extends ListenerAdapter{
 				}
 			}
 			
-			if(command1.get(i).getCategory().equals(Bumblebot.Mod)) {
+			if(cmds.get(i).getCategory().equals(Bumblebot.Mod)) {
 				if(s.getChannelType().equals(ChannelType.PRIVATE)) {
 					continue;
 				}else{
@@ -48,11 +48,11 @@ public class HelpUtil extends ListenerAdapter{
 				}
 			}
 			
-			if(command1.get(i).isHidden() && !OtherUtil.isOwners(s)) {
+			if(cmds.get(i).isHidden() && !OtherUtil.isOwners(s)) {
 				continue;
 			}
 			
-			if(command1.get(i).isOwnerCommand() && !OtherUtil.isOwners(s)) {
+			if(cmds.get(i).isOwnerCommand() && !OtherUtil.isOwners(s)) {
 				continue;
 			}
 		
@@ -67,9 +67,9 @@ public class HelpUtil extends ListenerAdapter{
 				}
 			} 
 			
-			if(s.getMessage().getContentDisplay().equalsIgnoreCase(ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" " + command1.get(i).getCategory().getName())) {				
-				cat = command1.get(i).getCategory().getName();
-				category.append(getCategoryMessage(command1.get(i).getCategory(), i));
+			if(s.getMessage().getContentDisplay().equalsIgnoreCase(ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" " + cmds.get(i).getCategory().getName())) {
+				cat = cmds.get(i).getCategory().getName();
+				category.append(getCategoryMessage(cmds.get(i).getCategory(), i));
 			}
 		}
 		
@@ -94,15 +94,11 @@ public class HelpUtil extends ListenerAdapter{
 		
 		return null;
 	}
-	
-	private LinkedList<Command> getHelp() { 
-		return this.command1;
+
+	private List<Command> getHelp() {
+		return this.cmds;
 	}
-	
-	public void setHelpCommands(Command... helpcmd) {
-		Collections.addAll(command1, helpcmd);
-	}
-	
+
 	private Message getHelpMessage(int i) {
 		
 		String hexCode = ConfigUtil.getHex();

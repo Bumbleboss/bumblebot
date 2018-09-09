@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -16,6 +15,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import javax.security.auth.login.LoginException;
 
+import commands.info.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,13 +57,6 @@ import commands.fun.ShippingCmd;
 import commands.fun.nekoLife.HugNekoCmd;
 import commands.fun.nekoLife.KissNekoCmd;
 import commands.fun.nekoLife.PatNekoCmd;
-import commands.info.AvatarCmd;
-import commands.info.BotInfoCmd;
-import commands.info.BotVersionCmd;
-import commands.info.ServerInfoCmd;
-import commands.info.ServerMembersInfoCmd;
-import commands.info.UptimeCmd;
-import commands.info.UserInfoCmd;
 import commands.misc.HexCmd;
 import commands.misc.LyricsCmd;
 import commands.misc.MovieSearchCmd;
@@ -139,19 +132,16 @@ public class Bumblebot {
 	public static final Logger logger = LoggerFactory.getLogger("Bumblebot");
 
 	public static void main(String[] args) throws LoginException {
-		HelpUtil util = new HelpUtil();
 		((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("org.mongodb.driver").setLevel(Level.OFF);
 		((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("com.sedmelluq.discord.lavaplayer").setLevel(Level.OFF);
 		((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("net.dv8tion.jda.core.requests.Requester").setLevel(Level.OFF);
 		((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("net.dv8tion.jda.core.audio.AudioWebSocket").setLevel(Level.OFF);
 
-		util.setHelpCommands(getCommands());
 		jda = new JDABuilder(AccountType.BOT).setToken(ConfigUtil.getToken()).setStatus(OnlineStatus.DO_NOT_DISTURB)
 				.setAudioSendFactory(new NativeAudioSendFactory())
-				.setGame(Game.playing("booting up...")).addEventListener(waiter).addEventListener(util)
-				.addEventListener(new ChatterBot()).addEventListener(new AntiLink()).addEventListener(new ServerJoins())
-				.addEventListener(getCommandClient())
-				.build();
+				.setGame(Game.playing("booting up...")).addEventListener(waiter)
+				.addEventListener(new HelpUtil()).addEventListener(new ChatterBot()).addEventListener(new AntiLink()).addEventListener(new ServerJoins())
+				.addEventListener(getCommandClient()).build();
 		ConfigUtil.main(new String[0]);
 		changeStatus();
 	}
@@ -162,7 +152,7 @@ public class Bumblebot {
 		client.setPrefix(ConfigUtil.getPrefix());
 		client.setHelpWord(ConfigUtil.getHelpWord());
 		client.setCoOwnerIds(ConfigUtil.getAdmins());
-		client.addCommands(getCommands());
+		client.addCommands(commandListeners());
 		client.setHelpConsumer((hl) -> {
 			if(hl.getMessage().getContentDisplay().equalsIgnoreCase(ConfigUtil.getPrefix()+ConfigUtil.getHelpWord())) {
 				EmbedBuilder eb = new EmbedBuilder();
@@ -171,7 +161,7 @@ public class Bumblebot {
 				eb.setDescription("Here you will find all the commands I can do.\n" +
 						"Type **"+ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" <command>** to know a detailed info about the command.\n\n**Following categories:**\n");
 
-				List<Command> cmds = Arrays.asList(getCommands());
+				List<Command> cmds = hl.getClient().getCommands();
 
 				cmds.stream().map(Command::getCategory).distinct().filter(category -> {
 				    if(category.equals(myServer)) {
@@ -213,10 +203,11 @@ public class Bumblebot {
 		return client.build();
 	}
 
-	public static Command[] getCommands() {
+	private static Command[] commandListeners() {
 		return new Command[] {
 				//INFO
-				new ServerInfoCmd(), new UserInfoCmd(), new BotInfoCmd(), new ServerMembersInfoCmd(), new AvatarCmd(), new UptimeCmd(), new BotVersionCmd(),
+				new ServerInfoCmd(), new UserInfoCmd(), new BotInfoCmd(), new ServerMembersInfoCmd(),
+				new AvatarCmd(), new UptimeCmd(), new BotVersionCmd(), new StatisticsCmd(),
 				//APIS
 				new AnimeCmd(waiter), new CharacterCmd(waiter), new OsuUserCmd(), new OsuBestCmd(),
 				new TraktUserCmd(), new TraktHistoryCmd(waiter), new YTVidCmd(), new YTChnlCmd(),

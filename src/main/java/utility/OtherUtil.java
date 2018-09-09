@@ -16,7 +16,6 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Objects;
@@ -184,7 +183,8 @@ public class OtherUtil {
 	}
 	
 	public static String postToHaste(String body) {
-		return "https://hastebin.com/"+ new JSONObject(Objects.requireNonNull(getPOST("https://hastebin.com/documents", body))).getString("key");
+		String val = getPOST("https://yourcousinwas.forsale/documents", body);
+		return (val == null ? "POST is currently down" : "https://yourcousinwas.forsale/"+ new JSONObject(val).getString("key"));
 	}
 	
 	public static String getCount(String input) {

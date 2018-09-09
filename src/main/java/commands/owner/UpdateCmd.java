@@ -3,6 +3,8 @@ package commands.owner;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
@@ -26,6 +28,14 @@ public class UpdateCmd extends Command {
 		Thread th = new Thread(() -> {
 			try {
 				UsrMsgUtil.sendVEMessage("Update log:\n"+OtherUtil.postToHaste(processLog(Runtime.getRuntime().exec("./update"))), e.getChannel());
+				new Timer().schedule(new TimerTask() {
+					@Override
+					public void run() {
+						e.reply("Update finished compiling, shutting down!");
+						e.getJDA().shutdown();
+						System.exit(-1);
+					}}, 120000
+				);
 			} catch (IOException ex) {
 				OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 			}

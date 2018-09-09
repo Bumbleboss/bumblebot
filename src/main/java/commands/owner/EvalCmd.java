@@ -25,7 +25,7 @@ public class EvalCmd extends Command {
     
     @Override
     protected void execute(CommandEvent e) {
-    	String parse = "\nimport java.awt.Color\n" +
+    	String parse = "\nimport java.awt.*\nimport java.awt.Color\n" +
 				"import net.dv8tion.jda.core.*\nimport utility.ConfigUtil as con\nimport utility.OtherUtil as othr\nimport utility.core.UsrMsgUtil as umt"
 				+ "\nimport org.json.JSONArray\n" + "import org.json.JSONObject\n"
 				+ e.getArgs();
@@ -41,7 +41,7 @@ public class EvalCmd extends Command {
 				e.reply(ll);
 			}	
 		}catch (Exception ex) {
-			e.reply(new EmbedBuilder().addField("What you tried to do", "```groovy\n"+parse+"```", false)
+			e.reply(new EmbedBuilder().addField("What you tried to do", (parse.length() > 1024 ? "```groovy\n"+parse.substring(0, 980)+"...```" :"```groovy\n"+parse+"```"), false)
 					.addField("Exception", "```groovy\n"+ex.toString()+"```", false).setColor(Color.decode(ConfigUtil.getHex())).build());
 		}
     }
