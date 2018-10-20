@@ -32,7 +32,7 @@ public class TVShowSearchCmd extends Command {
 		Tmdb api = ConfigUtil.tmdb;
 		try {
 			int id = Objects.requireNonNull(api.searchService().tv(e.getArgs(), null, null, null, null).execute().body()).results.get(0).id;
-			TvShow tv = api.tvService().tv(id).execute().body();
+			TvShow tv = api.tvService().tv(id, null).execute().body();
 			EmbedBuilder eb = new EmbedBuilder();
 				
 			eb.setAuthor("TMDB", "https://www.themoviedb.org/tv/"+id, "https://i.imgur.com/G9q4DF1.png");
@@ -44,19 +44,7 @@ public class TVShowSearchCmd extends Command {
 			eb.addField("Rating", tv.rating==null? "N/A" : tv.rating + "%", true);
 			eb.addField("Seasons | Episodes", 
 					(tv.number_of_seasons==null? "N/A" : tv.number_of_seasons) + " | " + (tv.number_of_episodes==null? "N/A" : tv.number_of_episodes), true);
-				
-			String genres;
-			if(tv.genres==null) {
-				genres = "N/A";
-			}else{
-				StringBuilder gen = new StringBuilder();
-				for(int i = 0; i < 3 && i < tv.genres.size(); i++) {
-					gen.append(tv.genres.get(i).name.substring(0, 1).toUpperCase()).append(tv.genres.get(i).name, 1, tv.genres.get(i).name.length()).append(", ");
-				}
-				genres = gen.toString().substring(0, gen.length()-2)+".";
-			}
-				
-			eb.addField("Genres", genres, true);
+			eb.addField("Genres", OtherUtil.getGenreString(tv.genres), true);
 			e.reply(eb.build());
 		} catch (Exception ex) {
 			if(ex instanceof IndexOutOfBoundsException) {

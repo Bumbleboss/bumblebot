@@ -4,6 +4,8 @@ import org.bson.Document;
 
 import utility.core.DatabaseManager;
 
+import java.util.ArrayList;
+
 public class Marriage {
 	
 	private static final DatabaseManager db = new DatabaseManager("beta_marriage");
@@ -22,7 +24,11 @@ public class Marriage {
                 .append("date", date);
 		db.getDocument().insertOne(doc);
     }
-	
+
+	public ArrayList<Document> getMarriages() {
+		return db.getDocument().find().into(new ArrayList<>());
+	}
+
 	public void removeUser(String id) {
 		db.removeCollection("id", id);
 	}

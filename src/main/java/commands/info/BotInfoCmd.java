@@ -29,7 +29,7 @@ public class BotInfoCmd extends Command {
 	    eb.setThumbnail(e.getJDA().getSelfUser().getAvatarUrl());
 	    eb.setDescription("Hello there! I'm **BumbleCore**. A bot that is dedicated for [this server](https://discord.gg/7PCdKYN)"
 	    		+ "\nI will be your personal waifu! I can cook, wash, str--. *cough* I mean.. I will be your assistant!!"
-	    		+ " I can play music, check users info and many more useless **"+e.getClient().getCommands().size()+"** functions! ver **"+Bumblebot.botVersion+"**"
+	    		+ " I can play music, check users info and many more useless **"+e.getClient().getCommands().size()+"** commands! ver **"+Bumblebot.botVersion+"**"
 	    		+ "\n\nTo know what functions I can do, type with **"+ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+"**"
 	    		+ "\nFeel free to support me on [PayPal](https://www.paypal.me/bumbleboss) or [Patreon](https://www.patreon.com/bumblecore)"
 	    		+ "\n\nNo idea what a command does? Type **"+ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" [command]**!");

@@ -15,6 +15,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import javax.security.auth.login.LoginException;
 
+import commands.family.MarriageStatsCmd;
 import commands.info.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ import commands.family.marriage.DeclineCmd;
 import commands.family.marriage.DivorceCmd;
 import commands.family.marriage.ForceDivorceCmd;
 import commands.family.marriage.ForceMarryCmd;
-import commands.family.marriage.MarriageInfoCmd;
+import commands.family.MarriageInfoCmd;
 import commands.family.marriage.ProposeCmd;
 import commands.fun.BirthdayCmd;
 import commands.fun.ChooseCmd;
@@ -220,7 +221,7 @@ public class Bumblebot {
 				new CleanCmd(threadpool), new KickCmd(), new BanCmd(), new MuteCmd(), new VoteCmd(),
 				//MARRIAGE
 				new AcceptCmd(), new CancelCmd(), new DeclineCmd(), new DivorceCmd(), new ProposeCmd(), new MarriageInfoCmd(), new ForceMarryCmd(), new ForceDivorceCmd(),
-				new AdoptCmd(), new AcceptAdoptCmd(), new AbandonCmd(), new DeclineAdoptCmd(), new ChildrenCmd(), new CancelAdoptCmd(),
+				new AdoptCmd(), new AcceptAdoptCmd(), new AbandonCmd(), new DeclineAdoptCmd(), new ChildrenCmd(), new CancelAdoptCmd(), new MarriageStatsCmd(),
 				//MYSERVER
 				new AddRolesCmd(), new RemoveRolesCmd(), new RolesCmd(), new RulesCmd(),
 				//MUSIC

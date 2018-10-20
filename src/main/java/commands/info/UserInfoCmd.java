@@ -31,15 +31,7 @@ public class UserInfoCmd extends Command {
 	@Override
 	protected void execute(CommandEvent e) {
 		try {
-			User user;
-			if(e.getMessage().getMentionedUsers().size() > 0) {
-				user = e.getMessage().getMentionedUsers().get(0);
-			}else if(!e.getArgs().isEmpty()) {
-				user = e.getJDA().retrieveUserById(e.getArgs()).complete();
-			}else{
-				user = e.getAuthor();
-			}
-			
+			User user = OtherUtil.getUserArguement(e);
 			EmbedBuilder eb = new EmbedBuilder();
 			eb.setThumbnail(user.getEffectiveAvatarUrl());
 			eb.addField("Username", user.getName() + "#" + user.getDiscriminator(), true);

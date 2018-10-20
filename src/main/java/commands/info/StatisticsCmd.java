@@ -54,7 +54,7 @@ public class StatisticsCmd extends Command {
         JDA jda = e.getJDA();
         String line = "\n------------\n";
 
-        String cmds = "Top used: **" + topCmd + "** | Uses: **" + max + "**\n" +
+        String cmds = "Top Used: **" + topCmd + "** | Uses: **" + max + "**\n" +
                       (scndCmd == null ? "" : "Second Used: **" + scndCmd + "** | Uses: **" + scndMax+"**\n") +
                       "[Commands List & Uses]("+OtherUtil.postToHaste(sb.toString())+")";
 

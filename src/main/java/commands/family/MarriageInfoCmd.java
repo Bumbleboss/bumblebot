@@ -1,4 +1,4 @@
-package commands.family.marriage;
+package commands.family;
 
 import java.awt.Color;
 import java.time.ZoneId;
@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
-import commands.family.Marriage;
 import main.Bumblebot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import utility.ConfigUtil;

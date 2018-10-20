@@ -27,12 +27,8 @@ public class BotVersionCmd extends Command {
 		StringBuilder sb3 = new StringBuilder();
 		String pr = ConfigUtil.getPrefix();
 		
-		String[] ft = new String[] {"new command, statistics!! **" + pr + "stats**"};
-		String[] fx = new String[] {
-				"eval command returns char limit exception when the evaluation string is large",
-				"how commands are handled for counting",
-				"another change in how update command works",
-				"changed hastebin to another url cuz hastebin keeps dying"};
+		String[] ft = new String[] {"new command, marriage statistics! **" + pr + "mstats**", "forced marriages now supports by id --OWNER"};
+		String[] fx = new String[] {"some code clean up, removed duplicated code"};
 		String[] ds = new String[] {};
 		
 		eb.addField("Version", "Current version: **"+ Bumblebot.botVersion + "**", false);

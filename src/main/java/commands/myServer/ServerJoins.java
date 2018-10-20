@@ -73,7 +73,7 @@ public class ServerJoins extends ListenerAdapter {
 		}	
 	}
 	
-	@SuppressWarnings("unused")
+	@SuppressWarnings({"unused", "WeakerAccess"})
 	public static File getWelcomeMsg(User usr) {
 		try {
 			int x; int y;

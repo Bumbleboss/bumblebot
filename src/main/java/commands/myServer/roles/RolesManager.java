@@ -17,7 +17,8 @@ public class RolesManager {
 	private static final String jsonData = FileManager.readFile("./assists/server_settings.json");
 	private static final JSONObject role = new JSONObject(jsonData);
 
-	public static String getRoleTypo(int i) {
+	@SuppressWarnings("WeakerAccess")
+    public static String getRoleTypo(int i) {
 		return getRoles().getJSONObject(i).getString("typo");
 	}
 	
@@ -39,6 +40,21 @@ public class RolesManager {
 	
 	public static JSONArray getRoles() {
 		return role.getJSONArray("roles");
+	}
+
+	public static String getAdjustedRole(String role) {
+		String roleName = null;
+		List<Object> list = getRoles().toList();
+		for(int i = 0; i < list.size(); i++) {
+			if(RolesManager.getRoleTypo(i).equalsIgnoreCase(role)) {
+				roleName = RolesManager.getRoleName(i);
+				break;
+			}else if(RolesManager.getRoleName(i).equalsIgnoreCase(role)) {
+				roleName = RolesManager.getRoleName(i);
+				break;
+			}
+		}
+		return roleName;
 	}
 	
 	public static boolean hasRole(Member member, String roleName) {

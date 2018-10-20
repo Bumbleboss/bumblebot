@@ -5,6 +5,7 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 
 import commands.family.Marriage;
 import main.Bumblebot;
+import utility.OtherUtil;
 import utility.core.UsrMsgUtil;
 
 public class ForceDivorceCmd extends Command {
@@ -31,14 +32,7 @@ public class ForceDivorceCmd extends Command {
 		}
 		
 		//IF USER IS MARRIED
-		if(mrg.isMarried(user)) {
-			if(isInGuild) {
-				e.reply(e.getAuthor().getAsMention()+" just divorced "+ e.getJDA().getUserById(mrg.getPartner(user)).getAsMention());
-			}else{
-				e.reply(e.getAuthor().getAsMention()+" just divorced **"+ UsrMsgUtil.getUserSet(e.getJDA(), mrg.getPartner(user))+"**");
-			}
-			mrg.removeUser(mrg.getPartner(user));
-			mrg.removeUser(user);
+		if(OtherUtil.marriageArguement(mrg, user, isInGuild, e, "married", true, true)) {
 			return;
 		}
 		

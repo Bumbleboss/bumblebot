@@ -9,12 +9,13 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 
 import commands.family.Marriage;
 import main.Bumblebot;
+import net.dv8tion.jda.core.exceptions.ErrorResponseException;
 
 public class ForceMarryCmd extends Command {
 
 	public ForceMarryCmd() {
 		this.name = "fmarry";
-		this.help = "Ever heard of force marriage? Well, this one is.";
+		this.help = "Ever heard of forced marriage? Well, this one is.";
 		this.aliases = new String[] {"enslave"};
 		this.category = Bumblebot.Marriage;
 		this.hidden = true;
@@ -25,16 +26,22 @@ public class ForceMarryCmd extends Command {
 	protected void execute(CommandEvent e) {
 		Marriage mrg = new Marriage();
 		String user = e.getAuthor().getId();
-		String user2 = null;
+		String user2;
 		
 		
 		if(e.getMessage().getMentionedUsers().size() > 0) {
 			user2 = e.getMessage().getMentionedUsers().get(0).getId();
+		}else{
+			try {
+				user2 = e.getJDA().retrieveUserById(e.getArgs()).complete().getId();
+			}catch(ErrorResponseException | NumberFormatException ex){
+				e.reply("Provided Id was invalid");
+				return;
+			}
 		}
-		
-		if(user2 == null) {
-			e.reply("You need to mention someone!");
-			return;
+
+		if(e.getArgs() == null) {
+			e.reply("You need to mention a user or provide a valid Id!");
 		}
 		
 		try {

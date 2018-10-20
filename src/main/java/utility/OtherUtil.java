@@ -18,10 +18,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import com.jagrosh.jdautilities.command.CommandEvent;
+import com.uwetrottmann.tmdb2.entities.Genre;
+import commands.family.Children;
+import commands.family.Marriage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -33,6 +38,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import utility.core.UsrMsgUtil;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class OtherUtil {
@@ -204,6 +210,71 @@ public class OtherUtil {
 	        arr[i]=array.optString(i);
 	    }
 	    return arr;
+	}
+
+	public static String getGenreString(List<Genre> genres) {
+		String genreText;
+		if(genres == null) {
+			genreText = "N/A";
+		}else{
+			StringBuilder gen = new StringBuilder();
+			for(int i = 0; i < 3 && i < genres.size(); i++) {
+				gen.append(genres.get(i).name.substring(0, 1).toUpperCase()).append(genres.get(i).name, 1, genres.get(i).name.length()).append(", ");
+			}
+			genreText = gen.toString().substring(0, gen.length()-2)+".";
+		}
+		return genreText;
+	}
+
+	public static User getUserArguement(CommandEvent e) {
+		User user;
+		if(e.getMessage().getMentionedUsers().size() > 0) {
+			user = e.getMessage().getMentionedUsers().get(0);
+		}else if(!e.getArgs().isEmpty()) {
+			user = e.getJDA().retrieveUserById(e.getArgs()).complete();
+		}else{
+			user = e.getAuthor();
+		}
+		return user;
+	}
+
+	public static boolean childArguement(Children chl, String child, boolean isInGuild, CommandEvent e) {
+		if(chl.isAdopted(child)) {
+			if(isInGuild) {
+				e.reply("You're already adopted by " + e.getJDA().getUserById(chl.getParentA(child)).getAsMention());
+			}else{
+				e.reply("You're already adopted by **" + UsrMsgUtil.getUserSet(e.getJDA(), chl.getParentA(child)) + "**");
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean marriageArguement(Marriage mrg, String user, boolean isInGuild, CommandEvent e, String mStatus, boolean removeUser, boolean self) {
+		String USER = e.getJDA().getUserById(user).getAsMention();
+
+		if((mStatus.equals("married") ? mrg.isMarried(user) : mrg.isProposing(user))) {
+			if(isInGuild) {
+				if(removeUser) {
+					e.reply(USER+" just divorced "+e.getJDA().getUserById(mrg.getPartner(user)).getAsMention());
+				}else{
+					e.reply(USER+" "+(self?"you're":" is")+" already "+(mStatus.equals("married") ? "married" : "proposing")+" to "+e.getJDA().getUserById(mrg.getPartner(user)).getAsMention());
+				}
+			}else{
+				if(removeUser) {
+					e.reply(USER+" just divorced **"+UsrMsgUtil.getUserSet(e.getJDA(), mrg.getPartner(user))+"**");
+				}else{
+					e.reply(USER+" "+(self?"you're":" is")+" already "+(mStatus.equals("married") ? "married" : "proposing")+" to **"+UsrMsgUtil.getUserSet(e.getJDA(), mrg.getPartner(user))+"**");
+				}
+			}
+
+			if(removeUser) {
+				mrg.removeUser(mrg.getPartner(user));
+				mrg.removeUser(user);
+			}
+			return true;
+		}
+		return false;
 	}
 	
 	public static boolean isOwners(MessageReceivedEvent s) {

@@ -1,7 +1,5 @@
 package commands.myServer.roles;
 
-import java.util.List;
-
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 import commands.myServer.Server;
@@ -21,19 +19,8 @@ public class RemoveRolesCmd extends Server {
 	public void doCommand(CommandEvent e) {
 		Guild gld = e.getGuild();
 		String role = e.getArgs();
-			
-		String roleName = null;
-		List<Object> list = RolesManager.getRoles().toList();
-		for(int i = 0; i < list.size(); i++) {
-			if(RolesManager.getRoleTypo(i).equalsIgnoreCase(role)) {
-				roleName = RolesManager.getRoleName(i);
-				break;
-			}else if(RolesManager.getRoleName(i).equalsIgnoreCase(role)) {
-				roleName = RolesManager.getRoleName(i);
-				break;
-			}
-		}
-			
+		String roleName = RolesManager.getAdjustedRole(role);
+
 		if(roleName == null) {
 			roleName = role;
 		}

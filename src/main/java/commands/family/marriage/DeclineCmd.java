@@ -6,6 +6,7 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 import commands.family.Marriage;
 import main.Bumblebot;
 import utility.ConfigUtil;
+import utility.OtherUtil;
 import utility.core.UsrMsgUtil;
 
 public class DeclineCmd extends Command {
@@ -24,12 +25,7 @@ public class DeclineCmd extends Command {
 		boolean isInGuild = UsrMsgUtil.isInGuild(e.getGuild(), mrg.getPartner(user));
 		
 		//IF USER IS ALREADY MARRIED
-		if(mrg.isMarried(user)) {
-			if(isInGuild) {
-				e.reply(e.getAuthor().getAsMention()+" you're already married to "+e.getJDA().getUserById(mrg.getPartner(user)).getAsMention());
-			}else{
-				e.reply(e.getAuthor().getAsMention()+" you're already married to **"+UsrMsgUtil.getUserSet(e.getJDA(), mrg.getPartner(user))+"**");
-			}
+		if(OtherUtil.marriageArguement(mrg, user, isInGuild, e, "married", false, true)) {
 			return;
 		}
 		

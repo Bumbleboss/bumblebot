@@ -5,6 +5,7 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 
 import commands.family.Children;
 import main.Bumblebot;
+import utility.OtherUtil;
 import utility.core.UsrMsgUtil;
 
 public class DeclineAdoptCmd extends Command {
@@ -32,16 +33,9 @@ public class DeclineAdoptCmd extends Command {
 			e.reply("You are not being adopted by anyone.");
 			return;
 		}
-		
-		if(chl.isAdopted(child)) {
-			if(isInGuild) {
-				e.reply("You're already adopted by " + e.getJDA().getUserById(chl.getParentA(child)).getAsMention());
-			}else{
-				e.reply("You're already adopted by **" + UsrMsgUtil.getUserSet(e.getJDA(), chl.getParentA(child)) + "**");
-			}
-			return;
-		}
-		
+
+		if(OtherUtil.childArguement(chl, child, isInGuild, e)) {return;}
+
 		if(isInGuild) {
 			e.reply(e.getAuthor().getAsMention() + " just refused the adoption of " + e.getJDA().getUserById(chl.getParentA(child)).getAsMention());
 		}else{

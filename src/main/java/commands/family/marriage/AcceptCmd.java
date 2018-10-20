@@ -9,6 +9,7 @@ import com.jagrosh.jdautilities.command.CommandEvent;
 
 import commands.family.Marriage;
 import main.Bumblebot;
+import utility.OtherUtil;
 import utility.core.UsrMsgUtil;
 
 public class AcceptCmd extends Command {
@@ -27,15 +28,10 @@ public class AcceptCmd extends Command {
 		boolean isInGuild = UsrMsgUtil.isInGuild(e.getGuild(), mrg.getPartner(user));
 
 		//IF USER IS MARRIED
-		if(mrg.isMarried(user)) {
-			if(isInGuild) {
-				e.reply(e.getAuthor().getAsMention()+" you're already married to "+e.getJDA().getUserById(mrg.getPartner(user)).getAsMention());
-			}else{
-				e.reply(e.getAuthor().getAsMention()+" you're already married to **"+UsrMsgUtil.getUserSet(e.getJDA(), mrg.getPartner(user))+"**");
-			}
+		if(OtherUtil.marriageArguement(mrg, user, isInGuild, e, "married", false, true)) {
 			return;
 		}
-		
+
 		//IF USER IS A BOT
 		if(e.getJDA().getUserById(user).isBot()) {
 			e.reply(e.getAuthor().getAsMention() + " how can a bot be proposed to by someone?!");
@@ -49,12 +45,7 @@ public class AcceptCmd extends Command {
 		}
 		
 		//IF USER IS ALREADY PROPOSING
-		if(mrg.isProposing(user)) {
-			if(isInGuild) {
-				e.reply(e.getAuthor().getAsMention()+" you're already proposing to "+e.getJDA().getUserById(mrg.getPartner(user)).getAsMention());
-			}else{
-				e.reply(e.getAuthor().getAsMention()+" you're already proposing to **"+UsrMsgUtil.getUserSet(e.getJDA(), mrg.getPartner(user))+"**");
-			}
+		if(OtherUtil.marriageArguement(mrg, user, isInGuild, e, "proposing", false, true)) {
 			return;
 		}
 		
