@@ -2,6 +2,7 @@ package commands.owner;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
@@ -36,14 +37,29 @@ public class DownloadCmd extends Command {
 			return;
 		}
 		boolean zipFile = false;
-		try {
+        String message = null;
+        try {
 			Attachment att = e.getMessage().getAttachments().get(0);
 			String fileName = att.getFileName();
 			FileUtils.copyInputStreamToFile(att.getInputStream(), new File(args+fileName));
-			if(att.getFileName().contains(".zip")) {
+			FileManager file = new FileManager("./");
+			List<String> list = file.listFiles("", "");
+			for (String fl:list) {
+				File fil = new File((fileName.contains(".zip")?args+fileName.replace(".zip", ""):args+fileName));
+				if(fl.equals(args+fileName)) {
+					if(fil.isDirectory()) {
+						file.deleteFolder(fil);
+						message = "deleted folder **" + fil.getName()+"**";
+					}else if(fil.isFile()) {
+						file.deleteFile(args+fileName);
+                        message = "deleted file **" + fil.getName()+"**";
+                    }
+				}
+			}
+
+			if(fileName.contains(".zip")) {
 				zipFile =  true;
 				new Thread(() -> {
-                    FileManager file = new FileManager("./");
                     try {
                         OtherUtil.unZipFile(new File(args+fileName), new File(args.isEmpty()?"./":args));
                         file.deleteFile(args+fileName);
@@ -56,6 +72,6 @@ public class DownloadCmd extends Command {
 			OtherUtil.getWebhookError(ex, this.getClass().getName(), e.getAuthor());
 			return;
 		}
-		UsrMsgUtil.sendVEMessage("Downloaded " + (zipFile?"& unzipped file!": "file!"), e.getChannel());
+		UsrMsgUtil.sendVEMessage("Downloaded " + (zipFile?"& unzipped ": "") + "file" + (message != null?", also "+message+"!":"!"), e.getChannel());
 	}
 }

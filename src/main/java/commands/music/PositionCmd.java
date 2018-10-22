@@ -24,12 +24,12 @@ public class PositionCmd extends Music {
 		
 		String pos = e.getArgs();
 		String regex = 
-				  "([1-9]|[1-5][0-9]|60)h([1-9]|[1-5][0-9]|60)m([1-9]|[1-5][0-9]|60)s|"
-				+ "([1-9]|[1-5][0-9]|60)h([1-9]|[1-5][0-9]|60)m|"
-				+ "([1-9]|[1-5][0-9]|60)m([1-9]|[1-5][0-9]|60)s|"
-				+ "([1-9]|[1-5][0-9]|60)h|"
-				+ "([1-9]|[1-5][0-9]|60)m|"
-				+ "([1-9]|[1-5][0-9]|60)s";
+				  "([0-9]|[1-5][0-9]|60)h([0-9]|[1-5][0-9]|60)m([0-9]|[1-5][0-9]|60)s|"
+				+ "([0-9]|[1-5][0-9]|60)h([0-9]|[1-5][0-9]|60)m|"
+				+ "([0-9]|[1-5][0-9]|60)m([0-9]|[1-5][0-9]|60)s|"
+				+ "([0-9]|[1-5][0-9]|60)h|"
+				+ "([0-9]|[1-5][0-9]|60)m|"
+				+ "([0-9]|[1-5][0-9]|60)s";
 		
 		if(pos.replace(" ", "").matches(regex)) {
 			long time = getTime(pos);
@@ -56,7 +56,7 @@ public class PositionCmd extends Music {
 		
 		long minutes = 0;
 		try {
-			if(m[0].matches("([1-9]|[1-5][0-9]|60)h ([1-9]|[1-5][0-9]|60)")) {
+			if(m[0].matches("([0-9]|[1-5][0-9]|60)h ([0-9]|[1-5][0-9]|60)")) {
 				minutes = Integer.parseInt(m[0].replace(Integer.toString((int) hours)+"h ", ""));
 			}else{
 				minutes = Integer.parseInt(m[0]);
@@ -65,9 +65,9 @@ public class PositionCmd extends Music {
 		
 		long seconds = 0;
 		try {
-			if(s[0].matches("([1-9]|[1-5][0-9]|60)h ([1-9]|[1-5][0-9]|60)m ([1-9]|[1-5][0-9]|60)")) {
+			if(s[0].matches("([0-9]|[1-5][0-9]|60)h ([0-9]|[1-5][0-9]|60)m ([0-9]|[1-5][0-9]|60)")) {
 				seconds = Integer.parseInt(s[0].replace(Integer.toString((int) hours)+"h " + Integer.toString((int) minutes)+"m ", ""));
-			}else if(s[0].matches("([1-9]|[1-5][0-9]|60)m ([1-9]|[1-5][0-9]|60)")) {
+			}else if(s[0].matches("([0-9]|[1-5][0-9]|60)m ([0-9]|[1-5][0-9]|60)")) {
 				seconds = Integer.parseInt(s[0].replace(Integer.toString((int) minutes)+"m ", ""));
 			}else{
 				seconds = Integer.parseInt(s[0]);

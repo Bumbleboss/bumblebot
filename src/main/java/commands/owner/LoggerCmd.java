@@ -6,6 +6,8 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 import main.Bumblebot;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 import utility.OtherUtil;
 import utility.core.FileManager;
 import utility.core.UsrMsgUtil;
@@ -15,7 +17,7 @@ public class LoggerCmd extends Command {
 	public LoggerCmd() {
 		this.name = "log";
 		this.help = "All the arguements that is logger related";
-		this.arguments = "[<date(0d 0m)>|<loggerLevel; message>] {} warn; I'm about to shut my booty!!";
+		this.arguments = "[<date(0d 0m)>|latest|<loggerLevel; message>] {} warn; I'm about to shut my booty!!";
 		this.ownerCommand = true;
 		this.guildOnly = false;
 		this.category = Bumblebot.Owner;
@@ -26,7 +28,8 @@ public class LoggerCmd extends Command {
 	@Override
 	protected void execute(CommandEvent e) {
 		FileManager fl = new FileManager("./assists/logs/");
-		
+		List<String> fls = fl.listFiles("", "");
+
 		//LOGGING STUFF
 		String[] parts = e.getArgs().split(";");
 		if(parts.length==2) {
@@ -47,6 +50,25 @@ public class LoggerCmd extends Command {
 			}
 			UsrMsgUtil.sendEMessage("Logger levels must be any of the following:```warn, debug, info```", e.getChannel());
 			return;
+		}else if(e.getArgs().equalsIgnoreCase("latest")) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d-MM-yyyy");
+			LocalDateTime now = LocalDateTime.now();
+			String date = dtf.format(now);
+			if(fls.size() > 0) {
+				for (String fl1 : fls) {
+					if (date.equals(fl1.replace(".log", ""))) {
+						String contents = FileManager.readFile(fl1);
+						if(contents.length() > 1900) {
+							UsrMsgUtil.sendVEMessage("[File contents]("+OtherUtil.postToHaste(contents)+")", e.getChannel());
+						}else{
+							UsrMsgUtil.sendVEMessage("Contents of the log file:\n```" +contents+"```", e.getChannel());
+						}
+					}
+				}
+			}else{
+				e.reply("No log files were found!");
+			}
+			return;
 		}
 		
 		String rgx = "(([1-9][0-9])|(0?[1-9]))d(([1-9][0-9])|(0?[1-9]))m|(([1-9][0-9])|(0?[1-9]))m(([1-9][0-9])|(0?[1-9]))d";
@@ -62,7 +84,6 @@ public class LoggerCmd extends Command {
 		
 		
 		//LISTING LOG FILES
-		List<String> fls = fl.listFiles("", "");
 		StringBuilder sb = new StringBuilder();
 		if(fls.size() > 0) {
 			sb.append("**__List of logs__:**\n");
@@ -79,6 +100,6 @@ public class LoggerCmd extends Command {
 		String[] d = value.split("[d]");
 		String[] m = value.split("[m]");
 
-		return "log-"+m[0].replace(d[0]+"d", "").replace(" ", "")+d[0].replace(m[0]+"m", "").replace(" ", "")+"2018.log";
+		return m[0].replace(d[0]+"d", "").replace(" ", "")+"-"+d[0].replace(m[0]+"m", "").replace(" ", "")+"-2018.log";
 	}
 }

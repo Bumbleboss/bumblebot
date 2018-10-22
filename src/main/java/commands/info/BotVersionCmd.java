@@ -27,8 +27,8 @@ public class BotVersionCmd extends Command {
 		StringBuilder sb3 = new StringBuilder();
 		String pr = ConfigUtil.getPrefix();
 		
-		String[] ft = new String[] {"new command, marriage statistics! **" + pr + "mstats**", "forced marriages now supports by id --OWNER"};
-		String[] fx = new String[] {"some code clean up, removed duplicated code"};
+		String[] ft = new String[] {"logs command now supports 'latest', means you can always check the latest log available --OWNER"};
+		String[] fx = new String[] {"download command now deletes the file that matches the downloaded file --OWNER", "fixed setposition command for when you set the postion to 0<time_unit>"};
 		String[] ds = new String[] {};
 		
 		eb.addField("Version", "Current version: **"+ Bumblebot.botVersion + "**", false);
