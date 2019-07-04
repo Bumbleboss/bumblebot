@@ -23,7 +23,7 @@ public class App implements EventListener {
     }
   }
 
-  public static String getBotName() {
+  public String getBotName() {
     return jda.getSelfUser().getName();
   }
 
