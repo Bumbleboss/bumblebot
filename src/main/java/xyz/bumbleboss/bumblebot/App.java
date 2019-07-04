@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.hooks.EventListener;
 
 public class App implements EventListener {
   public static JDA jda;
-  public static String TOKEN = "MzU2MDQ5MzI0NDI3MTgyMDgw.DVX_BQ.B_0p40FHH_zHU0J81tLT_VN79qo";
+  public static String TOKEN = "";
 
   public static void main(String[] args) {
     try {
