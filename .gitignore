@@ -1,11 +1,7 @@
 .gradle
-.idea
 .vscode
 
-/assists
-/jars
-/out
-/build
-/bin
+bin
+build
+assets
 
-*.iml

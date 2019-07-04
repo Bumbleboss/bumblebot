@@ -1,58 +1,18 @@
 plugins {
   id 'java'
   id 'application'
- 	id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
-mainClassName = 'main.Bumblebot'
-
-version '1.1.0_010'
-
-sourceCompatibility = 10
-
 repositories {
-    jcenter()
-	maven {url 'https://jitpack.io'}
+  jcenter()
 }
 
 dependencies {
-  //Database
-	implementation 'org.mongodb:mongodb-driver:3.8.2'
-  implementation 'org.mongodb:mongodb-driver-core:3.8.2'
-	implementation 'org.mongodb:bson:3.8.2'
+  // required dependencies
+  compile 'net.dv8tion:JDA:4.BETA.0_19'
 
-	//APIs
-	implementation 'com.github.Bumbleboss:yandexTranslate_api:1.4'
-	implementation 'com.github.Bumbleboss:urbanDictionary_api:1.1'
-	implementation 'com.github.Bumbleboss:osu_api:1.1'
-	implementation 'com.github.Bumbleboss:youtube_api:1.1'
-
-	implementation 'com.uwetrottmann.trakt5:trakt-java:5.10.2'
-	implementation 'com.uwetrottmann.tmdb2:tmdb-java:1.10.1'
-	implementation files('jars/musicxmatch-api.jar')
-	
-	//APIs dependencies
-	implementation 'com.google.code.gson:gson:2.8.5'
-	implementation 'org.json:json:20180813'
-	implementation 'org.codehaus.groovy:groovy-all:2.5.3'
-	
-	//JDA & JDA-Utils
-	implementation ('net.dv8tion:JDA:3.8.1_439') {
-		exclude module: 'opus-java'
-	}
-    implementation 'com.jagrosh:jda-utilities-command:2.1.4'
-    implementation 'com.jagrosh:jda-utilities-commons:2.1.4'
-    implementation 'com.jagrosh:jda-utilities-menu:2.1.4'
-    
-    //Lavaplayer && JDA-NAS
-    implementation 'com.sedmelluq:lavaplayer:1.3.9'
-    implementation 'com.sedmelluq:jda-nas:1.0.6'
-
-	//Other
-	implementation 'ch.qos.logback:logback-classic:1.2.3'
-	compileOnly 'net.sf.trove4j:trove4j:3.0.3'
-
+  // testing purposes
+  testImplementation 'junit:junit:4.12'
 }
 
-compileJava.options.encoding = 'UTF-8'
-
+mainClassName = 'xyz.bumbleboss.bumblebot.App'
