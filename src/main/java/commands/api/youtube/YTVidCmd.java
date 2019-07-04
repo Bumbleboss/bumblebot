@@ -1,7 +1,5 @@
 package commands.api.youtube;
 
-import java.awt.Color;
-
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
@@ -16,7 +14,6 @@ import youTubeAPI.core.error.YouTubeException;
 
 public class YTVidCmd extends Command{
 
-	
 	public YTVidCmd() {
 		this.name = "ytvid";
 		this.help = "Searches for YouTube videos";
@@ -37,12 +34,7 @@ public class YTVidCmd extends Command{
 		
 		try {
 			Item srch = inf.searchVideo(e.getArgs()).getItems().get(0);
-			eb.setAuthor("YouTube", "https://www.youtube.com/", "http://i.imgur.com/hkUafwu.png");
-			eb.setDescription("["+srch.getInfo().title + "](https://youtu.be/"+srch.getId().videoId+")");
-			eb.setImage("http://img.youtube.com/vi/"+srch.getId().videoId+"/mqdefault.jpg");
-			eb.setColor(Color.decode("#DD2825"));
-			eb.setFooter("Published by " + srch.getInfo().channelTitle + " on " + OtherUtil.getDate(srch.getInfo().publishedAt), null);
-			e.reply(eb.build());
+			e.reply("https://youtu.be/"+srch.getId());
 		} catch (Exception ex) {
 			if(ex instanceof YouTubeException) {
 				UsrMsgUtil.sendEMessage("No results found! ;-;", e.getChannel());

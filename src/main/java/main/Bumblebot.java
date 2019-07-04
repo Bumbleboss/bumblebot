@@ -17,6 +17,7 @@ import javax.security.auth.login.LoginException;
 
 import commands.family.MarriageStatsCmd;
 import commands.info.*;
+import commands.myServer.ServerCmd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +31,6 @@ import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import commands.api.ChatterBot;
-import commands.api.anilist.AnimeCmd;
-import commands.api.anilist.CharacterCmd;
 import commands.api.osu.OsuBestCmd;
 import commands.api.osu.OsuUserCmd;
 import commands.api.trakt.TraktHistoryCmd;
@@ -143,7 +142,6 @@ public class Bumblebot {
 				.setGame(Game.playing("booting up...")).addEventListener(waiter)
 				.addEventListener(new HelpUtil()).addEventListener(new ChatterBot()).addEventListener(new AntiLink()).addEventListener(new ServerJoins())
 				.addEventListener(getCommandClient()).build();
-		ConfigUtil.main(new String[0]);
 		changeStatus();
 	}
 
@@ -210,7 +208,7 @@ public class Bumblebot {
 				new ServerInfoCmd(), new UserInfoCmd(), new BotInfoCmd(), new ServerMembersInfoCmd(),
 				new AvatarCmd(), new UptimeCmd(), new BotVersionCmd(), new StatisticsCmd(),
 				//APIS
-				new AnimeCmd(waiter), new CharacterCmd(waiter), new OsuUserCmd(), new OsuBestCmd(),
+				new OsuUserCmd(), new OsuBestCmd(),
 				new TraktUserCmd(), new TraktHistoryCmd(waiter), new YTVidCmd(), new YTChnlCmd(),
 				//FUN
 				new ChooseCmd(), new BirthdayCmd(), new ShippingCmd(), new HugNekoCmd(), new KissNekoCmd(), new PatNekoCmd(),
@@ -223,7 +221,7 @@ public class Bumblebot {
 				new AcceptCmd(), new CancelCmd(), new DeclineCmd(), new DivorceCmd(), new ProposeCmd(), new MarriageInfoCmd(), new ForceMarryCmd(), new ForceDivorceCmd(),
 				new AdoptCmd(), new AcceptAdoptCmd(), new AbandonCmd(), new DeclineAdoptCmd(), new ChildrenCmd(), new CancelAdoptCmd(), new MarriageStatsCmd(),
 				//MYSERVER
-				new AddRolesCmd(), new RemoveRolesCmd(), new RolesCmd(), new RulesCmd(),
+				new AddRolesCmd(), new RemoveRolesCmd(), new RolesCmd(), new RulesCmd(), new ServerCmd(),
 				//MUSIC
 				new PlayCmd(), new PauseCmd(), new SkipCmd(), new ClearCmd(), new QueueCmd(waiter), new NowPlayingCmd(), new SearchCmd(waiter), new SkipToCmd(),
 				new StopCmd(), new ShuffleCmd(), new RemoveCmd(), new RepeatCmd(), new PositionCmd(), new GetPlaylistCmd(), new PlaylistCmd(),

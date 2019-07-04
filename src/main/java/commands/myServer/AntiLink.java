@@ -14,23 +14,27 @@ public class AntiLink extends ListenerAdapter{
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
 		if(e.getGuild().getId().equals(ConfigUtil.getServerId())) {
-			if(!e.getMember().hasPermission(Bumblebot.modPerms)) {
-				if (e.getMessage().getContentRaw().replaceAll(this.inviteRegex, "").length() < e.getMessage().getContentRaw().length()) {
-					e.getChannel().deleteMessageById(e.getMessage().getIdLong()).queue();
-					UsrMsgUtil.sendEMessage("Invites are not allowed! " + e.getAuthor().getAsMention(), e.getChannel());
+			try {
+				if(!e.getMember().hasPermission(Bumblebot.modPerms)) {
+					if (e.getMessage().getContentRaw().replaceAll(this.inviteRegex, "").length() < e.getMessage().getContentRaw().length()) {
+						e.getChannel().deleteMessageById(e.getMessage().getIdLong()).queue();
+						UsrMsgUtil.sendEMessage("Invites are not allowed! " + e.getAuthor().getAsMention(), e.getChannel());
+					}
 				}
-			}
+			}catch (NullPointerException ignored) {}
 		}
 	}
 	
 	public void onGuildMessageUpdate(GuildMessageUpdateEvent e) {
 		if(e.getGuild().getId().equals(ConfigUtil.getServerId())) {
-			if(!e.getMember().hasPermission(Bumblebot.modPerms)) {
-				if(e.getMessage().getContentRaw().replaceAll(this.inviteRegex, "").length() < e.getMessage().getContentRaw().length()) {
-					UsrMsgUtil.sendEMessage("Invites are not allowed! " + e.getAuthor().getAsMention() + " ... and nice try :D", e.getChannel());
-					e.getChannel().deleteMessageById(e.getMessage().getIdLong()).queue();
+			try {
+				if(!e.getMember().hasPermission(Bumblebot.modPerms)) {
+					if(e.getMessage().getContentRaw().replaceAll(this.inviteRegex, "").length() < e.getMessage().getContentRaw().length()) {
+						UsrMsgUtil.sendEMessage("Invites are not allowed! " + e.getAuthor().getAsMention() + " ... and nice try :D", e.getChannel());
+						e.getChannel().deleteMessageById(e.getMessage().getIdLong()).queue();
+					}
 				}
-		    }
+			}catch (NullPointerException ignored) {}
 		}
 	}
 }

@@ -1,9 +1,5 @@
 package utility;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import org.json.JSONObject;
 
 import com.mongodb.MongoClient;
@@ -12,7 +8,6 @@ import com.mongodb.client.MongoDatabase;
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.trakt5.TraktV2;
 
-import aniListAPI.AniListAPI;
 import main.Config;
 import musixMatchAPI.MusixMatch;
 import osuAPI.OsuAPI;
@@ -23,7 +18,6 @@ import youTubeAPI.YouTubeAPI;
 public class ConfigUtil {
 
 	private static final Config config = new Config();
-	private static final AniListAPI aniapi = new AniListAPI();
 	public static final OsuAPI osu = new OsuAPI(getOSU());
 	public static final TraktV2 trakt = new TraktV2(getTrakt());
 	public static final YouTubeAPI yt = new YouTubeAPI(getYT());
@@ -32,18 +26,6 @@ public class ConfigUtil {
 	public static final MusixMatch lyrc = new MusixMatch(getMusixMatch());
 	public static final Tmdb tmdb = new Tmdb(getTMDB());
 	public static final YandexAPI trns = new YandexAPI(getYandex());
-
-	@SuppressWarnings("static-access")
-	public static void main (String[] args) {
-		ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
-		ses.scheduleAtFixedRate(() -> {
-			try {
-				aniapi.getAccessToken(getAniClient(), getAniSecret());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}, 0, 3720000, TimeUnit.MILLISECONDS);
-	}
 
 	public static MongoDatabase getDatabase() {
 		MongoClientURI uri = new MongoClientURI(getMongoDB());
@@ -77,18 +59,6 @@ public class ConfigUtil {
 	
 	private static String getUrban() {
 		return getKeys().getString("urban");
-	}
-	
-	private static String getAniSecret() {
-		return getAnilist().getString("secret");
-	}
-	
-	private static String getAniClient() {
-		return getAnilist().getString("client");
-	}
-	
-	private static JSONObject getAnilist() {
-		return getKeys().getJSONObject("anilist");
 	}
 	
 	private static JSONObject getKeys() {		

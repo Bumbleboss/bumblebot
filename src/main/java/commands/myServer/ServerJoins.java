@@ -30,13 +30,12 @@ public class ServerJoins extends ListenerAdapter {
 			if(e.getMessage().getContentRaw().startsWith(ConfigUtil.getPrefix()+"memwel ")) {
 				String user = e.getMessage().getContentRaw().replace(ConfigUtil.getPrefix()+"memwel ", "");
 				User usr = e.getJDA().getUserById(user);
-				File file = getWelcomeMsg(usr);
-				e.getChannel().sendFile(file, Objects.requireNonNull(file).getName()).embed(new EmbedBuilder()
-						.setAuthor("Member Joined", null, usr.getEffectiveAvatarUrl())	
+				e.getGuild().getTextChannelById(ConfigUtil.getServerTC()).sendMessage(new EmbedBuilder()
+						.setAuthor("Member Joined", null, usr.getEffectiveAvatarUrl())
 						.setFooter(UsrMsgUtil.getUserSet(e.getJDA(), usr.getId()) +" | "+usr.getId(), null)
 						.setTimestamp(Instant.now())
 						.setColor(Color.decode(ConfigUtil.getHex()))
-						.setImage("attachment://"+file.getName())
+						.setImage("https://cdn.discordapp.com/attachments/339727721376645120/517986545047961602/sample_join.png")
 						.build()).queue();
 			}
 		}
@@ -47,13 +46,12 @@ public class ServerJoins extends ListenerAdapter {
 			if(!e.getUser().isBot()) {
 				e.getGuild().getController().addSingleRoleToMember(e.getMember(), e.getGuild().getRoleById("281034463410913280")).queue();
 				User usr = e.getUser();
-				File file = getWelcomeMsg(usr);
-				e.getGuild().getTextChannelById(ConfigUtil.getServerTC()).sendFile(file, Objects.requireNonNull(file).getName()).embed(new EmbedBuilder()
+				e.getGuild().getTextChannelById(ConfigUtil.getServerTC()).sendMessage(new EmbedBuilder()
 						.setAuthor("Member Joined", null, usr.getEffectiveAvatarUrl())	
 						.setFooter(UsrMsgUtil.getUserSet(e.getJDA(), usr.getId()) +" | "+usr.getId(), null)
 						.setTimestamp(Instant.now())
 						.setColor(Color.decode(ConfigUtil.getHex()))
-						.setImage("attachment://"+file.getName())
+						.setImage("https://cdn.discordapp.com/attachments/339727721376645120/517986545047961602/sample_join.png")
 						.build()).queue();
 			}
 		}
@@ -65,14 +63,15 @@ public class ServerJoins extends ListenerAdapter {
 				e.getGuild().getTextChannelById(ConfigUtil.getServerTC()).sendMessage(new EmbedBuilder()
 						.setColor(Color.decode(ConfigUtil.getHex()))
 						.setAuthor("Member left!", null, e.getUser().getEffectiveAvatarUrl())
-						.setImage("https://cdn.discordapp.com/attachments/312197256399028224/426899093084700672/Server_leave.png")
+						.setImage("https://cdn.discordapp.com/attachments/339727721376645120/517986562991063052/sample_leave.png")
 						.setFooter(UsrMsgUtil.getUserSet(e.getJDA(), e.getUser().getId()) + " | " + e.getUser().getId(), null)
 						.setTimestamp(Instant.now())
 						.build()).queue();
 			}
 		}	
 	}
-	
+
+	/*
 	@SuppressWarnings({"unused", "WeakerAccess"})
 	public static File getWelcomeMsg(User usr) {
 		try {
@@ -101,4 +100,6 @@ public class ServerJoins extends ListenerAdapter {
 			}
 		return null;	
 	}
+	*/
+
 }

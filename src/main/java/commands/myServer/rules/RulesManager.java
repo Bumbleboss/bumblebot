@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import utility.core.FileManager;
 
-class RulesManager {
+public class RulesManager {
 
 	private static final String jsonData = FileManager.readFile("./assists/server_settings.json");
 	private static final JSONObject role = new JSONObject(jsonData);

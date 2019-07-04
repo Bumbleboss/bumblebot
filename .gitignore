@@ -1,9 +1,11 @@
 .gradle
 .idea
+.vscode
 
 /assists
 /jars
 /out
 /build
+/bin
 
 *.iml
