@@ -1,6 +1,5 @@
 package xyz.bumbleboss.bumblebot;
 
-import org.json.simple.parser.*;
 import org.json.simple.*;
 
 import xyz.bumbleboss.core.*;
@@ -11,15 +10,7 @@ public class Config {
   private static String jsonData = FileManager.readFile(path);
 
   public static Object getConfigVal(String key) {
-    JSONParser jsonParser = new JSONParser();
-    JSONObject js = null;
-
-    try {
-      Object obj = jsonParser.parse(jsonData);
-      js = (JSONObject) obj;
-    }catch(Exception e) {
-      e.printStackTrace();
-    }
+    JSONObject js = (JSONObject) Util.getJSON(jsonData);
     return js.get(key);
   }
 }

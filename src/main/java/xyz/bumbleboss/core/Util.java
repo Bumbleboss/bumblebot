@@ -1,17 +1,31 @@
 package xyz.bumbleboss.core;
 
-import org.json.simple.JSONArray;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.Member;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import java.util.*;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.lang.reflect.Array;
+import java.time.Duration;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
 
 public class Util {
+
+  private static final OkHttpClient client = new OkHttpClient();
   
+  // JAVA STUFF
   @SuppressWarnings("unchecked")
   public static <T> T[] toArray(JSONArray jsonArray, Class<T> type) {
       T[] array = (T[]) Array.newInstance(type, jsonArray.size());
@@ -35,6 +49,21 @@ public class Util {
     return array;
   }
 
+  public static Date toDate(String format, String date) {
+    Date dt = null;
+    try {
+      dt = new SimpleDateFormat(format).parse(date); 
+    } catch(ParseException ex) {
+      ex.printStackTrace();
+    }
+    return dt;
+  }
+  
+  public static String capatalize(String text) {
+    return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+  }
+
+  // DISCORD RELATED STUFF
   public static int[] getMembers(Guild gd) {
     int[] all = new int[7]; 
 
@@ -63,11 +92,58 @@ public class Util {
     return all;
   }
 
-  public static String capatalize(String text) {
-    return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
-  }
-
   public static String getFullName(User usr) {
     return usr.getName()+"#"+usr.getDiscriminator();
+  }
+
+  // MISC STUFF
+  public static String getUptime() {
+    Duration d = Duration.ofMillis(ManagementFactory.getRuntimeMXBean().getUptime());
+    StringBuilder sb = new StringBuilder();
+
+    long dy = d.toDays();
+    long hr = d.toHours() % 24;
+    long min = d.toMinutes() % 60;
+    long sec = d.getSeconds() % 60;
+
+    if(dy != 0) {
+      sb.append(dy + " days ");
+    }
+
+    if(hr != 0) {
+      sb.append(hr + " hours ");
+    }
+
+    if(min != 0) {
+      sb.append(min + " minutes ");
+    }
+
+    if(sec != 0) {
+      sb.append(sec + " seconds");
+    }
+    return sb.toString();
+  }
+
+  public static String getGET(String url) {
+    Request request = new Request.Builder().url(url).get().build();
+		Response response;
+		try {
+			response = client.newCall(request).execute();
+			return Objects.requireNonNull(response.body()).string();
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
+  public static Object getJSON(String val) {
+    JSONParser jsonParser = new JSONParser();
+    Object js = null;
+
+    try {
+      js = jsonParser.parse(val);
+    }catch(org.json.simple.parser.ParseException ex) {
+      ex.printStackTrace();
+    }
+    return js;
   }
 }

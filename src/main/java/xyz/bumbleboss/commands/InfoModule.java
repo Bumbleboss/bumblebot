@@ -9,6 +9,8 @@ import com.jockie.bot.core.command.impl.CommandEvent;
 import com.jockie.bot.core.module.Module;
 import com.jockie.bot.core.utility.ArgumentUtility;
 
+import org.json.simple.*;
+
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDAInfo;
@@ -16,6 +18,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
+
 import xyz.bumbleboss.bumblebot.App;
 import xyz.bumbleboss.bumblebot.Config;
 import xyz.bumbleboss.core.Util;
@@ -52,7 +55,7 @@ public class InfoModule {
     eb.addField("Channels", channels, true);
     eb.addField("Members", users, true);
     
-    eb.setFooter(String.format("ID: %s | Created on ", guild.getId()), null).setTimestamp(guild.getTimeCreated());
+    eb.setFooter(String.format("ID: %s | Created on ", guild.getId())).setTimestamp(guild.getTimeCreated());
     eb.setColor(Color.decode(HEX));
     e.reply(eb.build()).queue();
   }
@@ -111,7 +114,7 @@ public class InfoModule {
 
     Activity gm = jda.getPresence().getActivity();
     eb.addField("Activity", (gm != null ? gm.getName() : "N/A"), false);
-    eb.addField("Uptime", "", true);
+    eb.addField("Uptime", Util.getUptime(), true);
 	
     eb.setFooter(String.format("Developed by %s | Hosted by %s", 
       Util.getFullName(jda.getUserById((String) Config.getConfigVal("ownerid"))),
@@ -130,7 +133,7 @@ public class InfoModule {
       e.reply(new EmbedBuilder()
         .setAuthor(ur.getName(), ur.getAvatarUrl())
         .setImage(ur.getAvatarUrl()+"?size=2048")
-        .setFooter("Lookin' hot", null)
+        .setFooter("Lookin' hot")
         .setColor(Color.decode(HEX))
         .build()
       ).queue();
@@ -139,12 +142,27 @@ public class InfoModule {
 
   @Command(value="uptime", description="Check for how long I have been running :sweat_drops:")
 	public void uptime(CommandEvent e) {
-    e.reply("text").queue();
+    e.reply(new EmbedBuilder().setDescription(Util.getUptime()).setColor(Color.decode(HEX)).build()).queue();
   }
 
-  @Command(value="version", description="Check the version of the bot and it's changelogs", aliases={"ver"})
+  @Command(value="version", description="Check the version of the bot and it's changelog", aliases={"ver"})
 	public void version(CommandEvent e) {
-    e.reply("text").queue();
+    String json =  Util.getGET("https://api.github.com/repos/Bumbleboss/bumblebot/commits?sha=2.0");
+    JSONArray js = (JSONArray) Util.getJSON(json);
+    
+    JSONObject data = (JSONObject) js.get(0);
+    JSONObject commit = (JSONObject) data.get("commit");
+    JSONObject author = (JSONObject) commit.get("author");
+
+    e.reply(new EmbedBuilder()
+      .addField("Version", "2.0", false)
+      .addField("Changelog", commit.get("message").toString(), false)
+      .setFooter(String.format("On %1$tb %1$te, %1$tY", 
+        Util.toDate("yyyy-MM-dd'T'HH:mm:ss'Z'", author.get("date").toString())
+      ))
+      .setColor(Color.decode(HEX))
+      .build()
+    ).queue();
   }
 
   @Command(value="stats", description="Some statistics on the bot")
