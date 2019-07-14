@@ -63,6 +63,10 @@ public class Util {
     return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
   }
 
+  public static String random(String... items) {
+    return items[(int)(Math.random()*items.length)];
+  }
+
   // DISCORD RELATED STUFF
   public static int[] getMembers(Guild gd) {
     int[] all = new int[7]; 
@@ -124,7 +128,7 @@ public class Util {
     return sb.toString();
   }
 
-  public static String getGET(String url) {
+  public static String GET(String url) {
     Request request = new Request.Builder().url(url).get().build();
 		Response response;
 		try {

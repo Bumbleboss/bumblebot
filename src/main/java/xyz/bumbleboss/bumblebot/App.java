@@ -14,9 +14,7 @@ import xyz.bumbleboss.core.Util;
 public class App {
   
   public static JDA jda;
-  public static String TOKEN = Config.getConfigVal("token").toString();
   public static JSONArray DEVS = (JSONArray) Config.getConfigVal("devs");
-  public static String PREFIX = Config.getConfigVal("prefix").toString();
 
   public static void main(String[] args) {    
     try {
@@ -24,9 +22,9 @@ public class App {
       
       listener.addCommandStore(CommandStore.of("xyz.bumbleboss.commands"));
       listener.addDevelopers(Util.toArrayLong(DEVS));
-      listener.setDefaultPrefixes(PREFIX);
+      listener.setDefaultPrefixes(Constants.PREFIX);
 
-      jda = new JDABuilder().setToken(TOKEN).addEventListeners(listener).build();
+      jda = new JDABuilder().setToken(Constants.TOKEN).addEventListeners(listener).build();
     } catch (LoginException e) {
       e.printStackTrace();
     }
