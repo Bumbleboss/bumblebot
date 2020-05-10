@@ -25,7 +25,7 @@ public class Util {
 
   private static final OkHttpClient client = new OkHttpClient();
   
-  // JAVA STUFF
+  // JAVA
   @SuppressWarnings("unchecked")
   public static <T> T[] toArray(JSONArray jsonArray, Class<T> type) {
       T[] array = (T[]) Array.newInstance(type, jsonArray.size());
@@ -63,11 +63,38 @@ public class Util {
     return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
   }
 
+  public static String getUptime() {
+    Duration d = Duration.ofMillis(ManagementFactory.getRuntimeMXBean().getUptime());
+    StringBuilder sb = new StringBuilder();
+
+    long dy = d.toDays();
+    long hr = d.toHours() % 24;
+    long min = d.toMinutes() % 60;
+    long sec = d.getSeconds() % 60;
+
+    if(dy != 0) {
+      sb.append(dy + " days ");
+    }
+
+    if(hr != 0) {
+      sb.append(hr + " hours ");
+    }
+
+    if(min != 0) {
+      sb.append(min + " minutes ");
+    }
+
+    if(sec != 0) {
+      sb.append(sec + " seconds");
+    }
+    return sb.toString();
+  }
+
   public static String random(String... items) {
     return items[(int)(Math.random()*items.length)];
   }
 
-  // DISCORD RELATED STUFF
+  // DISCORD
   public static int[] getMembers(Guild gd) {
     int[] all = new int[7]; 
 
@@ -100,34 +127,7 @@ public class Util {
     return usr.getName()+"#"+usr.getDiscriminator();
   }
 
-  // MISC STUFF
-  public static String getUptime() {
-    Duration d = Duration.ofMillis(ManagementFactory.getRuntimeMXBean().getUptime());
-    StringBuilder sb = new StringBuilder();
-
-    long dy = d.toDays();
-    long hr = d.toHours() % 24;
-    long min = d.toMinutes() % 60;
-    long sec = d.getSeconds() % 60;
-
-    if(dy != 0) {
-      sb.append(dy + " days ");
-    }
-
-    if(hr != 0) {
-      sb.append(hr + " hours ");
-    }
-
-    if(min != 0) {
-      sb.append(min + " minutes ");
-    }
-
-    if(sec != 0) {
-      sb.append(sec + " seconds");
-    }
-    return sb.toString();
-  }
-
+  // REST
   public static String GET(String url) {
     Request request = new Request.Builder().url(url).get().build();
 		Response response;

@@ -143,7 +143,7 @@ public class InfoModule {
     e.reply(new EmbedBuilder().setDescription(Util.getUptime()).setColor(Color.decode(Constants.HEX)).build()).queue();
   }
 
-  @Command(value="version", description="Check the version of the bot and it's changelog", aliases={"ver"})
+  @Command(value="version", description="Check the version of the bot and it's changelog", aliases={"ver", "changelogs", "changes"})
 	public void version(CommandEvent e) {
     String json =  Util.GET("https://api.github.com/repos/Bumbleboss/bumblebot/commits?sha=2.0");
     JSONArray js = (JSONArray) Util.getJSON(json);

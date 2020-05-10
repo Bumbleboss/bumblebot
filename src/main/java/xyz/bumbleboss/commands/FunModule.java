@@ -3,6 +3,7 @@ package xyz.bumbleboss.commands;
 import java.awt.Color;
 import java.time.Instant;
 import java.util.Optional;
+import java.util.Random;
 
 import com.jockie.bot.core.argument.Argument;
 import com.jockie.bot.core.argument.Endless;
@@ -26,7 +27,7 @@ public class FunModule {
     e.reply(String.format("%s **%s**", Util.random(replies), Util.random(choices))).queue();
   }
 
-  @Command(value="birthday", description="Makes a decision with the provided choices", aliases="bd")
+  @Command(value="birthday", description="Wishes you a happy birthday!", aliases="bd")
 	public void birthday(CommandEvent e, @Argument("User") User usr) {
     e.reply(new EmbedBuilder()
       .setDescription("HAPPY BIRTHDAY " + usr.getName().toUpperCase())
@@ -37,6 +38,54 @@ public class FunModule {
     .queue();
 		e.reply("🎉🎂🎉🎂🎉🎂🎉🎂🎉🎂🎉🎂").queue();
   }
+
+  @Command(value="ship", description="Shipping people has never been better!")
+  public void ship(CommandEvent e, @Argument("User") Optional<User> usr, @Argument("User") User usr2) {
+    User usr1 = usr.orElse(e.getAuthor()); 
+    e.reply(new EmbedBuilder()
+      .setDescription(shipMsg())
+      .setColor(Color.decode(Constants.HEX))
+      .setFooter(usr1.getName() + " ❤ " + usr2.getName())
+      .build())
+    .queue();
+  }
+
+  private String shipMsg() {
+    Random r = new Random();
+    int Low = 1;
+    int High = 100;
+    int result = r.nextInt(High-Low);
+    StringBuilder sb = new StringBuilder();
+    
+    if(result >= 1 && result <= 10) {
+      sb.append("**").append(result).append("%** `​█         ​` It's not gonna work ;-;");
+    }else if(result >= 11 && result <= 20) {
+      sb.append("**").append(result).append("%** `​██        ​` Forget it...");
+    }else if(result >= 21 && result <= 30) {
+      sb.append("**").append(result).append("%** `​█​██       ​` Very bad.");
+    }else if(result >= 31 && result <= 40) {
+      sb.append("**").append(result).append("%** `​█​███      ​` Not too good.");
+    }else if(result >= 41 && result <= 50) {
+      sb.append("**").append(result).append("%** `█​████     ​` Almost");
+    }else if(result >= 51 && result <= 60) {
+      sb.append("**").append(result).append("%** `█​█████    ​` Almost");
+    }else if(result >= 61 && result <= 68) {
+      sb.append("**").append(result).append("%** `​█​██████   ​` Not too shabby!");
+    }else if(result == 69) {
+      sb.append("**").append(result).append("%** `​█​██████   ​` Oh I see how it is ( ͡° ͜ʖ ͡°)");
+    }else if(result >= 70 && result <= 80) {
+      sb.append("**").append(result).append("%** `​█​███████  ​` Take good care!");
+    }else if(result >= 81 && result <= 90) {
+      sb.append("**").append(result).append("%** `​█​████████ ​` My my, I'm so envious.");
+    }else if(result >= 91 && result <= 99) {
+      sb.append("**").append(result).append("%** `​█​████████ ​` Damn :o");
+    }else if(result == 100) {
+      sb.append("**").append(result).append("%** `​█​█████████​` SUGOOOOOI!! YOU TWO ARE MEANT FOR EACH OTHER!!");
+		}else{
+			sb.append("**").append(result).append("%** `​          ​` Okay, it's pointless.");
+    }
+    return sb.toString();
+	}
 
   @Command(value="hug", description="Hug someone >//<")
 	public void hug(CommandEvent e, @Argument("User") Optional<User> usr) {
@@ -83,7 +132,7 @@ public class FunModule {
     .queue();
   }
 
-  public String[] nekoVal(String type, Boolean isAuthor, User author, User mentioned) {
+  private String[] nekoVal(String type, Boolean isAuthor, User author, User mentioned) {
     String msg = null;
     String img = nekoImg(type);
     
@@ -107,12 +156,12 @@ public class FunModule {
     return new String[] {msg, img};
   }
 
-  public String nekoImg(String type) {
+  private String nekoImg(String type) {
     JSONObject img = (JSONObject) Util.getJSON(Util.GET("https://nekos.life/api/"+type));
     return img.getString("url");
   }
 
-  public String nekoMsg(String[] msgs, String[] msgs2, Boolean isAuthor, User author, User mentioned) {
+  private String nekoMsg(String[] msgs, String[] msgs2, Boolean isAuthor, User author, User mentioned) {
     String msg = null;
     if(isAuthor) {
       msg = Util.random(msgs) + " " + author.getAsMention();
