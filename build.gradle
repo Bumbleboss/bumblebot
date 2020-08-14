@@ -29,7 +29,7 @@ dependencies {
 
 	implementation 'com.uwetrottmann.trakt5:trakt-java:5.10.2'
 	implementation 'com.uwetrottmann.tmdb2:tmdb-java:1.10.1'
-	implementation files('jars/musicxmatch-api.jar')
+	implementation 'com.sachinhandiekar:jMusixMatch:1.1.4'
 	
 	//APIs dependencies
 	implementation 'com.google.code.gson:gson:2.8.5'
