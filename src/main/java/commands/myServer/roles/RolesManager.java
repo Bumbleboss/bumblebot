@@ -14,7 +14,7 @@ import utility.core.FileManager;
 
 public class RolesManager {
 	
-	private static final String jsonData = FileManager.readFile("./assists/server_settings.json");
+	private static final String jsonData = FileManager.readFile("./assets/server_settings.json");
 	private static final JSONObject role = new JSONObject(jsonData);
 
 	@SuppressWarnings("WeakerAccess")

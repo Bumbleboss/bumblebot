@@ -77,20 +77,20 @@ public class ServerJoins extends ListenerAdapter {
 		try {
 			int x; int y;
 			
-			Image image = ImageIO.read(new File("./assists/imgs/server-join.png"));
+			Image image = ImageIO.read(new File("./assets/imgs/server-join.png"));
 			BufferedImage buffered_image_x = (BufferedImage) image;
 				
 			InputStream f = ImgUtil.imageFromUrl(Bumblebot.jda.getUserById(usr.getId()).getEffectiveAvatarUrl() +"?size=1024");
 			Image image2 = ImageIO.read(f);
 			BufferedImage buffered_image_y = (BufferedImage) image2;
 				
-			Image image3 = ImageIO.read(new File("./assists/imgs/server-join-trans.png"));
+			Image image3 = ImageIO.read(new File("./assets/imgs/server-join-trans.png"));
 			BufferedImage buffered_image_z = (BufferedImage) image3;
 				
 			buffered_image_x.getGraphics().drawImage(ImgUtil.resize(buffered_image_y, 420, 420), 1075, 0, null);
 			buffered_image_x.getGraphics().drawImage(buffered_image_z, 0, 0, null);
 			
-			File file = new File("./assists/imgs/joins/Welcome_"+UsrMsgUtil.stripFormatting(usr.getName())+".png");
+			File file = new File("./assets/imgs/joins/Welcome_"+UsrMsgUtil.stripFormatting(usr.getName())+".png");
 			ImageIO.write(buffered_image_x, "PNG", file);
 			
 			

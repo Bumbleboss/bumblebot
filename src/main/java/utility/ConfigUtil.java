@@ -34,7 +34,7 @@ public class ConfigUtil {
 	}
 	
 	private static String getYT() {
-		return getKeys().getString("yt");
+		return getKeys().getString("youtube");
 	}
 	
 	private static String getMusixMatch() {
@@ -62,7 +62,7 @@ public class ConfigUtil {
 	}
 	
 	private static JSONObject getKeys() {		
-		return config.getJSONObject("keys");
+		return config.getJSONObject("apiKeys");
 	}
 
 	private static String getMongoDB() {
@@ -82,15 +82,15 @@ public class ConfigUtil {
 	}
 	
 	public static String getHelpWord() {
-		return config.getValue("helpword");
+		return config.getValue("helpWord");
 	}
 
 	public static void setHelpWord(String newHelpWord) {
-		config.setValue("helpword", newHelpWord);
+		config.setValue("helpWord", newHelpWord);
 	}
 
 	public static String getOwnerId() {
-		return config.getValue("ownerid");
+		return config.getValue("ownerId");
 	}
 	
 	public static String getServerId() {
@@ -98,11 +98,11 @@ public class ConfigUtil {
 	}
 	
 	public static String getCleverTC() {
-		return getServer().getString("clevertc");
+		return getServer().getString("chatTextChannelId");
 	}
 	
 	public static String getServerTC() {
-		return getServer().getString("servertc");
+		return getServer().getString("joinTextChannelID");
 	}
 	
 	private static JSONObject getServer() {
@@ -118,11 +118,11 @@ public class ConfigUtil {
 	}
 	
 	public static String[] getAdmins() {
-		return OtherUtil.toStringArray(config.getJSONArray("admins"));
+		return OtherUtil.toStringArray(config.getJSONArray("developersId"));
 	}
 
 	public static String getWebhookURL() {
-		return config.getValue("webhook");
+		return config.getValue("webHook");
 	}
 
 }
