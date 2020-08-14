@@ -1,5 +1,6 @@
 # Info
 Basically the source code of my bot that's mainly used for my Discord server<br>
+This branch is a rebuild of the old Master 1.0 branch just to get the bot working.<br>
 Check out my server: https://discord.gg/7PCdKYN
 
 # IMPORTANT
