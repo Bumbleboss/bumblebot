@@ -1,9 +1,11 @@
 .gradle
 .vscode
+.idea
 
 .settings
 .classpath
 .project
+*.iml
 
 bin
 build
