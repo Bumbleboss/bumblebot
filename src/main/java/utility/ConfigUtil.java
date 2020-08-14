@@ -9,7 +9,7 @@ import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.trakt5.TraktV2;
 
 import main.Config;
-import musixMatchAPI.MusixMatch;
+import org.jmusixmatch.MusixMatch;
 import osuAPI.OsuAPI;
 import urbanAPI.UrbanAPI;
 import yandexAPI.YandexAPI;
