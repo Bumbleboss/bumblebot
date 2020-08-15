@@ -122,7 +122,7 @@ public class ConfigUtil {
 	}
 
 	public static String getWebhookURL() {
-		return config.getValue("webHook");
+		return config.getValue("webhook");
 	}
 
 }
