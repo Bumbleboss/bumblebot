@@ -10,9 +10,9 @@ repositories {
 
 dependencies {
   // required dependencies
-  compile 'net.dv8tion:JDA:4.BETA.0_19'
-  compile 'com.googlecode.json-simple:json-simple:1.1.1'
-  compileOnly 'com.github.21Joakim:Jockie-Utils:36df7416428f8c2659a8e4684f1a4775430de8d9'
+  implementation 'net.dv8tion:JDA:4.BETA.0_19'
+  implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+  implementation 'com.github.21Joakim:Jockie-Utils:36df7416428f8c2659a8e4684f1a4775430de8d9'
 
   // api
   
