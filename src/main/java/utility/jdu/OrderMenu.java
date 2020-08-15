@@ -28,7 +28,7 @@ import net.dv8tion.jda.core.requests.RestAction;
 import net.dv8tion.jda.core.utils.Checks;
 import net.dv8tion.jda.core.utils.PermissionUtil;
 
-@SuppressWarnings({"WeakerAccess", "FieldCanBeLocal"})
+@SuppressWarnings({"WeakerAccess", "FieldCanBeLocal", "unused"})
 public class OrderMenu extends Menu {
 	
 	private final Color color;
