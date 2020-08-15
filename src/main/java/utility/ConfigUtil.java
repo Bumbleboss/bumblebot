@@ -93,16 +93,16 @@ public class ConfigUtil {
 		return config.getValue("ownerId");
 	}
 	
-	public static Integer getServerId() {
-		return getServer().getInt("id");
+	public static Long getServerId() {
+		return getServer().getLong("id");
 	}
 	
-	public static Integer getCleverTC() {
-		return getServer().getInt("chatTextChannelId");
+	public static Long getCleverTC() {
+		return getServer().getLong("chatTextChannelId");
 	}
 	
-	public static Integer getServerTC() {
-		return getServer().getInt("joinTextChannelID");
+	public static Long getServerTC() {
+		return getServer().getLong("joinTextChannelID");
 	}
 	
 	private static JSONObject getServer() {

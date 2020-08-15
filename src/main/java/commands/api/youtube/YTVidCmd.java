@@ -4,7 +4,6 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 import main.Bumblebot;
-import net.dv8tion.jda.core.EmbedBuilder;
 import utility.ConfigUtil;
 import utility.OtherUtil;
 import utility.core.UsrMsgUtil;
@@ -30,7 +29,6 @@ public class YTVidCmd extends Command{
 		}
 		
 		YouTubeAPI inf = ConfigUtil.yt;	
-		EmbedBuilder eb = new EmbedBuilder();
 		
 		try {
 			Item srch = inf.searchVideo(e.getArgs()).getItems().get(0);

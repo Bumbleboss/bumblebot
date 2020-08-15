@@ -22,7 +22,7 @@ public class ChatterBot extends ListenerAdapter {
 		}
 		
 		try {
-			if(e.getGuild().getId().equals(ConfigUtil.getServerId()) && e.getChannel().getId().equals(ConfigUtil.getCleverTC())) {
+			if(e.getGuild().getIdLong() == ConfigUtil.getServerId() && e.getChannel().getIdLong() == ConfigUtil.getCleverTC()) {
 				if(e.getMessage().getAttachments().size() > 0) {
 					String[] replies = new String[] {"Hey, I don't reply to images!", "No images pls ;-;", "I don't respond to images >.>", "Please refrain from sending images here, I am learning..."};
 		            e.getChannel().sendMessage(replies[(int)(Math.random()*replies.length)]).queue();

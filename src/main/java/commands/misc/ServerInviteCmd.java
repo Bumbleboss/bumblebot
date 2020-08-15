@@ -17,7 +17,7 @@ public class ServerInviteCmd extends Command{
 	
 	@Override
 	protected void execute(CommandEvent e) {
-		if(e.getGuild().getId().equals(ConfigUtil.getServerId())) {
+		if(e.getGuild().getIdLong() == ConfigUtil.getServerId()) {
 			UsrMsgUtil.sendVEMessage("Inviting people here is always fun!\nInvite link: https://discord.gg/7PCdKYN", e.getChannel());
 		}else{
 			UsrMsgUtil.sendVEMessage("Hope you enjoy your stay there!\nInvite link: https://discord.gg/7PCdKYN", e.getChannel());

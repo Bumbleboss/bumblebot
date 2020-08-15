@@ -28,7 +28,7 @@ public class HelpUtil extends ListenerAdapter{
 				if(s.getChannelType().equals(ChannelType.PRIVATE)) {
 					continue;
 				}else{
-					if(!s.getGuild().getId().equals(ConfigUtil.getServerId())) {
+					if(s.getGuild().getIdLong() != ConfigUtil.getServerId()) {
 						continue;
 					}
 				}

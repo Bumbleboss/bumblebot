@@ -1,0 +1,286 @@
+{
+  "channels": [
+    {
+      "name": "info",
+      "id": "271171252423491584",
+      "category": "server-info",
+      "description": "Get to know what this server is about, and the rules that apply to it.",
+      "embed": null
+    },
+    {
+      "name": "announcements",
+      "id": "360701550773141504",
+      "category": "server-info",
+      "description": "All new updates about the server and any new videos published on BumbleCore's YT channel.",
+      "embed": null
+    },
+    {
+      "name": "free-games",
+      "id": "449618870014181376",
+      "category": "server-info",
+      "description": "Where all the links of the free limited games are sent!\n*You need <@&445365047854891009> in order to receive notifications!*",
+      "embed": null
+    },
+    {
+      "name": "introduction",
+      "id": "416352699769028618",
+      "category": "general",
+      "description": "Conversations are not tolerated here. If it is to be seen, messages will be deleted\nWhen doing an introduction, you may follow this format:\n(Sections without * are optional)",
+      "embed": "```About myself:*\nGender:\nAge:\nHobbies:\nOther:```"
+    },
+    {
+      "name": "general",
+      "id": "271211222248980480",
+      "category": "general",
+      "description": "Just be nice!",
+      "embed": null
+    },
+    {
+      "name": "gaming",
+      "id": "416352562070159366",
+      "category": "general",
+      "description": "Just don't post your hentai games, kthnx.",
+      "embed": null
+    },
+    {
+      "name": "dumb",
+      "id": "282188375564484609",
+      "category": "general",
+      "description": "For your memes. ( ͡° ͜ʖ ͡°)",
+      "embed": null
+    },
+    {
+      "name": "chat-with-bot",
+      "id": "443022401836679190",
+      "category": "general",
+      "description": "A totally human conversation awaits you!!",
+      "embed": null
+    },
+    {
+      "name": "suggestions",
+      "id": "416370074136608776",
+      "category": "voting rooms",
+      "description": "No conversations are tolerated here. Add your suggestion and leave it there.\nAny argument about it will be forwarded to **#general**",
+      "embed": "When having a suggestion, you may follow this format\n(Sections with * are required)\n```- Your suggestion*\n? Why it should be added\n! Rules the suggestion should be following```\nAfter adding your suggestion, please react with emojis <:yes:445598815806816257> <:no:445598834698092544>. We want everyone to share your vote!"
+    },
+    {
+      "name": "music",
+      "id": "427563921654808585",
+      "category": "voting rooms",
+      "description": "Share the music you want us to listen to! We will vote for them! :D\nConversations are not allowed!!",
+      "embed": null
+    },
+    {
+      "name": "media",
+      "id": "488697464514281472",
+      "category": "misc",
+      "description": "Share all the content you want! No self promotion tho.",
+      "embed": null
+    },
+    {
+      "name": "creative",
+      "id": "282188309449408513",
+      "category": "misc",
+      "description": "Bob's favourite channel for posting photoshop tutorials",
+      "embed": null
+    },
+    {
+      "name": "self-promotion",
+      "id": "282188273730977792",
+      "category": "misc",
+      "description": "Advertising anything besides Discord servers.",
+      "embed": null
+    },
+    {
+      "name": "nsfw",
+      "id": "416352778852630528",
+      "category": "misc",
+      "description": "All NSFW posting is allowed except the following:\n**NSFL, Gore, Child pornography, Yaoi, Trap, Bloating, Pregnancy, Lolicon, Shotacon, Furries, Excessive torture.**\n\nViolating one of these are considered as a violation to [Discord's community guidelines](https://discordapp.com/guidelines).",
+      "embed": null
+    },
+    {
+      "name": "coding",
+      "id": "459383256555585556",
+      "category": "misc",
+      "description": "Share your projects, ask for help, send coding memes and stuff like that",
+      "embed": null
+    },
+    {
+      "name": "botspam",
+      "id": "284762544416227328",
+      "category": "misc",
+      "description": "All the commands that trigger bots here. Spams as well!",
+      "embed": null
+    }
+  ],
+  "roles": [
+    {
+      "name": "Youtubers",
+      "typo": "youtuber",
+      "description": "If you own a YT channel with content",
+      "section": "special",
+      "assignable": true
+    },
+    {
+      "name": "Promoters",
+      "typo": "promoter",
+      "description": "If you promote tracks on YT or any other site",
+      "section": "special",
+      "assignable": true
+    },
+    {
+      "name": "Producers",
+      "typo": "producers",
+      "description": "For whom can create music",
+      "section": "special",
+      "assignable": true
+    },
+    {
+      "name": "Booblings",
+      "typo": "boobling",
+      "description": "Receives notifications of new uploads from BumbleCore's YT channel",
+      "section": "special",
+      "assignable": true
+    },
+    {
+      "name": "Male",
+      "typo": "male",
+      "description": "If you have a dongle",
+      "section": "gender",
+      "assignable": true
+    },
+    {
+      "name": "Female",
+      "typo": "female",
+      "description": "If you have a hot v-shaped thing",
+      "section": "gender",
+      "assignable": true
+    },
+    {
+      "name": "DJ",
+      "typo": "dj",
+      "description": "Controlling music bots and VC actions",
+      "section": "perks",
+      "assignable": false
+    },
+    {
+      "name": "NSFW",
+      "typo": "nsfw",
+      "description": "Get 'em lewd pics bby",
+      "section": "perks",
+      "assignable": true
+    },
+    {
+      "name": "Free Games",
+      "typo": "free game",
+      "description": "Receive notifications on a free game",
+      "section": "perks",
+      "assignable": true
+    },
+    {
+      "name": "Developer",
+      "typo": "developers",
+      "description": "Access to the coding channel",
+      "section": "perks",
+      "assignable": true
+    },
+    {
+      "name": "Designer",
+      "typo": "desginer",
+      "description": "Do you make designs?",
+      "section": "perks",
+      "assignable": true
+    },
+    {
+      "name": "Java",
+      "typo": "java",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "PY",
+      "typo": "snake",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "JS",
+      "typo": "trashscript",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "PHP",
+      "typo": "bob cloud",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "CSS",
+      "typo": "css",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "C",
+      "typo": "see",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "RB",
+      "typo": "Ruby",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "C++",
+      "typo": "microsoft sucks",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "Swift",
+      "typo": "swift",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "Haskell",
+      "typo": "haskell",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "Julia",
+      "typo": "romeo",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "Go",
+      "typo": "pokemon go",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    },
+    {
+      "name": "Nim",
+      "typo": "Nemo",
+      "description": null,
+      "section": "coding",
+      "assignable": true
+    }
+  ]
+}

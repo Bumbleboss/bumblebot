@@ -2,7 +2,7 @@
 .idea
 .vscode
 
-/assets
+/assets/config.json
 /out
 /build
 /bin

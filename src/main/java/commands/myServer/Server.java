@@ -15,7 +15,7 @@ public abstract class Server extends Command {
 	 protected void execute(CommandEvent e) {
 		 if(e.isOwner()) {
 			 doCommand(e);
-		 }else if(e.getGuild().getId().equals(ConfigUtil.getServerId())) {
+		 }else if(e.getGuild().getIdLong() == ConfigUtil.getServerId()) {
 			 doCommand(e);
 		 }
 	 }

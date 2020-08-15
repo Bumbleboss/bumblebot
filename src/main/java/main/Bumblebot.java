@@ -167,7 +167,7 @@ public class Bumblebot {
 				    	if(hl.getChannelType().equals(ChannelType.PRIVATE)) {
 					        return false;
 				    	}else{
-					        return hl.getGuild().getId().equals(ConfigUtil.getServerId());
+					        return hl.getGuild().getIdLong() == ConfigUtil.getServerId();
 				    	}
 				    }
 				    if(category.equals(Mod)){
@@ -257,7 +257,7 @@ public class Bumblebot {
 							OtherUtil.getWebhookError(ex, this.getClass().getName(), null);
 						}
 				}
-				jda.getPresence().setGame(Game.playing(ConfigUtil.getPrefix()+ConfigUtil.getHelpWord()+" | " + lines.get(new Random().nextInt(lines.size()))));
+				jda.getPresence().setGame(Game.playing(lines.get(new Random().nextInt(lines.size()))));
 			}
 		}, 0 , 150000);
 	}

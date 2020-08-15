@@ -13,7 +13,7 @@ public class AntiLink extends ListenerAdapter{
 
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
-		if(e.getGuild().getId().equals(ConfigUtil.getServerId())) {
+		if(e.getGuild().getIdLong() == ConfigUtil.getServerId()) {
 			try {
 				if(!e.getMember().hasPermission(Bumblebot.modPerms)) {
 					if (e.getMessage().getContentRaw().replaceAll(this.inviteRegex, "").length() < e.getMessage().getContentRaw().length()) {
@@ -26,7 +26,7 @@ public class AntiLink extends ListenerAdapter{
 	}
 	
 	public void onGuildMessageUpdate(GuildMessageUpdateEvent e) {
-		if(e.getGuild().getId().equals(ConfigUtil.getServerId())) {
+		if(e.getGuild().getIdLong() == ConfigUtil.getServerId()) {
 			try {
 				if(!e.getMember().hasPermission(Bumblebot.modPerms)) {
 					if(e.getMessage().getContentRaw().replaceAll(this.inviteRegex, "").length() < e.getMessage().getContentRaw().length()) {
