@@ -27,7 +27,7 @@ public class LoggerCmd extends Command {
 
 	@Override
 	protected void execute(CommandEvent e) {
-		FileManager fl = new FileManager("./assists/logs/");
+		FileManager fl = new FileManager("./assets/logs/");
 		List<String> fls = fl.listFiles("", "");
 
 		//LOGGING STUFF

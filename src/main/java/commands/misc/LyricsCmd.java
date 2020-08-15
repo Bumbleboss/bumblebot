@@ -6,10 +6,10 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
 import main.Bumblebot;
-import musixMatchAPI.MusixMatch;
-import musixMatchAPI.MusixMatchException;
-import musixMatchAPI.entity.lyrics.Lyrics;
-import musixMatchAPI.entity.track.Track;
+import org.jmusixmatch.MusixMatch;
+import org.jmusixmatch.MusixMatchException;
+import org.jmusixmatch.entity.lyrics.Lyrics;
+import org.jmusixmatch.entity.track.Track;
 import net.dv8tion.jda.core.EmbedBuilder;
 import utility.ConfigUtil;
 import utility.OtherUtil;

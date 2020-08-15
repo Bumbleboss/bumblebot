@@ -10,7 +10,7 @@ import utility.core.FileManager;
 
 public class RulesManager {
 
-	private static final String jsonData = FileManager.readFile("./assists/server_settings.json");
+	private static final String jsonData = FileManager.readFile("./assets/server_settings.json");
 	private static final JSONObject role = new JSONObject(jsonData);
 	private static final List<Object> list = getChannels().toList();
 

@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = 'main.Bumblebot'
 
-version '1.1.0_010'
+version '1.1.0_012'
 
 sourceCompatibility = 10
 
@@ -18,7 +18,7 @@ repositories {
 dependencies {
   //Database
 	implementation 'org.mongodb:mongodb-driver:3.8.2'
-  implementation 'org.mongodb:mongodb-driver-core:3.8.2'
+  	implementation 'org.mongodb:mongodb-driver-core:3.8.2'
 	implementation 'org.mongodb:bson:3.8.2'
 
 	//APIs
@@ -29,7 +29,7 @@ dependencies {
 
 	implementation 'com.uwetrottmann.trakt5:trakt-java:5.10.2'
 	implementation 'com.uwetrottmann.tmdb2:tmdb-java:1.10.1'
-	implementation files('jars/musicxmatch-api.jar')
+	implementation 'com.sachinhandiekar:jMusixMatch:1.1.4'
 	
 	//APIs dependencies
 	implementation 'com.google.code.gson:gson:2.8.5'
@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.jagrosh:jda-utilities-menu:2.1.4'
     
     //Lavaplayer && JDA-NAS
-    implementation 'com.sedmelluq:lavaplayer:1.3.9'
+    implementation 'com.sedmelluq:lavaplayer:1.3.50'
     implementation 'com.sedmelluq:jda-nas:1.0.6'
 
 	//Other

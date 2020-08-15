@@ -9,7 +9,7 @@ import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.trakt5.TraktV2;
 
 import main.Config;
-import musixMatchAPI.MusixMatch;
+import org.jmusixmatch.MusixMatch;
 import osuAPI.OsuAPI;
 import urbanAPI.UrbanAPI;
 import yandexAPI.YandexAPI;
@@ -34,7 +34,7 @@ public class ConfigUtil {
 	}
 	
 	private static String getYT() {
-		return getKeys().getString("yt");
+		return getKeys().getString("youtube");
 	}
 	
 	private static String getMusixMatch() {
@@ -62,7 +62,7 @@ public class ConfigUtil {
 	}
 	
 	private static JSONObject getKeys() {		
-		return config.getJSONObject("keys");
+		return config.getJSONObject("apiKeys");
 	}
 
 	private static String getMongoDB() {
@@ -82,27 +82,27 @@ public class ConfigUtil {
 	}
 	
 	public static String getHelpWord() {
-		return config.getValue("helpword");
+		return config.getValue("helpWord");
 	}
 
 	public static void setHelpWord(String newHelpWord) {
-		config.setValue("helpword", newHelpWord);
+		config.setValue("helpWord", newHelpWord);
 	}
 
 	public static String getOwnerId() {
-		return config.getValue("ownerid");
+		return config.getValue("ownerId");
 	}
 	
-	public static String getServerId() {
-		return getServer().getString("id");
+	public static Integer getServerId() {
+		return getServer().getInt("id");
 	}
 	
-	public static String getCleverTC() {
-		return getServer().getString("clevertc");
+	public static Integer getCleverTC() {
+		return getServer().getInt("chatTextChannelId");
 	}
 	
-	public static String getServerTC() {
-		return getServer().getString("servertc");
+	public static Integer getServerTC() {
+		return getServer().getInt("joinTextChannelID");
 	}
 	
 	private static JSONObject getServer() {
@@ -118,7 +118,7 @@ public class ConfigUtil {
 	}
 	
 	public static String[] getAdmins() {
-		return OtherUtil.toStringArray(config.getJSONArray("admins"));
+		return OtherUtil.toStringArray(config.getJSONArray("developersId"));
 	}
 
 	public static String getWebhookURL() {

@@ -9,14 +9,14 @@ import utility.core.FileManager;
 
 public class Config {
 
-	private static final String jsonData = FileManager.readFile("./assists/beta_config.json");
+	private static final String jsonData = FileManager.readFile("./assets/config.json");
 	private static final JSONObject inf = new JSONObject(jsonData);
     private JSONObject configObject;
 
 	public Config() {
         JSONObject object = inf;	
         
-        if (object.has("token") && object.has("prefix") && object.has("ownerid")) {
+        if (object.has("token") && object.has("prefix") && object.has("ownerId")) {
             configObject = object;
         }else{ 
             System.err.println("A value was missing in the config file!");

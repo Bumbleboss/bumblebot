@@ -7,7 +7,7 @@
     </appender>
     
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file> ./assists/logs/${byDate}.log</file>
+        <file> ./assets/logs/${byDate}.log</file>
         <append>true</append>
         <encoder>
             <pattern>%nopex[%d{HH:mm:ss}] [%level] [%logger{0}]: %msg%n%ex</pattern>

@@ -189,8 +189,8 @@ public class OtherUtil {
 	}
 	
 	public static String postToHaste(String body) {
-		String val = getPOST("https://yourcousinwas.forsale/documents", body);
-		return (val == null ? "POST is currently down" : "https://yourcousinwas.forsale/"+ new JSONObject(val).getString("key"));
+		String val = getPOST("https://hastebin.com/documents", body);
+		return (val == null ? "POST is currently down" : "https://hastebin.com/"+ new JSONObject(val).getString("key"));
 	}
 	
 	public static String getCount(String input) {

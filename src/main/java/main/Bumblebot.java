@@ -235,7 +235,7 @@ public class Bumblebot {
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				String fileName = "./assists/status.txt";
+				String fileName = "./assets/status.txt";
 				BufferedReader input = null;
 
 				ArrayList<String> lines = new ArrayList<>();

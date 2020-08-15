@@ -21,9 +21,9 @@ public class PlaylistCmd extends Music {
 	@Override
 	public void doCommand(CommandEvent e) {
 		MusicManager ms = getMusicManager();
-		FileManager fl = new FileManager("./assists/playlists/");
+		FileManager fl = new FileManager("./assets/playlists/");
 		StringBuilder sb = new StringBuilder();
-		List<String> playlists = fl.listFiles("./assists/playlists/", "txt");
+		List<String> playlists = fl.listFiles("./assets/playlists/", "txt");
 		
 		if(ms.getGuildAudioPlayer(e.getGuild()).player.isPaused()) {
 			ms.pauseTrack(e.getTextChannel());
