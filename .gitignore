@@ -3,6 +3,8 @@
 .vscode
 
 /assets/config.json
+/assets/logs
+
 /out
 /build
 /bin

@@ -26,7 +26,7 @@ public class BotVersionCmd extends Command {
 		StringBuilder sb2 = new StringBuilder();
 		StringBuilder sb3 = new StringBuilder();
 		
-		String[] ft = new String[] {""};
+		String[] ft = new String[] {};
 		String[] fx = new String[] {"it works now"};
 		String[] ds = new String[] {};
 		
