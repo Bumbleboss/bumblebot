@@ -2,8 +2,6 @@
 .idea
 .vscode
 
-/assists
-/jars
 /assets
 /out
 /build
