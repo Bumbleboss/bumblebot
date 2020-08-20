@@ -116,8 +116,8 @@ public class InfoModule {
     eb.addField("Uptime", Util.getUptime(), true);
 	
     eb.setFooter(String.format("Developed by %s | Hosted by %s", 
-      Util.getFullName(jda.getUserById((String) Config.getConfigVal("ownerId"))),
-      Util.getFullName(jda.getUserById((String) Config.getConfigVal("hostId")))
+      Util.getFullName(jda.getUserById((Long) Config.getConfigVal("ownerId"))),
+      Util.getFullName(jda.getUserById((Long) Config.getConfigVal("hostId")))
     ));
 
     eb.setColor(Color.decode(Constants.HEX));
