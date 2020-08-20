@@ -3,6 +3,11 @@ plugins {
   id 'application'
 }
 
+/**
+ * compileJava added to force UTF-8 encoding for special characters
+ */
+compileJava.options.encoding = "UTF-8"
+
 repositories {
   jcenter()
   maven { url 'https://jitpack.io' }
