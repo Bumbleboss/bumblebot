@@ -21,6 +21,7 @@ import net.dv8tion.jda.api.entities.User;
 
 import xyz.bumbleboss.bumblebot.Config;
 import xyz.bumbleboss.bumblebot.Constants;
+import xyz.bumbleboss.bumblebot.configValueMissingException;
 import xyz.bumbleboss.core.Util;
 
 @Module
@@ -88,7 +89,7 @@ public class InfoModule {
   }
 
   @Command(value="botinfo", description="Know more about me!", aliases={"bi"})
-	public void botInfo(CommandEvent e) {
+	public void botInfo(CommandEvent e) throws configValueMissingException {
     EmbedBuilder eb = new EmbedBuilder();
     JDA jda = e.getJDA();
     User me = jda.getSelfUser();

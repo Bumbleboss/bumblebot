@@ -14,7 +14,14 @@ import xyz.bumbleboss.core.Util;
 public class App {
   
   public static JDA jda;
-  public static JSONArray DEVS = (JSONArray) Config.getConfigVal("devs");
+  public static JSONArray DEVS;
+
+  static {
+    try {
+      DEVS = (JSONArray) Config.getConfigVal("devs");
+    } catch (configValueMissingException e) {
+    }
+  }
 
   public static void main(String[] args) {    
     try {

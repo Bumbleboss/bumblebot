@@ -4,15 +4,22 @@ import org.json.simple.JSONObject;
 
 public class Constants {
 
-  public static String TOKEN = Config.getConfigVal("token").toString();
-  
-  public static String HEX = Config.getConfigVal("hex").toString();
+  public static String TOKEN;
+  public static String HEX;
+  public static String PREFIX;
+  public static String SERVER_ID;
 
-  public static String PREFIX = Config.getConfigVal("prefix").toString();
+  static {
+    try {
+      TOKEN = Config.getConfigVal("token").toString();
+      HEX = Config.getConfigVal("hex").toString();
+      PREFIX = Config.getConfigVal("prefix").toString();
+      SERVER_ID = getServer().get("id").toString();
+    } catch (configValueMissingException e) {
+    }
+  }
 
-  public static String SERVER_ID = getServer().get("id").toString();
-
-  public static JSONObject getServer() {
+  public static JSONObject getServer() throws configValueMissingException {
     return (JSONObject) Config.getConfigVal("server");
   }
 }
