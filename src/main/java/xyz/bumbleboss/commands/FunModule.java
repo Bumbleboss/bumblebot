@@ -11,7 +11,7 @@ import com.jockie.bot.core.command.Command;
 import com.jockie.bot.core.command.impl.CommandEvent;
 import com.jockie.bot.core.module.Module;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
@@ -158,7 +158,7 @@ public class FunModule {
 
   private String nekoImg(String type) {
     JSONObject img = (JSONObject) Util.getJSON(Util.GET("https://nekos.life/api/"+type));
-    return img.getString("url");
+    return (String) img.get("url");
   }
 
   private String nekoMsg(String[] msgs, String[] msgs2, Boolean isAuthor, User author, User mentioned) {
