@@ -4,12 +4,15 @@ import javax.security.auth.login.LoginException;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import com.jockie.bot.core.command.impl.*;
 
 import org.json.simple.JSONArray;
 
 import xyz.bumbleboss.core.Util;
+
+import java.util.EnumSet;
 
 public class App {
   
@@ -31,7 +34,8 @@ public class App {
       listener.addDevelopers(Util.toArrayLong(DEVS));
       listener.setDefaultPrefixes(Constants.PREFIX);
 
-      jda = new JDABuilder().setToken(Constants.TOKEN).addEventListeners(listener).build();
+      jda = JDABuilder.create(Constants.TOKEN, EnumSet.allOf(GatewayIntent.class)).addEventListeners(listener).build();
+      
     } catch (LoginException e) {
       e.printStackTrace();
     }
