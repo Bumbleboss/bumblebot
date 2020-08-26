@@ -10,4 +10,5 @@
 bin
 build
 assets/configs
+assets/logs/*
 
