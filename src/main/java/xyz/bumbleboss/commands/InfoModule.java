@@ -126,7 +126,7 @@ public class InfoModule {
 	
     eb.setFooter(String.format("Developed by %s & %s | Hosted by %s", 
       jda.getUserById(Constants.OWNER_ID).getName(),
-      jda.getUserById(Constants.DEVS_ID[3]),
+      jda.getUserById(Constants.DEVS_ID[3]).getName(),
       jda.getUserById(Constants.HOST_ID).getName()
     ));
 
