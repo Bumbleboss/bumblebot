@@ -22,8 +22,7 @@ public class App {
 
   public static void main(String[] args) {
     try {
-      String[] requiredKeys = {"devs","token","prefix","ownerId","hostId","server","hex"};
-      System.out.println((String) Config.initConfig(requiredKeys));
+      Config.validateConfig();
     }catch (dataValueMissingException e) {
       e.printStackTrace();
       System.exit(1);

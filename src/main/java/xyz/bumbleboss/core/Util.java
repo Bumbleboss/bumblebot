@@ -179,9 +179,7 @@ public class Util {
         }
       }
       throw new dataValueMissingException(path, output.toString());
-    }else{
-      output.append("All required data found");
     }
-    return output.toString();
+    return true;
   }
 }
