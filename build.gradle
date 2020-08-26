@@ -14,13 +14,10 @@ repositories {
 }
 
 dependencies {
-  // required dependencies
   implementation 'net.dv8tion:JDA:4.2.0_198'
   implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-  implementation 'com.github.21Joakim:Jockie-Utils:36df7416428f8c2659a8e4684f1a4775430de8d9'
-
-  // api
-  
+  implementation 'com.github.21Joakim:Jockie-Utils:41a8ce78d01655b0d9db6572f20012ae2d507c6b'
+  implementation 'org.apache.commons:commons-math3:3.2'
 }
 
-mainClassName = 'xyz.bumbleboss.bumblebot.App'
+mainClassName = 'xyz.bumbleboss.bumblebot.Bot'

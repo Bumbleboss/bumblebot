@@ -8,35 +8,32 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import com.jockie.bot.core.command.impl.*;
 
-import org.json.simple.JSONArray;
-
-import xyz.bumbleboss.core.Util;
 import xyz.bumbleboss.exceptions.dataValueMissingException;
 
 import java.util.EnumSet;
 
-public class App {
+public class Bot {
   
   public static JDA jda;
-  public static JSONArray DEVS = (JSONArray) Config.getConfigVal("devs");
 
-  public static void main(String[] args) {
+  public static void main(String[] args) {    
     try {
       Config.validateConfig();
-    }catch (dataValueMissingException e) {
+    } catch (dataValueMissingException e) {
       e.printStackTrace();
       System.exit(1);
     }
+    
     try {
       CommandListener listener = new CommandListener();
       
-      listener.addCommandStore(CommandStore.of("xyz.bumbleboss.commands"));
-      listener.addDevelopers(Util.toArrayLong(DEVS));
+      listener.addCommandStores(CommandStore.of("xyz.bumbleboss.commands"));
+      listener.addDevelopers(Constants.DEVS_ID);
       listener.setDefaultPrefixes(Constants.PREFIX);
 
       jda = JDABuilder.create(Constants.TOKEN, EnumSet.allOf(GatewayIntent.class)).addEventListeners(listener).build();
       
-    } catch (LoginException e) {
+    } catch (LoginException | NullPointerException e) {
       e.printStackTrace();
     }
   }

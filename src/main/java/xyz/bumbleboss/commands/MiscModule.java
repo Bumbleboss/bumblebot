@@ -9,7 +9,6 @@ import com.jockie.bot.core.module.Module;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import xyz.bumbleboss.bumblebot.Constants;
-import xyz.bumbleboss.core.Util;
 
 @Module
 public class MiscModule {
@@ -18,31 +17,17 @@ public class MiscModule {
   public void invite(CommandEvent e) {
     String msg = "";
     
-    if(Constants.SERVER_ID == e.getGuild().getId()) {
-      msg = "Inviting people here is always fun!";
-    }else{
-      msg = "Hope you enjoy your stay there!";
+    if (Constants.SERVER_ID == e.getGuild().getId()) {
+      msg = "Invite people to this server and let them join the booblings!";
+    } else {
+      msg = "Hope I see you there!";
     }
     
     e.reply(new EmbedBuilder()
       .setDescription(msg+"\nInvite link: https://discord.gg/7PCdKYN")
-      .setColor(Color.decode(Constants.HEX))
+      .setColor(Color.decode(Constants.COLOR))
       .build())
     .queue();
   }
-
-  /*
-  @Command(value="hex", description="Get the hexcode from an image, url, and more")
-  public void hex(CommandEvent e) {
-    String hex = "#";
-    String raw = hex.replace("#", "");
-
-    e.reply(new EmbedBuilder()
-      .setTitle(hex.toUpperCase())
-      .setColor(Color.decode(hex)).setImage("http://placehold.it/1024x1024.png/"+raw+"/"+raw)
-      .setFooter("Requested by " + Util.getFullName(e.getAuthor()), e.getAuthor().getAvatarUrl())
-      .build())
-    .queue();
-  }
-  */
+  
 }
