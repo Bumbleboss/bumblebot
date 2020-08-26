@@ -17,16 +17,16 @@ import java.util.EnumSet;
 public class App {
   
   public static JDA jda;
-  public static JSONArray DEVS;
+  public static JSONArray DEVS = (JSONArray) Config.getConfigVal("devs");
 
-  static {
+  public static void main(String[] args) {
     try {
-      DEVS = (JSONArray) Config.getConfigVal("devs");
-    } catch (configValueMissingException e) {
+      String[] requiredKeys = {"devs","token","prefix","ownerId","hostId","server","hex"};
+      System.out.println((String) Config.initConfig(requiredKeys));
+    }catch (configValueMissingException e) {
+      e.printStackTrace();
+      System.exit(1);
     }
-  }
-
-  public static void main(String[] args) {    
     try {
       CommandListener listener = new CommandListener();
       
