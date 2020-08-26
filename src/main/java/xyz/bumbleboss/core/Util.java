@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.Member;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import xyz.bumbleboss.exceptions.dataValueMissingException;
 
 import java.util.*;
 import java.io.IOException;
@@ -149,5 +150,38 @@ public class Util {
       ex.printStackTrace();
     }
     return js;
+  }
+
+  public static Object validateJson(JSONObject jsonData, String path, String[] requiredKeys) throws dataValueMissingException {
+    ArrayList<String> success = new ArrayList<String>();
+    ArrayList<String> failure = new ArrayList<String>();
+    StringBuffer output = new StringBuffer();
+    for (int i = 0; i < requiredKeys.length; i++){
+      if (jsonData.containsKey(requiredKeys[i])) {
+        success.add(requiredKeys[i]);
+      }else{
+        failure.add(requiredKeys[i]);
+      }
+    }
+    if (failure.size() > 0){
+      output.append("Found required keys: ");
+      for(int i = 0; i < success.size(); i++) {
+        output.append(success.get(i));
+        if (i < success.size() - 1) {
+          output.append(", ");
+        }
+      }
+      output.append("\n Missing required keys: ");
+      for(int i = 0; i < failure.size(); i++){
+        output.append(failure.get(i));
+        if(i < failure.size() - 1){
+          output.append(", ");
+        }
+      }
+      throw new dataValueMissingException(path, output.toString());
+    }else{
+      output.append("All required data found");
+    }
+    return output.toString();
   }
 }

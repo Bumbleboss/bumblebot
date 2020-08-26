@@ -11,6 +11,7 @@ import com.jockie.bot.core.command.impl.*;
 import org.json.simple.JSONArray;
 
 import xyz.bumbleboss.core.Util;
+import xyz.bumbleboss.exceptions.dataValueMissingException;
 
 import java.util.EnumSet;
 
@@ -23,7 +24,7 @@ public class App {
     try {
       String[] requiredKeys = {"devs","token","prefix","ownerId","hostId","server","hex"};
       System.out.println((String) Config.initConfig(requiredKeys));
-    }catch (configValueMissingException e) {
+    }catch (dataValueMissingException e) {
       e.printStackTrace();
       System.exit(1);
     }
