@@ -38,7 +38,7 @@ public class Util {
     T[] array = (T[]) Array.newInstance(type, jsonArray.size());
       
     for (int i = 0; i < jsonArray.size(); i++) {
-      array[i] = (T) conversionFunction.apply(jsonArray.get(i));
+      array[i] = conversionFunction.apply(jsonArray.get(i));
     }
       
     return array;
@@ -89,10 +89,10 @@ public class Util {
   }
 
   public static <T> List<Pair<T, Double>> ArrayToPairList(T[] items) {
-    List<Pair<T, Double>> list = new ArrayList<Pair<T, Double>>();
-   
-    for (int i = 0; i < items.length; i++) {
-      list.add(new Pair<T, Double>(items[i], 1.0));
+    List<Pair<T, Double>> list = new ArrayList<>();
+
+    for (T item : items) {
+      list.add(new Pair<>(item, 1.0));
     }
    
     return list;
@@ -103,9 +103,7 @@ public class Util {
     int[] all = new int[7]; 
 
     List<Member> members = guild.getMembers();
-    for (int i = 0; i < members.size(); i++) {
-      Member member = members.get(i);
-
+    for (Member member : members) {
       if (member.getOnlineStatus() == OnlineStatus.ONLINE) {
         all[0] += 1;
       } else if (member.getOnlineStatus() == OnlineStatus.IDLE) {
@@ -129,21 +127,15 @@ public class Util {
   }
 
   public static void respond(CommandEvent e, MessageBuilder mb) {
-    e.replyTyping().queue(q -> {
-      e.reply(mb.build()).queue();
-    });
+    e.replyTyping().queue(q -> e.reply(mb.build()).queue());
   }
 
   public static void respond(CommandEvent e, String text) {
-    e.replyTyping().queue(q -> {
-      e.reply(text).queue();
-    });
+    e.replyTyping().queue(q -> e.reply(text).queue());
   }
 
   public static void respond(CommandEvent e, MessageEmbed embed) {
-    e.replyTyping().queue(q -> {
-      e.reply(embed).queue();
-    });
+    e.replyTyping().queue(q -> e.reply(embed).queue());
   }
   
   // REST
@@ -175,15 +167,15 @@ public class Util {
 
   // HELPERS
   public static Object validateJson(JSONObject jsonData, String path, String[] requiredKeys) throws dataValueMissingException {
-    ArrayList<String> success = new ArrayList<String>();
-    ArrayList<String> failure = new ArrayList<String>();
-    StringBuffer output = new StringBuffer();
-    
-    for (int i = 0; i < requiredKeys.length; i++) {
-      if (jsonData.containsKey(requiredKeys[i])) {
-        success.add(requiredKeys[i]);
+    ArrayList<String> success = new ArrayList<>();
+    ArrayList<String> failure = new ArrayList<>();
+    StringBuilder output = new StringBuilder();
+
+    for (String requiredKey : requiredKeys) {
+      if (jsonData.containsKey(requiredKey)) {
+        success.add(requiredKey);
       } else {
-        failure.add(requiredKeys[i]);
+        failure.add(requiredKey);
       }
     }
 

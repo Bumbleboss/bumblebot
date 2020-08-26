@@ -61,6 +61,7 @@ public class FunModule {
     );
   }
 
+  @SuppressWarnings("SpellCheckingInspection")
   private String shipMsg() {
     Random r = new Random();
     int Low = 1;
@@ -145,9 +146,9 @@ public class FunModule {
     String msg = null;
     String img = nekoImg(type);
 
-    List<List<Pair<String, Double>>> hugs = new ArrayList<List<Pair<String, Double>>>();
-    List<List<Pair<String, Double>>> kisses = new ArrayList<List<Pair<String, Double>>>();
-    List<List<Pair<String, Double>>> pats = new ArrayList<List<Pair<String, Double>>>();
+    List<List<Pair<String, Double>>> hugs = new ArrayList<>();
+    List<List<Pair<String, Double>>> kisses = new ArrayList<>();
+    List<List<Pair<String, Double>>> pats = new ArrayList<>();
 
     hugs.add(Util.ArrayToPairList(new String[] {
       "Why so lonely, here's a hug (づ｡◕‿‿◕｡)づ",

@@ -138,15 +138,13 @@ public class InfoModule {
 	public void avatar(CommandEvent e, @Argument("user") Optional<String> usr) {
     String user = usr.orElse(e.getAuthor().getId());
 
-    ArgumentUtility.retrieveUserById(e.getJDA(), user).queue(ur -> {
-      e.reply(new EmbedBuilder()
-        .setAuthor(ur.getName(), ur.getAvatarUrl())
-        .setImage(ur.getAvatarUrl()+"?size=2048")
-        .setFooter("Lookin' hot")
-        .setColor(Color.decode(Constants.COLOR))
-        .build()
-      ).queue();
-    });
+    ArgumentUtility.retrieveUserById(e.getJDA(), user).queue(ur -> e.reply(new EmbedBuilder()
+      .setAuthor(ur.getName(), ur.getAvatarUrl())
+      .setImage(ur.getAvatarUrl()+"?size=2048")
+      .setFooter("Lookin' hot")
+      .setColor(Color.decode(Constants.COLOR))
+      .build()
+    ).queue());
   }
 
   @Command(value="uptime", description="Check for how long I have been running :sweat_drops:")
