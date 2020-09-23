@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import xyz.bumbleboss.exceptions.dataValueMissingException;
+import xyz.bumbleboss.exceptions.validateFailedException;
 
 import java.util.*;
 import java.util.function.Function;
@@ -166,7 +166,7 @@ public class Util {
   }
 
   // HELPERS
-  public static Object validateJson(JSONObject jsonData, String path, String[] requiredKeys) throws dataValueMissingException {
+  public static void validateJson(JSONObject jsonData, String path, String[] requiredKeys) throws validateFailedException {
     ArrayList<String> success = new ArrayList<>();
     ArrayList<String> failure = new ArrayList<>();
     StringBuilder output = new StringBuilder();
@@ -195,10 +195,7 @@ public class Util {
           output.append(", ");
         }
       }
-
-      throw new dataValueMissingException(path, output.toString());
+      throw new validateFailedException(path, output.toString());
     }
-
-    return true;
   }
 }

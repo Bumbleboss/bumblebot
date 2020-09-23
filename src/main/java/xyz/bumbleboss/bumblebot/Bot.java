@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import com.jockie.bot.core.command.impl.*;
 
-import xyz.bumbleboss.exceptions.dataValueMissingException;
+import xyz.bumbleboss.exceptions.validateFailedException;
 
 import java.util.EnumSet;
 
@@ -19,7 +19,7 @@ public class Bot {
   public static void main(String[] args) {    
     try {
       Config.validateConfig();
-    } catch (dataValueMissingException e) {
+    } catch (validateFailedException e) {
       e.printStackTrace();
       System.exit(1);
     }
