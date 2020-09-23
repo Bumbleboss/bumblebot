@@ -31,7 +31,7 @@ public class InfoModule {
     Guild guild = e.getGuild();
     
     String info = String.format("Owner: **%s**\nRegion: **%s** %s\nVerification Level: **%s**\nID: **%s**",
-      guild.getOwner().getUser().getAsTag(),
+      Objects.requireNonNull(guild.getOwner()).getUser().getAsTag(),
       guild.getRegion().getName(), 
       guild.getRegion().getEmoji(),
       guild.getVerificationLevel().name(),
@@ -81,6 +81,7 @@ public class InfoModule {
       if (e.getChannelType().isGuild()) {
         if (e.getGuild().isMember(ur)) {
           Member mem = e.getGuild().getMember(ur);
+          assert mem != null;
           List<Activity> act = mem.getActivities();
   
           eb.addField("Joined on", String.format("%1$tb %1$te, %1$tY", mem.getTimeJoined()), true);
@@ -89,7 +90,7 @@ public class InfoModule {
           eb.addField("Activity", (act.size() != 0 ? act.get(0).getName() : "N/A"), false);
         }
   
-        eb.setFooter(String.format("Requested by %s", e.getAuthor().getAsTag(), e.getAuthor().getAvatarUrl()));
+        eb.setFooter(String.format("Requested by %s", e.getAuthor().getAsTag()), e.getAuthor().getAvatarUrl());
       }
   
       eb.setColor(Color.decode(Constants.COLOR));
@@ -125,9 +126,9 @@ public class InfoModule {
     eb.addField("Uptime", Util.getUptime(), true);
 	
     eb.setFooter(String.format("Developed by %s & %s | Hosted by %s", 
-      jda.getUserById(Constants.OWNER_ID).getName(),
-      jda.getUserById(Constants.DEVS_ID[3]).getName(),
-      jda.getUserById(Constants.HOST_ID).getName()
+      Objects.requireNonNull(jda.getUserById(Constants.OWNER_ID)).getName(),
+      Objects.requireNonNull(jda.getUserById(Constants.DEVS_ID[3])).getName(),
+      Objects.requireNonNull(jda.getUserById(Constants.HOST_ID)).getName()
     ));
 
     eb.setColor(Color.decode(Constants.COLOR));

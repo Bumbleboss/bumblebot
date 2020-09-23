@@ -66,19 +66,19 @@ public class Util {
     long sec = d.getSeconds() % 60;
 
     if (dy != 0) {
-      sb.append(dy + " days ");
+      sb.append(dy).append(" days ");
     }
 
     if (hr != 0) {
-      sb.append(hr + " hours ");
+      sb.append(hr).append(" hours ");
     }
 
     if (min != 0) {
-      sb.append(min + " minutes ");
+      sb.append(min).append(" minutes ");
     }
 
     if (sec != 0) {
-      sb.append(sec + " seconds");
+      sb.append(sec).append(" seconds");
     }
 
     return sb.toString();

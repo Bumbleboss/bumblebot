@@ -2,10 +2,7 @@ package xyz.bumbleboss.commands;
 
 import java.awt.Color;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 import com.jockie.bot.core.argument.Argument;
 import com.jockie.bot.core.argument.Endless;
@@ -178,11 +175,11 @@ public class FunModule {
       "just patted", "patted", "pat pat"
     }));
 
-    if (type == "hug") {
+    if (Objects.equals(type, "hug")) {
       msg = nekoMsg(hugs, isAuthor, author, mentioned);
-    } else if (type == "kiss") {
+    } else if (Objects.equals(type, "kiss")) {
       msg = nekoMsg(kisses, isAuthor, author, mentioned);
-    } else if (type == "pat") {
+    } else if (Objects.equals(type, "pat")) {
       msg = nekoMsg(pats, isAuthor, author, mentioned);
     }
 
