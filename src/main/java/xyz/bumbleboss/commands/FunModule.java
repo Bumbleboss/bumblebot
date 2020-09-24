@@ -61,9 +61,8 @@ public class FunModule {
   @SuppressWarnings("SpellCheckingInspection")
   private String shipMsg() {
     Random r = new Random();
-    int Low = 1;
-    int High = 100;
-    int result = r.nextInt(High - Low);
+    int High = 101;
+    int result = r.nextInt(High);
     StringBuilder sb = new StringBuilder();
 
     if (result >= 1 && result <= 10) {
