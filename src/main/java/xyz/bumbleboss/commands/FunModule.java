@@ -70,25 +70,25 @@ public class FunModule {
     } else if (result >= 11 && result <= 20) {
       sb.append("**").append(result).append("%** `​██        ​` Forget it...");
     } else if (result >= 21 && result <= 30) {
-      sb.append("**").append(result).append("%** `​█​██       ​` Very bad.");
+      sb.append("**").append(result).append("%** `​███       ​` Very bad.");
     } else if (result >= 31 && result <= 40) {
-      sb.append("**").append(result).append("%** `​█​███      ​` Not too good.");
+      sb.append("**").append(result).append("%** `​████      ​` Not too good.");
     } else if (result >= 41 && result <= 50) {
-      sb.append("**").append(result).append("%** `█​████     ​` Almost");
+      sb.append("**").append(result).append("%** `​█████     ​` Almost");
     } else if (result >= 51 && result <= 60) {
-      sb.append("**").append(result).append("%** `█​█████    ​` Almost");
+      sb.append("**").append(result).append("%** `​██████    ​` Almost");
     } else if (result >= 61 && result <= 68) {
-      sb.append("**").append(result).append("%** `​█​██████   ​` Not too shabby!");
+      sb.append("**").append(result).append("%** `​███████   ​` Not too shabby!");
     } else if (result == 69) {
-      sb.append("**").append(result).append("%** `​█​██████   ​` Oh I see how it is ( ͡° ͜ʖ ͡°)");
+      sb.append("**").append(result).append("%** `​███████   ​` Oh I see how it is ( ͡° ͜ʖ ͡°)");
     } else if (result >= 70 && result <= 80) {
-      sb.append("**").append(result).append("%** `​█​███████  ​` Take good care!");
+      sb.append("**").append(result).append("%** `​████████  ​` Take good care!");
     } else if (result >= 81 && result <= 90) {
-      sb.append("**").append(result).append("%** `​█​████████ ​` My my, I'm so envious.");
+      sb.append("**").append(result).append("%** `​█████████ ​` My my, I'm so envious.");
     } else if (result >= 91 && result <= 99) {
-      sb.append("**").append(result).append("%** `​█​████████ ​` Damn :o");
+      sb.append("**").append(result).append("%** `​█████████ ​` Damn :o");
     } else if (result == 100) {
-      sb.append("**").append(result).append("%** `​█​█████████​` SUGOOOOOI!! YOU TWO ARE MEANT FOR EACH OTHER!!");
+      sb.append("**").append(result).append("%** `​██████████​` SUGOOOOOI!! YOU TWO ARE MEANT FOR EACH OTHER!!");
     } else {
       sb.append("**").append(result).append("%** `​          ​` Okay, it's pointless.");
     }
