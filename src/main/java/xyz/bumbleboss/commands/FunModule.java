@@ -125,10 +125,23 @@ public class FunModule {
   }
 
   @Command(value = "pat", description = "pat someone >.<")
-  public void pat(CommandEvent e, @Argument("User") Optional<User> usr) {
+  public void pat(CommandEvent e) {
     User author = e.getAuthor();
-    User user = usr.orElse(author);
-    String[] data = nekoVal("pat", author == user, author, user);
+    User user = author;
+    String[] data = nekoVal("pat", true, author, user);
+
+    Util.respond(e, new EmbedBuilder()
+            .setDescription(data[0])
+            .setColor(Color.decode(Constants.COLOR))
+            .setImage(data[1])
+            .build()
+    );
+  }
+
+  @Command(value = "pat", description = "pat someone >.<")
+  public void pat(CommandEvent e, @Argument("User") User usr) {
+    User author = e.getAuthor();
+    String[] data = nekoVal("pat", author == usr, author, usr);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
