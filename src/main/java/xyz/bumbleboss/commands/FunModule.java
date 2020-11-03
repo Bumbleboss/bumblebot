@@ -205,9 +205,9 @@ public class FunModule {
 
   private String nekoMsg(List<List<Pair<String, Double>>> responses, Boolean isAuthor, User author, User mentioned) {
     if (isAuthor) {
-      return Util.getRandom(responses.get(1)) + " " + author.getAsMention();
+      return Util.getRandom(responses.get(0)) + " " + author.getAsMention();
     }
     
-    return author.getAsMention() + " " + Util.getRandom(responses.get(0)) + " " + mentioned.getAsMention();
+    return author.getAsMention() + " " + Util.getRandom(responses.get(1)) + " " + mentioned.getAsMention();
   }
 }
