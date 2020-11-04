@@ -18,6 +18,7 @@ import net.dv8tion.jda.api.entities.User;
 import org.apache.commons.math3.util.Pair;
 
 import xyz.bumbleboss.bumblebot.Constants;
+import xyz.bumbleboss.core.NekoApi;
 import xyz.bumbleboss.core.Util;
 
 @Module
@@ -100,7 +101,7 @@ public class FunModule {
   public void hug(CommandEvent e, @Argument("User") Optional<User> usr) {
     User author = e.getAuthor();
     User user = usr.orElse(author);
-    String[] data = nekoVal("hug", author == user, author, user);
+    String[] data = NekoApi.nekoVal("hug", author == user, author, user);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -114,7 +115,7 @@ public class FunModule {
   public void kiss(CommandEvent e, @Argument("User") Optional<User> usr) {
     User author = e.getAuthor();
     User user = usr.orElse(author);
-    String[] data = nekoVal("kiss", author == user, author, user);
+    String[] data = NekoApi.nekoVal("kiss", author == user, author, user);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -127,8 +128,7 @@ public class FunModule {
   @Command(value = "pat", description = "pat someone >.<")
   public void pat(CommandEvent e) {
     User author = e.getAuthor();
-    User user = author;
-    String[] data = nekoVal("pat", true, author, user);
+    String[] data = NekoApi.nekoVal("pat", true, author, author);
 
     Util.respond(e, new EmbedBuilder()
             .setDescription(data[0])
@@ -141,7 +141,7 @@ public class FunModule {
   @Command(value = "pat", description = "pat someone >.<")
   public void pat(CommandEvent e, @Argument("User") User usr) {
     User author = e.getAuthor();
-    String[] data = nekoVal("pat", author == usr, author, usr);
+    String[] data = NekoApi.nekoVal("pat", author == usr, author, usr);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -149,65 +149,5 @@ public class FunModule {
       .setImage(data[1])
       .build()
     );
-  }
-
-  private String[] nekoVal(String type, Boolean isAuthor, User author, User mentioned) {
-    String msg = null;
-    String img = nekoImg(type);
-
-    List<List<Pair<String, Double>>> hugs = new ArrayList<>();
-    List<List<Pair<String, Double>>> kisses = new ArrayList<>();
-    List<List<Pair<String, Double>>> pats = new ArrayList<>();
-
-    hugs.add(Util.ArrayToPairList(new String[] {
-      "Why so lonely, here's a hug (づ｡◕‿‿◕｡)づ",
-      "Why are you hugging yourself? ;-;", 
-      "Have a hug from me instead!", 
-      "Don't hug yourself ;-;" 
-    }));
-    hugs.add(Util.ArrayToPairList(new String[] { 
-      "just gave a hug to", "hugged", "just sent a hug to" 
-    }));
-
-    kisses.add(Util.ArrayToPairList(new String[] { 
-      "Why are you kissing yourself? ;-;",
-      "Have a kiss from me instead!", 
-      "Don't kiss yourself ;-;" 
-    }));
-    kisses.add(Util.ArrayToPairList(new String[] { 
-      "just kissed", "kissed", "gave a kiss to", "french kissed"
-    }));
-
-    pats.add(Util.ArrayToPairList(new String[] {
-      "Why are you patting yourself? ;-;", 
-      "Have a pat from me instead!", 
-      "Don't pat yourself ;-;" 
-    }));
-    pats.add(Util.ArrayToPairList(new String[] { 
-      "just patted", "patted", "pat pat"
-    }));
-
-    if (Objects.equals(type, "hug")) {
-      msg = nekoMsg(hugs, isAuthor, author, mentioned);
-    } else if (Objects.equals(type, "kiss")) {
-      msg = nekoMsg(kisses, isAuthor, author, mentioned);
-    } else if (Objects.equals(type, "pat")) {
-      msg = nekoMsg(pats, isAuthor, author, mentioned);
-    }
-
-    return new String[] {msg, img};
-  }
-
-  private String nekoImg(String type) {
-    JSONObject img = (JSONObject) Util.getJSON(Util.GET("https://nekos.life/api/"+type));
-    return (String) img.get("url");
-  }
-
-  private String nekoMsg(List<List<Pair<String, Double>>> responses, Boolean isAuthor, User author, User mentioned) {
-    if (isAuthor) {
-      return Util.getRandom(responses.get(0)) + " " + author.getAsMention();
-    }
-    
-    return author.getAsMention() + " " + Util.getRandom(responses.get(1)) + " " + mentioned.getAsMention();
   }
 }
