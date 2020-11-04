@@ -69,9 +69,9 @@ public class InfoModule {
   @Command(value="userinfo", description="Returns with information about a certain user", aliases={"ui"})
   public void userInfo(CommandEvent e) {
     EmbedBuilder eb = new EmbedBuilder();
-    String user = e.getAuthor().getId();
+    String usr = e.getAuthor().getId();
 
-    ArgumentUtility.retrieveUserById(e.getJDA(), user).queue(ur -> {
+    ArgumentUtility.retrieveUserById(e.getJDA(), usr).queue(ur -> {
       eb.setThumbnail(ur.getAvatarUrl());
       eb.addField("Username", ur.getAsTag(), false);
       eb.addField("ID", ur.getId(), true);
@@ -99,11 +99,10 @@ public class InfoModule {
   }
 
   @Command(value="userinfo", description="Returns with information about a certain user", aliases={"ui"})
-	public void userInfo(CommandEvent e, @Argument("user") User usr) {
+	public void userInfo(CommandEvent e, @Argument("user") String usr) {
     EmbedBuilder eb = new EmbedBuilder();
-    String user = usr.getId();
 
-    ArgumentUtility.retrieveUserById(e.getJDA(), user).queue(ur -> {
+    ArgumentUtility.retrieveUserById(e.getJDA(), usr).queue(ur -> {
       eb.setThumbnail(ur.getAvatarUrl());
       eb.addField("Username", ur.getAsTag(), false);
       eb.addField("ID", ur.getId(), true);
@@ -168,10 +167,22 @@ public class InfoModule {
   }
 
   @Command(value="avatar", description="Get an avatar of a user", aliases={"ava"})
-	public void avatar(CommandEvent e, @Argument("user") Optional<String> usr) {
-    String user = usr.orElse(e.getAuthor().getId());
+  public void avatar(CommandEvent e) {
+    String usr = e.getAuthor().getId();
 
-    ArgumentUtility.retrieveUserById(e.getJDA(), user).queue(ur -> e.reply(new EmbedBuilder()
+    ArgumentUtility.retrieveUserById(e.getJDA(), usr).queue(ur -> e.reply(new EmbedBuilder()
+            .setAuthor(ur.getName(), ur.getAvatarUrl())
+            .setImage(ur.getAvatarUrl()+"?size=2048")
+            .setFooter("Lookin' hot")
+            .setColor(Color.decode(Constants.COLOR))
+            .build()
+    ).queue());
+  }
+
+  @Command(value="avatar", description="Get an avatar of a user", aliases={"ava"})
+	public void avatar(CommandEvent e, @Argument("user") String usr) {
+
+    ArgumentUtility.retrieveUserById(e.getJDA(), usr).queue(ur -> e.reply(new EmbedBuilder()
       .setAuthor(ur.getName(), ur.getAvatarUrl())
       .setImage(ur.getAvatarUrl()+"?size=2048")
       .setFooter("Lookin' hot")
