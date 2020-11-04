@@ -9,13 +9,36 @@ import java.util.List;
 import java.util.Objects;
 
 public class NekoApi {
-    public static String[] nekoVal(String type, Boolean isAuthor, User author, User mentioned) {
-        String msg = null;
+    public static String[] nekoVal(String type, User author) {
+        String msg = nekoMsg(nekoMessages(type), author);
         String img = nekoImg(type);
+        return new String[]{msg, img};
+    }
 
+    public static String[] nekoVal(String type, User author, User mentioned) {
+        String msg = nekoMsg(nekoMessages(type), author, mentioned);
+        String img = nekoImg(type);
+        return new String[]{msg, img};
+    }
+
+    private static String nekoImg(String type) {
+        JSONObject img = (JSONObject) Util.getJSON(Util.GET("https://nekos.life/api/" + type));
+        return (String) img.get("url");
+    }
+
+    private static String nekoMsg(List<List<Pair<String, Double>>> responses, User author, User mentioned) {
+        return author.getAsMention() + " " + Util.getRandom(responses.get(1)) + " " + mentioned.getAsMention();
+    }
+
+    private static String nekoMsg(List<List<Pair<String, Double>>> responses, User author) {
+        return Util.getRandom(responses.get(0)) + " " + author.getAsMention();
+    }
+
+    private static List<List<Pair<String, Double>>> nekoMessages(String type) {
         List<List<Pair<String, Double>>> hugs = new ArrayList<>();
         List<List<Pair<String, Double>>> kisses = new ArrayList<>();
         List<List<Pair<String, Double>>> pats = new ArrayList<>();
+        List<List<Pair<String, Double>>> messages = null;
 
         hugs.add(Util.ArrayToPairList(new String[]{
                 "Why so lonely, here's a hug (づ｡◕‿‿◕｡)づ",
@@ -46,26 +69,13 @@ public class NekoApi {
         }));
 
         if (Objects.equals(type, "hug")) {
-            msg = nekoMsg(hugs, isAuthor, author, mentioned);
+            messages = hugs;
         } else if (Objects.equals(type, "kiss")) {
-            msg = nekoMsg(kisses, isAuthor, author, mentioned);
+            messages = kisses;
         } else if (Objects.equals(type, "pat")) {
-            msg = nekoMsg(pats, isAuthor, author, mentioned);
+            messages = pats;
         }
 
-        return new String[]{msg, img};
-    }
-
-    private String nekoImg(String type) {
-        JSONObject img = (JSONObject) Util.getJSON(Util.GET("https://nekos.life/api/" + type));
-        return (String) img.get("url");
-    }
-
-    private String nekoMsg(List<List<Pair<String, Double>>> responses, Boolean isAuthor, User author, User mentioned) {
-        if (isAuthor) {
-            return Util.getRandom(responses.get(0)) + " " + author.getAsMention();
-        }
-
-        return author.getAsMention() + " " + Util.getRandom(responses.get(1)) + " " + mentioned.getAsMention();
+        return messages;
     }
 }

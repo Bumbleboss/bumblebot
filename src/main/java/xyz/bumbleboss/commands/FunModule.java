@@ -10,8 +10,6 @@ import com.jockie.bot.core.command.Command;
 import com.jockie.bot.core.command.impl.CommandEvent;
 import com.jockie.bot.core.module.Module;
 
-import org.json.simple.JSONObject;
-
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 
@@ -48,14 +46,24 @@ public class FunModule {
   }
 
   @Command(value = "ship", description = "Shipping people has never been better!")
-  public void ship(CommandEvent e, @Argument("User") Optional<User> usr, @Argument("User") User usr2) {
-    User usr1 = usr.orElse(e.getAuthor());
-    
+  public void ship(CommandEvent e, @Argument("User") User usr) {
+
     Util.respond(e, new EmbedBuilder()
       .setDescription(shipMsg())
       .setColor(Color.decode(Constants.COLOR))
-      .setFooter(usr1.getName() + " ❤ " + usr2.getName())
+      .setFooter(usr.getName() + " ❤ " + usr.getName())
       .build()
+    );
+  }
+
+  @Command(value = "ship", description = "Shipping people has never been better!")
+  public void ship(CommandEvent e, @Argument("User") User usr, @Argument("User") User usr2) {
+
+    Util.respond(e, new EmbedBuilder()
+            .setDescription(shipMsg())
+            .setColor(Color.decode(Constants.COLOR))
+            .setFooter(usr.getName() + " ❤ " + usr2.getName())
+            .build()
     );
   }
 
@@ -98,10 +106,9 @@ public class FunModule {
   }
 
   @Command(value = "hug", description = "Hug someone >//<")
-  public void hug(CommandEvent e, @Argument("User") Optional<User> usr) {
+  public void hug(CommandEvent e) {
     User author = e.getAuthor();
-    User user = usr.orElse(author);
-    String[] data = NekoApi.nekoVal("hug", author == user, author, user);
+    String[] data = NekoApi.nekoVal("hug", author);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -111,11 +118,36 @@ public class FunModule {
     );
   }
 
-  @Command(value = "kiss", description = "Kiss someone >o<")
-  public void kiss(CommandEvent e, @Argument("User") Optional<User> usr) {
+  @Command(value = "hug", description = "Hug someone >//<")
+  public void hug(CommandEvent e, @Argument("User") User usr) {
     User author = e.getAuthor();
-    User user = usr.orElse(author);
-    String[] data = NekoApi.nekoVal("kiss", author == user, author, user);
+    String[] data = NekoApi.nekoVal("hug", author, usr);
+
+    Util.respond(e, new EmbedBuilder()
+            .setDescription(data[0])
+            .setColor(Color.decode(Constants.COLOR))
+            .setImage(data[1])
+            .build()
+    );
+  }
+
+  @Command(value = "kiss", description = "Kiss someone >o<")
+  public void kiss(CommandEvent e) {
+    User author = e.getAuthor();
+    String[] data = NekoApi.nekoVal("kiss", author);
+
+    Util.respond(e, new EmbedBuilder()
+            .setDescription(data[0])
+            .setColor(Color.decode(Constants.COLOR))
+            .setImage(data[1])
+            .build()
+    );
+  }
+
+  @Command(value = "kiss", description = "Kiss someone >o<")
+  public void kiss(CommandEvent e, @Argument("User") User usr) {
+    User author = e.getAuthor();
+    String[] data = NekoApi.nekoVal("kiss", author, usr);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -128,7 +160,7 @@ public class FunModule {
   @Command(value = "pat", description = "pat someone >.<")
   public void pat(CommandEvent e) {
     User author = e.getAuthor();
-    String[] data = NekoApi.nekoVal("pat", true, author, author);
+    String[] data = NekoApi.nekoVal("pat", author);
 
     Util.respond(e, new EmbedBuilder()
             .setDescription(data[0])
@@ -141,7 +173,7 @@ public class FunModule {
   @Command(value = "pat", description = "pat someone >.<")
   public void pat(CommandEvent e, @Argument("User") User usr) {
     User author = e.getAuthor();
-    String[] data = NekoApi.nekoVal("pat", author == usr, author, usr);
+    String[] data = NekoApi.nekoVal("pat", author, usr);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
