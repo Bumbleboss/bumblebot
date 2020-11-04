@@ -67,9 +67,41 @@ public class InfoModule {
   }
 
   @Command(value="userinfo", description="Returns with information about a certain user", aliases={"ui"})
-	public void userInfo(CommandEvent e, @Argument("user") Optional<String> usr) {
+  public void userInfo(CommandEvent e) {
     EmbedBuilder eb = new EmbedBuilder();
-    String user = usr.orElse(e.getAuthor().getId());
+    String user = e.getAuthor().getId();
+
+    ArgumentUtility.retrieveUserById(e.getJDA(), user).queue(ur -> {
+      eb.setThumbnail(ur.getAvatarUrl());
+      eb.addField("Username", ur.getAsTag(), false);
+      eb.addField("ID", ur.getId(), true);
+      eb.addBlankField(true);
+      eb.addField("Created on", String.format("%1$tb %1$te, %1$tY", ur.getTimeCreated()), true);
+
+      if (e.getChannelType().isGuild()) {
+        if (e.getGuild().isMember(ur)) {
+          Member mem = e.getGuild().getMember(ur);
+          assert mem != null;
+          List<Activity> act = mem.getActivities();
+
+          eb.addField("Joined on", String.format("%1$tb %1$te, %1$tY", mem.getTimeJoined()), true);
+          eb.addBlankField(true);
+          eb.addField("Status", mem.getOnlineStatus().toString().replace("_", " "), true);
+          eb.addField("Activity", (act.size() != 0 ? act.get(0).getName() : "N/A"), false);
+        }
+
+        eb.setFooter(String.format("Requested by %s", e.getAuthor().getAsTag()), e.getAuthor().getAvatarUrl());
+      }
+
+      eb.setColor(Color.decode(Constants.COLOR));
+      e.reply(eb.build()).queue();
+    });
+  }
+
+  @Command(value="userinfo", description="Returns with information about a certain user", aliases={"ui"})
+	public void userInfo(CommandEvent e, @Argument("user") User usr) {
+    EmbedBuilder eb = new EmbedBuilder();
+    String user = usr.getId();
 
     ArgumentUtility.retrieveUserById(e.getJDA(), user).queue(ur -> {
       eb.setThumbnail(ur.getAvatarUrl());
