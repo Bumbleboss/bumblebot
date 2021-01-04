@@ -11,6 +11,7 @@ import com.jockie.bot.core.command.impl.CommandEvent;
 import com.jockie.bot.core.module.Module;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.User;
 
 import org.apache.commons.math3.util.Pair;
@@ -24,7 +25,6 @@ public class FunModule {
 
   @Command(value="choose", description="Makes a decision with the provided choices", aliases="random")
 	public void choose(CommandEvent e, @Endless @Argument("choices") String[] choices) {
-    
     List<Pair<String, Double>> replies = Util.ArrayToPairList(new String[] {
       "Lovin'", "I would pick", "I think I would go with", ":point_right:"
     });
@@ -35,36 +35,33 @@ public class FunModule {
   }
 
   @Command(value = "birthday", description = "Wishes you a happy birthday!", aliases = "bd")
-  public void birthday(CommandEvent e, @Argument("User") User usr) {
-    Util.respond(e, new EmbedBuilder()
-      .setDescription("HAPPY BIRTHDAY " + usr.getName().toUpperCase())
-      .setColor(Color.decode(Constants.COLOR))
-      .setImage("https://media.tenor.com/images/d48f0a731ae8274f5752f059a5af8bfd/tenor.gif")
-      .setTimestamp(Instant.now()).build()
-    );
-    Util.respond(e, "🎉🎂🎉🎂🎉🎂🎉🎂🎉🎂🎉🎂");
-  }
-
-  @Command(value = "ship", description = "Shipping people has never been better!")
-  public void ship(CommandEvent e, @Argument("User") User usr) {
-
-    Util.respond(e, new EmbedBuilder()
-      .setDescription(shipMsg())
-      .setColor(Color.decode(Constants.COLOR))
-      .setFooter(usr.getName() + " ❤ " + usr.getName())
-      .build()
+  public void birthday(CommandEvent e, @Argument("User") User user) {
+    Util.respond(e, new MessageBuilder().setEmbed(
+        new EmbedBuilder()
+        .setDescription("HAPPY BIRTHDAY " + user.getName().toUpperCase())
+        .setColor(Color.decode(Constants.COLOR))
+        .setImage("https://media.tenor.com/images/d48f0a731ae8274f5752f059a5af8bfd/tenor.gif")
+        .setTimestamp(Instant.now())
+        .build()
+      )
+      .setContent("🎉🎂🎉🎂🎉🎂🎉🎂🎉🎂🎉🎂")
     );
   }
 
   @Command(value = "ship", description = "Shipping people has never been better!")
-  public void ship(CommandEvent e, @Argument("User") User usr, @Argument("User") User usr2) {
+  public void ship(CommandEvent e, @Argument("User") User user, @Argument("User") Optional<User> user2) {
+    EmbedBuilder eb = new EmbedBuilder();
 
-    Util.respond(e, new EmbedBuilder()
-            .setDescription(shipMsg())
-            .setColor(Color.decode(Constants.COLOR))
-            .setFooter(usr.getName() + " ❤ " + usr2.getName())
-            .build()
-    );
+    eb.setDescription(shipMsg());
+    eb.setColor(Color.decode(Constants.COLOR));
+
+    if (user2.isPresent()) {
+      eb.setFooter(user.getName() + " ❤ " + user2.get().getName());
+    } else {
+      eb.setFooter(e.getAuthor().getName() + " ❤ " + user.getName());
+    }
+    
+    Util.respond(e, eb.build());
   }
 
   @SuppressWarnings("SpellCheckingInspection")
@@ -106,9 +103,8 @@ public class FunModule {
   }
 
   @Command(value = "hug", description = "Hug someone >//<")
-  public void hug(CommandEvent e) {
-    User author = e.getAuthor();
-    String[] data = NekoApi.nekoVal("hug", author);
+  public void hug(CommandEvent e, @Argument("User") User user) {
+    String[] data = NekoApi.nekoVal("hug", e.getAuthor(), user);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -118,36 +114,9 @@ public class FunModule {
     );
   }
 
-  @Command(value = "hug", description = "Hug someone >//<")
-  public void hug(CommandEvent e, @Argument("User") User usr) {
-    User author = e.getAuthor();
-    String[] data = NekoApi.nekoVal("hug", author, usr);
-
-    Util.respond(e, new EmbedBuilder()
-            .setDescription(data[0])
-            .setColor(Color.decode(Constants.COLOR))
-            .setImage(data[1])
-            .build()
-    );
-  }
-
   @Command(value = "kiss", description = "Kiss someone >o<")
-  public void kiss(CommandEvent e) {
-    User author = e.getAuthor();
-    String[] data = NekoApi.nekoVal("kiss", author);
-
-    Util.respond(e, new EmbedBuilder()
-            .setDescription(data[0])
-            .setColor(Color.decode(Constants.COLOR))
-            .setImage(data[1])
-            .build()
-    );
-  }
-
-  @Command(value = "kiss", description = "Kiss someone >o<")
-  public void kiss(CommandEvent e, @Argument("User") User usr) {
-    User author = e.getAuthor();
-    String[] data = NekoApi.nekoVal("kiss", author, usr);
+  public void kiss(CommandEvent e, @Argument("User") User user) {
+    String[] data = NekoApi.nekoVal("kiss", e.getAuthor(), user);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -158,22 +127,8 @@ public class FunModule {
   }
 
   @Command(value = "pat", description = "pat someone >.<")
-  public void pat(CommandEvent e) {
-    User author = e.getAuthor();
-    String[] data = NekoApi.nekoVal("pat", author);
-
-    Util.respond(e, new EmbedBuilder()
-            .setDescription(data[0])
-            .setColor(Color.decode(Constants.COLOR))
-            .setImage(data[1])
-            .build()
-    );
-  }
-
-  @Command(value = "pat", description = "pat someone >.<")
-  public void pat(CommandEvent e, @Argument("User") User usr) {
-    User author = e.getAuthor();
-    String[] data = NekoApi.nekoVal("pat", author, usr);
+  public void pat(CommandEvent e, @Argument("User") User user) {
+    String[] data = NekoApi.nekoVal("pat", e.getAuthor(), user);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])

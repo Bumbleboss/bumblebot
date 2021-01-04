@@ -10,6 +10,7 @@ import com.jockie.bot.core.module.Module;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import xyz.bumbleboss.bumblebot.Constants;
+import xyz.bumbleboss.core.Util;
 
 @Module
 public class MiscModule {
@@ -24,11 +25,10 @@ public class MiscModule {
       msg = "Hope I see you there!";
     }
     
-    e.reply(new EmbedBuilder()
+    Util.respond(e, new EmbedBuilder()
       .setDescription(msg+"\nInvite link: https://discord.gg/7PCdKYN")
       .setColor(Color.decode(Constants.COLOR))
-      .build())
-    .queue();
+      .build()
+    );
   }
-  
 }
