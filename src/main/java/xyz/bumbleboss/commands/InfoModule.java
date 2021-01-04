@@ -9,7 +9,8 @@ import com.jockie.bot.core.command.impl.CommandEvent;
 import com.jockie.bot.core.module.Module;
 import com.jockie.bot.core.utility.ArgumentUtility;
 
-import org.json.simple.*;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -157,7 +158,7 @@ public class InfoModule {
     String json =  Util.GET("https://api.github.com/repos/Bumbleboss/bumblebot/releases");
     JSONArray js = (JSONArray) Util.getJSON(json);
 
-    if (js.size() > 0) {
+    if (js.length() > 0) {
       JSONObject data = (JSONObject) js.get(0);
       EmbedBuilder eb = new EmbedBuilder();
 

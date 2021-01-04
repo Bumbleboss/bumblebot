@@ -1,7 +1,7 @@
 package xyz.bumbleboss.bumblebot;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 import xyz.bumbleboss.core.Util;
 
@@ -12,6 +12,8 @@ public class Constants {
   public static final String COLOR = Config.getConfigVal("hex").toString();
 
   public static final String PREFIX = Config.getConfigVal("prefix").toString();
+
+  public static final String WEBHOOK = Config.getConfigVal("webhook").toString();
 
   public static final String SERVER_ID = getServer().get("id").toString();
 

@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import com.jockie.bot.core.command.impl.*;
 
+import xyz.bumbleboss.core.CommandManager;
 import xyz.bumbleboss.exceptions.validateFailedException;
 
 import java.util.EnumSet;
@@ -28,6 +29,7 @@ public class Bot {
       CommandListener listener = new CommandListener();
       
       listener.addCommandStores(CommandStore.of("xyz.bumbleboss.commands"));
+      listener.addCommandEventListener(new CommandManager());
       listener.addDevelopers(Constants.DEVS_ID);
       listener.setDefaultPrefixes(Constants.PREFIX);
 

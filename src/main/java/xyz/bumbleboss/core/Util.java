@@ -2,28 +2,38 @@ package xyz.bumbleboss.core;
 
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
-import org.json.simple.*;
-import org.json.simple.parser.*;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONTokener;
 
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import xyz.bumbleboss.bumblebot.Bot;
+import xyz.bumbleboss.bumblebot.Constants;
 import xyz.bumbleboss.exceptions.validateFailedException;
 
 import java.util.*;
 import java.util.function.Function;
 
+import com.jockie.bot.core.command.ICommand;
 import com.jockie.bot.core.command.impl.CommandEvent;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Array;
 import java.time.Duration;
+import java.time.Instant;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
@@ -35,9 +45,9 @@ public class Util {
   // JAVA
   @SuppressWarnings("unchecked")
   public static <T> T[] JSONArrayTo(JSONArray jsonArray, Class<T> type, Function<Object, T> conversionFunction) {
-    T[] array = (T[]) Array.newInstance(type, jsonArray.size());
+    T[] array = (T[]) Array.newInstance(type, jsonArray.length());
       
-    for (int i = 0; i < jsonArray.size(); i++) {
+    for (int i = 0; i < jsonArray.length(); i++) {
       array[i] = conversionFunction.apply(jsonArray.get(i));
     }
       
@@ -150,19 +160,25 @@ public class Util {
 			ex.printStackTrace();
     }
     return null;
-	}
-
-  public static Object getJSON(String value) {
-    JSONParser jsonParser = new JSONParser();
-    Object obj = null;
+  }
+  
+  public static String POST(String url, String body) {
+    RequestBody reqBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
+    Request req = new Request.Builder().url(url).post(reqBody).build();
+    Response res;
 
     try {
-      obj = jsonParser.parse(value);
-    } catch (org.json.simple.parser.ParseException ex) {
-      ex.printStackTrace();
+			res = client.newCall(req).execute();
+			return Objects.requireNonNull(res.body()).string();
+		} catch (IOException ex) {
+			ex.printStackTrace();
     }
+    return null;
+  }
 
-    return obj;
+  public static Object getJSON(String value) {
+    JSONTokener json = new JSONTokener(value);
+    return json.nextValue();
   }
 
   // HELPERS
@@ -172,7 +188,7 @@ public class Util {
     StringBuilder output = new StringBuilder();
 
     for (String requiredKey : requiredKeys) {
-      if (jsonData.containsKey(requiredKey)) {
+      if (jsonData.has(requiredKey)) {
         success.add(requiredKey);
       } else {
         failure.add(requiredKey);
@@ -197,5 +213,36 @@ public class Util {
       }
       throw new validateFailedException(path, output.toString());
     }
+  }
+
+  public static String toHaste(String text) {
+    String data = POST("https://hastebin.com/documents", text);
+
+    if (data == null) {
+      return "Hastebin is currently down";
+    }
+    return String.format("https://hastebin.com/%s", new org.json.JSONObject(data).get("key").toString());
+  }
+
+  public static void postError(ICommand command, Throwable throwable) {
+    StringWriter errors = new StringWriter();
+		throwable.printStackTrace(new PrintWriter(errors));
+    String link = String.format("[Error link](%s)", toHaste(errors.toString()));
+    
+    HashMap<String, Object> data = new HashMap<String, Object>();
+    
+    data.put("color", "#Cf0000");
+    data.put("author_name", throwable.getClass().getName());
+    data.put("author_icon", Bot.jda.getSelfUser().getAvatarUrl());
+    data.put("text", String.format("%s\nCommand: %s", link, command.getCommand()));
+    data.put("ts", Instant.now().getEpochSecond());
+
+    org.json.JSONArray attachments = new org.json.JSONArray().put(0, new JSONObject(data));
+
+    HashMap<String, Object> data2 = new HashMap<String, Object>();
+    data2.put("attachments", attachments);
+
+    String body = new JSONObject(data2).toString();
+    POST(Constants.WEBHOOK+"/slack", body);
   }
 }
