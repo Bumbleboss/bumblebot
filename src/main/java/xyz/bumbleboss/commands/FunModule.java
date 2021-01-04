@@ -17,7 +17,7 @@ import net.dv8tion.jda.api.entities.User;
 import org.apache.commons.math3.util.Pair;
 
 import xyz.bumbleboss.bumblebot.Constants;
-import xyz.bumbleboss.core.NekoApi;
+import xyz.bumbleboss.core.api.NekoAPI;
 import xyz.bumbleboss.core.Util;
 
 @Module
@@ -104,7 +104,7 @@ public class FunModule {
 
   @Command(value = "hug", description = "Hug someone >//<")
   public void hug(CommandEvent e, @Argument("User") User user) {
-    String[] data = NekoApi.nekoVal("hug", e.getAuthor(), user);
+    String[] data = NekoAPI.getData("hug", e.getAuthor(), user);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -116,7 +116,7 @@ public class FunModule {
 
   @Command(value = "kiss", description = "Kiss someone >o<")
   public void kiss(CommandEvent e, @Argument("User") User user) {
-    String[] data = NekoApi.nekoVal("kiss", e.getAuthor(), user);
+    String[] data = NekoAPI.getData("kiss", e.getAuthor(), user);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])
@@ -128,7 +128,7 @@ public class FunModule {
 
   @Command(value = "pat", description = "pat someone >.<")
   public void pat(CommandEvent e, @Argument("User") User user) {
-    String[] data = NekoApi.nekoVal("pat", e.getAuthor(), user);
+    String[] data = NekoAPI.getData("pat", e.getAuthor(), user);
 
     Util.respond(e, new EmbedBuilder()
       .setDescription(data[0])

@@ -1,5 +1,7 @@
 package xyz.bumbleboss.core;
 
+import java.awt.Color;
+
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
 
@@ -7,11 +9,13 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONTokener;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -136,6 +140,10 @@ public class Util {
     return all;
   }
 
+  public static void respond(CommandEvent e, Boolean embed_only, String text) {
+    respond(e, new EmbedBuilder().setDescription(text).setColor(Color.decode(Constants.COLOR)).build());
+  }
+
   public static void respond(CommandEvent e, MessageBuilder mb) {
     e.replyTyping().queue(q -> e.reply(mb.build()).queue());
   }
@@ -149,6 +157,25 @@ public class Util {
   }
   
   // REST
+
+  public static String GET(String url, String[][] headers) {
+    Headers.Builder hs = new Headers.Builder();
+    for (int i = 0; i < headers.length; i++) {
+      hs.add(headers[i][0], headers[i][1]);
+    }
+    
+    Request req = new Request.Builder().url(url).get().headers(hs.build()).build();
+		Response res;
+
+    try {
+			res = client.newCall(req).execute();
+			return Objects.requireNonNull(res.body()).string();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+    }
+    return null;
+  }
+
   public static String GET(String url) {
     Request req = new Request.Builder().url(url).get().build();
 		Response res;
@@ -220,7 +247,7 @@ public class Util {
 
     if (data == null) {
       return "Hastebin is currently down";
-    }
+    }    
     return String.format("https://hastebin.com/%s", new org.json.JSONObject(data).get("key").toString());
   }
 

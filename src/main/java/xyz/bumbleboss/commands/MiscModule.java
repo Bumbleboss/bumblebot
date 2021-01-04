@@ -1,16 +1,15 @@
 package xyz.bumbleboss.commands;
 
-import java.awt.Color;
 import java.util.Objects;
 
+import com.jockie.bot.core.argument.Argument;
 import com.jockie.bot.core.command.Command;
 import com.jockie.bot.core.command.impl.CommandEvent;
 import com.jockie.bot.core.module.Module;
 
-import net.dv8tion.jda.api.EmbedBuilder;
-
 import xyz.bumbleboss.bumblebot.Constants;
 import xyz.bumbleboss.core.Util;
+import xyz.bumbleboss.core.api.UrbanAPI;
 
 @Module
 public class MiscModule {
@@ -25,10 +24,11 @@ public class MiscModule {
       msg = "Hope I see you there!";
     }
     
-    Util.respond(e, new EmbedBuilder()
-      .setDescription(msg+"\nInvite link: https://discord.gg/7PCdKYN")
-      .setColor(Color.decode(Constants.COLOR))
-      .build()
-    );
+    Util.respond(e, true, msg);
+  }
+
+  @Command(value="define", description="Meaning of a word directly from Urban Dictionary")
+  public void define(CommandEvent e, @Argument("word") String word) {
+    //Util.respond(e, true, new UrbanAPI(word).working());
   }
 }

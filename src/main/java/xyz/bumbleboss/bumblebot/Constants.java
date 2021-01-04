@@ -23,7 +23,13 @@ public class Constants {
 
   public static final String[] DEVS_ID = Util.JSONArrayTo((JSONArray) Config.getConfigVal("developersId"), String.class, Object::toString);
 
+  public static final String URBAN_KEY = getAPIKeys().getString("urban");
+
   public static JSONObject getServer() {
     return (JSONObject) Config.getConfigVal("server");
+  }
+
+  public static JSONObject getAPIKeys() {
+    return (JSONObject) Config.getConfigVal("apiKeys");
   }
 }

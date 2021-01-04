@@ -150,7 +150,7 @@ public class InfoModule {
 
   @Command(value="uptime", description="Check for how long I have been running :sweat_drops:")
 	public void uptime(CommandEvent e) {
-    Util.respond(e, new EmbedBuilder().setDescription(Util.getUptime()).setColor(Color.decode(Constants.COLOR)).build());
+    Util.respond(e, true, Util.getUptime());
   }
 
   @Command(value="version", description="Check the version of the bot and it's changelog", aliases={"ver", "changelogs", "changes"})

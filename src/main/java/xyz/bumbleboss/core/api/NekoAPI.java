@@ -1,6 +1,8 @@
-package xyz.bumbleboss.core;
+package xyz.bumbleboss.core.api;
 
 import net.dv8tion.jda.api.entities.User;
+import xyz.bumbleboss.core.Util;
+
 import org.apache.commons.math3.util.Pair;
 import org.json.simple.JSONObject;
 
@@ -8,27 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NekoApi {
+public class NekoAPI {
 
-   public static String[] nekoVal(String type, User author, User mentioned) {
-    String msg = nekoMsg(nekoMessages(type), author, mentioned);
-    String img = nekoImg(type);
+  public static String[] getData(String type, User author, User mentioned) {
+    String msg = getMsg(messageType(type), author, mentioned);
+    String img = getImg(type);
     return new String[]{msg, img};
   }
 
-  private static String nekoImg(String type) {
+  private static String getImg(String type) {
     JSONObject img = (JSONObject) Util.getJSON(Util.GET("https://nekos.life/api/" + type));
     return (String) img.get("url");
   }
 
-  private static String nekoMsg(List<List<Pair<String, Double>>> responses, User author, User mentioned) {
+  private static String getMsg(List<List<Pair<String, Double>>> responses, User author, User mentioned) {
     if (author == mentioned) {
       return Util.getRandom(responses.get(0)) + " " + author.getAsMention();
     }
     return author.getAsMention() + " " + Util.getRandom(responses.get(1)) + " " + mentioned.getAsMention();
   }
 
-  private static List<List<Pair<String, Double>>> nekoMessages(String type) {
+  private static List<List<Pair<String, Double>>> messageType(String type) {
     List<List<Pair<String, Double>>> hugs = new ArrayList<>();
     List<List<Pair<String, Double>>> kisses = new ArrayList<>();
     List<List<Pair<String, Double>>> pats = new ArrayList<>();
