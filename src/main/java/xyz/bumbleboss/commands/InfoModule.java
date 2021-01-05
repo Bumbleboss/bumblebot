@@ -1,6 +1,5 @@
 package xyz.bumbleboss.commands;
 
-import java.awt.Color;
 import java.util.*;
 
 import com.jockie.bot.core.argument.Argument;
@@ -62,9 +61,8 @@ public class InfoModule {
     eb.addField("Channels", channels, true);
     eb.addField("Members", users, true);
     eb.setFooter(footer);
-    eb.setColor(Color.decode(Constants.COLOR));
   
-    Util.respond(e, eb.build());  
+    Util.respond(e, eb);  
   }
 
   @Command(value="userinfo", description="Returns with information about a certain user", aliases={"ui"})
@@ -93,8 +91,7 @@ public class InfoModule {
         eb.setFooter(String.format("Requested by %s", e.getAuthor().getAsTag()), e.getAuthor().getAvatarUrl());
       }
   
-      eb.setColor(Color.decode(Constants.COLOR));
-      Util.respond(e, eb.build());
+      Util.respond(e, eb);
     });
   }
 
@@ -131,8 +128,7 @@ public class InfoModule {
       Objects.requireNonNull(jda.getUserById(Constants.HOST_ID)).getName()
     ));
 
-    eb.setColor(Color.decode(Constants.COLOR));
-    Util.respond(e, eb.build());
+    Util.respond(e, eb);
   }
 
   @Command(value="avatar", description="Get an avatar of a user", aliases={"ava"})
@@ -142,8 +138,6 @@ public class InfoModule {
         .setAuthor(ur.getName(), ur.getAvatarUrl())
         .setImage(ur.getAvatarUrl()+"?size=2048")
         .setFooter("Lookin' hot")
-        .setColor(Color.decode(Constants.COLOR))
-        .build()
       )
     );
   }
@@ -167,11 +161,10 @@ public class InfoModule {
       eb.setFooter(String.format("On %1$tb %1$te, %1$tY",
         Util.getDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", data.get("published_at").toString())
       ));
-      eb.setColor(Color.decode(Constants.COLOR));
   
-      Util.respond(e, eb.build());
+      Util.respond(e, eb);
     } else {
-      Util.respond(e, "There are no public releases at the moment...");
+      Util.respond(e, "There are no public releases at the moment!");
     }
   }
 }

@@ -7,6 +7,7 @@ import com.jockie.bot.core.command.Command;
 import com.jockie.bot.core.command.impl.CommandEvent;
 import com.jockie.bot.core.module.Module;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import xyz.bumbleboss.bumblebot.Constants;
 import xyz.bumbleboss.core.Util;
 import xyz.bumbleboss.core.api.UrbanAPI;
@@ -29,6 +30,18 @@ public class MiscModule {
 
   @Command(value="define", description="Meaning of a word directly from Urban Dictionary")
   public void define(CommandEvent e, @Argument("word") String word) {
-    //Util.respond(e, true, new UrbanAPI(word).working());
+    UrbanAPI api = new UrbanAPI(word);
+
+    if (api.data != null) {
+      EmbedBuilder eb = new EmbedBuilder();
+      
+      eb.addField(api.word, api.definition, false);
+      eb.addField("example", "\n\n"+api.example, false);
+      eb.setFooter(String.format("👍 %,d | 👎 %,d · %s", api.thumbsUp, api.thumbsDown, api.author), null);
+      
+      Util.respond(e, eb);
+    } else {
+      Util.respond(e, "Found nothing from your query!");
+    }
   }
 }

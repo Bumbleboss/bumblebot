@@ -144,6 +144,10 @@ public class Util {
     respond(e, new EmbedBuilder().setDescription(text).setColor(Color.decode(Constants.COLOR)).build());
   }
 
+  public static void respond(CommandEvent e, EmbedBuilder eb) {
+    respond(e, eb.setColor(Color.decode(Constants.COLOR)).build());
+  }
+  
   public static void respond(CommandEvent e, MessageBuilder mb) {
     e.replyTyping().queue(q -> e.reply(mb.build()).queue());
   }
@@ -157,7 +161,6 @@ public class Util {
   }
   
   // REST
-
   public static String GET(String url, String[][] headers) {
     Headers.Builder hs = new Headers.Builder();
     for (int i = 0; i < headers.length; i++) {
@@ -204,8 +207,7 @@ public class Util {
   }
 
   public static Object getJSON(String value) {
-    JSONTokener json = new JSONTokener(value);
-    return json.nextValue();
+    return new JSONTokener(value).nextValue();
   }
 
   // HELPERS
@@ -247,8 +249,9 @@ public class Util {
 
     if (data == null) {
       return "Hastebin is currently down";
-    }    
-    return String.format("https://hastebin.com/%s", new org.json.JSONObject(data).get("key").toString());
+    }
+
+    return String.format("https://hastebin.com/%s", new JSONObject(data).get("key").toString());
   }
 
   public static void postError(ICommand command, Throwable throwable) {
@@ -264,7 +267,7 @@ public class Util {
     data.put("text", String.format("%s\nCommand: %s", link, command.getCommand()));
     data.put("ts", Instant.now().getEpochSecond());
 
-    org.json.JSONArray attachments = new org.json.JSONArray().put(0, new JSONObject(data));
+    JSONArray attachments = new JSONArray().put(0, new JSONObject(data));
 
     HashMap<String, Object> data2 = new HashMap<String, Object>();
     data2.put("attachments", attachments);

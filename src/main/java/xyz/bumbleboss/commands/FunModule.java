@@ -53,7 +53,6 @@ public class FunModule {
     EmbedBuilder eb = new EmbedBuilder();
 
     eb.setDescription(shipMsg());
-    eb.setColor(Color.decode(Constants.COLOR));
 
     if (user2.isPresent()) {
       eb.setFooter(user.getName() + " ❤ " + user2.get().getName());
@@ -61,14 +60,12 @@ public class FunModule {
       eb.setFooter(e.getAuthor().getName() + " ❤ " + user.getName());
     }
     
-    Util.respond(e, eb.build());
+    Util.respond(e, eb);
   }
 
   @SuppressWarnings("SpellCheckingInspection")
   private String shipMsg() {
-    Random r = new Random();
-    int High = 101;
-    int result = r.nextInt(High);
+    int result = new Random().nextInt(101);
     StringBuilder sb = new StringBuilder();
 
     if (result >= 1 && result <= 10) {
@@ -104,37 +101,19 @@ public class FunModule {
 
   @Command(value = "hug", description = "Hug someone >//<")
   public void hug(CommandEvent e, @Argument("User") User user) {
-    String[] data = NekoAPI.getData("hug", e.getAuthor(), user);
-
-    Util.respond(e, new EmbedBuilder()
-      .setDescription(data[0])
-      .setColor(Color.decode(Constants.COLOR))
-      .setImage(data[1])
-      .build()
-    );
+    NekoAPI api = new NekoAPI("hug", e.getAuthor(), user);
+    Util.respond(e, new EmbedBuilder().setDescription(api.message).setImage(api.image));
   }
 
   @Command(value = "kiss", description = "Kiss someone >o<")
   public void kiss(CommandEvent e, @Argument("User") User user) {
-    String[] data = NekoAPI.getData("kiss", e.getAuthor(), user);
-
-    Util.respond(e, new EmbedBuilder()
-      .setDescription(data[0])
-      .setColor(Color.decode(Constants.COLOR))
-      .setImage(data[1])
-      .build()
-    );
+    NekoAPI api = new NekoAPI("kiss", e.getAuthor(), user);
+    Util.respond(e, new EmbedBuilder().setDescription(api.message).setImage(api.image));
   }
 
   @Command(value = "pat", description = "pat someone >.<")
   public void pat(CommandEvent e, @Argument("User") User user) {
-    String[] data = NekoAPI.getData("pat", e.getAuthor(), user);
-
-    Util.respond(e, new EmbedBuilder()
-      .setDescription(data[0])
-      .setColor(Color.decode(Constants.COLOR))
-      .setImage(data[1])
-      .build()
-    );
+    NekoAPI api = new NekoAPI("pat", e.getAuthor(), user);
+    Util.respond(e, new EmbedBuilder().setDescription(api.message).setImage(api.image));
   }
 }

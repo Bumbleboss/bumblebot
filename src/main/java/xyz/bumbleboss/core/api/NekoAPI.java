@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.User;
 import xyz.bumbleboss.core.Util;
 
 import org.apache.commons.math3.util.Pair;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,29 +12,30 @@ import java.util.Objects;
 
 public class NekoAPI {
 
-  public static String[] getData(String type, User author, User mentioned) {
-    String msg = getMsg(messageType(type), author, mentioned);
-    String img = getImg(type);
-    return new String[]{msg, img};
+  public String message;
+  public String image;
+
+  public NekoAPI(String type, User user, User user2) {
+    this.message = getMessage(messageType(type), user, user2);
+    this.image = getImage(type);
   }
 
-  private static String getImg(String type) {
+  private static String getImage(String type) {
     JSONObject img = (JSONObject) Util.getJSON(Util.GET("https://nekos.life/api/" + type));
-    return (String) img.get("url");
+    return img.getString("url");
   }
 
-  private static String getMsg(List<List<Pair<String, Double>>> responses, User author, User mentioned) {
-    if (author == mentioned) {
-      return Util.getRandom(responses.get(0)) + " " + author.getAsMention();
+  private static String getMessage(List<List<Pair<String, Double>>> responses, User user, User user2) {
+    if (user == user2) {
+      return Util.getRandom(responses.get(0)) + " " + user.getAsMention();
     }
-    return author.getAsMention() + " " + Util.getRandom(responses.get(1)) + " " + mentioned.getAsMention();
+    return user.getAsMention() + " " + Util.getRandom(responses.get(1)) + " " + user2.getAsMention();
   }
 
   private static List<List<Pair<String, Double>>> messageType(String type) {
     List<List<Pair<String, Double>>> hugs = new ArrayList<>();
     List<List<Pair<String, Double>>> kisses = new ArrayList<>();
     List<List<Pair<String, Double>>> pats = new ArrayList<>();
-    List<List<Pair<String, Double>>> messages = null;
 
     hugs.add(Util.ArrayToPairList(new String[]{
       "Why so lonely, here's a hug (づ｡◕‿‿◕｡)づ",
@@ -65,13 +66,13 @@ public class NekoAPI {
     }));
 
     if (Objects.equals(type, "hug")) {
-      messages = hugs;
+      return hugs;
     } else if (Objects.equals(type, "kiss")) {
-      messages = kisses;
+      return kisses;
     } else if (Objects.equals(type, "pat")) {
-      messages = pats;
+      return pats;
     }
 
-    return messages;
+    return null;
   }
 }
